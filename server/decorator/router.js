@@ -1,0 +1,100 @@
+import Router from 'koa-router'
+import { resolve } from 'path'
+import glob from 'glob'
+import R from 'ramda'
+import _ from 'lodash'
+
+export let routersMap = new Map()
+export const symbolPrefix = Symbol('prefix')
+export const isArray = v => _.isArray(v) ? v : [v]
+export const normalizePath = path => path.startsWith('/') ? path : `/${path}`
+const isDev = process.env.NODE_ENV === 'development'
+
+export class Route {
+  constructor (app, apiPath) {
+    this.app = app
+    this.router = new Router()
+    this.apiPath = apiPath
+  }
+
+  init () {
+    glob.sync(resolve(this.apiPath, './api/*.js')).forEach(require)
+    if(isDev) {
+        require(resolve(this.apiPath, './ssr/dev-ssr'))
+      console.log("------------------123344444")
+    } else {
+        require(resolve(this.apiPath, './ssr/por-ssr'))
+    }
+
+    for (let [ conf, controller ] of routersMap) {
+      const controllers = isArray(controller)
+      let prefixPath = conf.target[symbolPrefix]
+      if (prefixPath) prefixPath = normalizePath(prefixPath)
+
+      const routerPath = prefixPath + conf.path
+
+      this.router[conf.method](routerPath, ...controllers)
+    }
+
+    this.app.use(this.router.routes())
+    this.app.use(this.router.allowedMethods())
+  }
+}
+
+export const router = conf => (target, key, desc) => {
+  conf.path = normalizePath(conf.path)
+
+  routersMap.set({
+    target: target,
+    ...conf
+  }, target[key])
+}
+
+export const Controller = path => target => target.prototype[symbolPrefix] = path
+
+export const Get = path => router({
+  method: 'get',
+  path: path
+})
+
+export const Post = path => router({
+  method: 'post',
+  path: path
+})
+
+export const Put = path => router({
+  method: 'put',
+  path: path
+})
+
+export const Del = path => router({
+  method: 'del',
+  path: path
+})
+
+const decorate = (args, middleware) => {
+  let [ target, key, descriptor ] = args
+
+  target[key] = isArray(target[key])
+  target[key].unshift(middleware)
+
+  return descriptor
+}
+
+export const convert = middleware => (...args) => decorate(args, middleware)
+
+export const Required = rules => convert(async (ctx, next) => {
+  let errors = []
+
+  const passRules = R.forEachObjIndexed(
+    (value, key) => {
+      errors = R.filter(i => !R.has(i, ctx.request[key]))(value)
+    }
+  )
+
+  passRules(rules)
+
+  if (errors.length) ctx.throw(412, `${errors.join(', ')} 参数缺失`)
+
+  await next()
+})
