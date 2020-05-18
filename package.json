@@ -6,7 +6,9 @@
   "scripts": {
     "dev:client": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.dev.client.js",
     "build:client": "cross-env NODE_ENV=production webpack --config build/webpack.config.pro.client.js",
-    "dev:server": "cross-env NODE_ENV=development nodemon start.js"
+    "dev:server": "cross-env NODE_ENV=development nodemon start.js",
+    "build:server": "cross-env NODE_ENV=production webpack --config build/webpack.config.server.js",
+    "start": "cross-env NODE_ENV=production node start.js"
   },
   "keywords": [],
   "author": "",

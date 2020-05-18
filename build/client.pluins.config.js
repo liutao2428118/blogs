@@ -7,7 +7,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'ssr', // 默认值：Webpack App
             filename: 'index.html', // 生成的html
-            template: path.resolve(__dirname, '../index.html'), // 自定义模版
+            template: path.resolve(__dirname, '../template/index.html'), // 自定义模版
             minify: {
                 collapseWhitespace: true, // 是否压缩
                 removeComments: true, // 是否移除注释

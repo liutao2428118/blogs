@@ -15,7 +15,7 @@ module.exports = merge(base, {
     output: {
         filename: '[name].[chunkhash:8].js',
         path: path.join(__dirname, '../public'),
-        // publicPath: '/public/'
+        publicPath: '/public/'
     },
     module: {
         rules: [{
