@@ -28,6 +28,7 @@ if (isDev) {
 
         // 获取vue-ssr-server-bundle的绝对路径
         const bundlePath = path.join(serverConfig.output.path, 'vue-ssr-server-bundle.json')
+        console.log(bundlePath)
 
         // 内存中读取vue-ssr-server-bundle文件内容
         bundle = JSON.parse(mfs.readFileSync(bundlePath, 'utf-8'))

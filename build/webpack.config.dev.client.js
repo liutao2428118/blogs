@@ -48,7 +48,7 @@ module.exports = merge(base, {
                 use: [{
                     loader: 'style-loader',
                     options: {
-                        singleton: false
+                        // singleton: false
                     }
                 },
                 {
