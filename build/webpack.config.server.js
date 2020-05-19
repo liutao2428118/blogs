@@ -28,6 +28,11 @@ module.exports = merge(base, {
         path: path.join(__dirname, '../server-build')
     },
     externals: Object.keys(require('../package.json').dependencies),
+    resolve:{
+        alias: { // 配置别名
+            'apiModel': path.join(__dirname, '../client/api-model/server-api.js')
+        }
+    },
     module: {
         rules: [
             {

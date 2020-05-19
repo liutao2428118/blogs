@@ -1,10 +1,12 @@
-import { getCategoryList } from '../../server/controllers/category'
+import api from '../../server/api'
+
+// console.log(api.client.getAllCategorys())
 
 export default {
-  getAllCategorys () {
-    return new Promise(async (resolve, reject) => {
-      const data = await getCategoryList()
-      resolve(data)
-    })
-  }
+    getAllCategorys() {
+        return new Promise(async (resolve, reject) => {
+            const data = await api.client.getAllCategorys()
+            resolve(data)
+        })
+    }
 }

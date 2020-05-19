@@ -1,10 +1,11 @@
-const path = require('path')
-const fs = require('fs')
-const axios = require('axios')
-const VueServerRenderer = require('vue-server-renderer')
-const ejs = require('ejs')
+import path from 'path'
+import fs from'fs'
+import axios from'axios'
+import * as VueServerRenderer from 'vue-server-renderer'
+import ejs from 'ejs'
 
-
+// 读取ejs模板
+const template = fs.readFileSync(path.join(__dirname, '../../template/server.template.ejs'), 'utf-8')
 
 export const devSsr = function (bundle) {
     return async function (ctx, next) {
@@ -12,11 +13,11 @@ export const devSsr = function (bundle) {
         const clientManifestResp = await axios.get('http://127.0.0.1:8000/vue-ssr-client-manifest.json')
         // 获取到具体内容
         const clientManifest = clientManifestResp.data
-        // 读取ejs模板
-        const template = fs.readFileSync(path.join(__dirname, '../../template/server.template.ejs'), 'utf-8')
+        
         // 创建createBundleRenderer, inject:false表示手动注入html模板
         const renderer = VueServerRenderer.createBundleRenderer(bundle, { inject: false, clientManifest })
 
+        
         // 设置返回文件类型是html
         ctx.headers['Content-Type'] = 'text/html'
         // 服务端与客户端沟通的上下文对象context
@@ -51,10 +52,8 @@ export const devSsr = function (bundle) {
 
 export const porSsr = async function (ctx, next) {
     const bundle = require('../../server-build/server-entry').default
-    console.log(bundle)
     const clientManifest = require('../../public/vue-ssr-client-manifest.json')
     const renderer = VueServerRenderer.createRenderer({ inject: false, clientManifest })
-    const template = fs.readFileSync(path.join(__dirname, '../../template/server.template.ejs'), 'utf-8')
 
 
     ctx.headers['Content-Type'] = 'text/html'

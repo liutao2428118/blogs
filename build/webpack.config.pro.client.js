@@ -17,6 +17,7 @@ module.exports = merge(base, {
         path: path.join(__dirname, '../public'),
         publicPath: '/public/'
     },
+    resolve: pluginsConfig.resolve,
     module: {
         rules: [{
             test: /\.css$/,

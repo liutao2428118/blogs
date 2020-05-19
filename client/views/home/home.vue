@@ -1,6 +1,6 @@
 <template>
   <div class="table-box">
-    客户端
+    客户端-tao.lt
     <div v-for="item in categoryArr">
       <span>{{item._id}}</span>
       <span>{{item.name}}</span>
@@ -39,9 +39,9 @@ export default {
   },
   beforeMount() {},
   mounted() {},
-//   asyncData({ router, store }) {
-//     // return store.dispatch("fetchCategorys");
-//   },
+  asyncData({ router, store }) {
+    return store.dispatch("fetchCategorys");
+  },
   filters: {},
   methods: {
     ...mapActions([

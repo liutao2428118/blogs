@@ -14,6 +14,7 @@ module.exports = merge(base, {
         path: path.join(__dirname, '../public'),
         publicPath: 'http://127.0.0.1:8000/'
     },
+    resolve: pluginsConfig.resolve,
     devtool: 'inline-source-map',
     devServer: {
         port: 8000, // 端口
@@ -28,7 +29,7 @@ module.exports = merge(base, {
             index: '/public/index.html'
         },
         proxy: { // 设置代理
-            '/api': 'http://127.0.0.1:3000'
+            '/': 'http://127.0.0.1:3000'
             // '/user': 'http://127.0.0.1:3333'
         },
         hot: true // 启用 webpack 的模块热替换特性, 这个需要配合： webpack.HotModuleReplacementPlugin插件

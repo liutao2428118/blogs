@@ -1,9 +1,9 @@
 /**
  * ssr路由
  */
-const path = require('path')
-const MemoryFS = require('memory-fs')
-const webpack = require('webpack')
+import path  from 'path'
+import MemoryFS from 'memory-fs'
+import webpack from 'webpack'
 import { devSsr, porSsr } from '../controllers/ssr'
 import { Controller, Get } from '../decorator/router'
 
@@ -14,7 +14,7 @@ let bundle
 if (isDev) {
     // 获取服务端打包入口文件
     const serverConfig = require('../../build/webpack.config.server')
-    // 调用webpack解析入口文件
+    // 调用webpack解析配置文件
     const serverCompiler = webpack(serverConfig)
     // 创建一个内存中读取文件的对象
     const mfs = new MemoryFS()
@@ -39,9 +39,8 @@ if (isDev) {
 
 
 @Controller('')
-class Devssr {
-    constructor() { }
-
+class SsrController {
+   
     @Get('*')
     async all(ctx, next) {
         if (isDev) {

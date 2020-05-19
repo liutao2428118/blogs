@@ -15,5 +15,12 @@ module.exports = {
             }
         }),
         new VueClientPlugin()
-    ]
+    ],
+    resolve: {
+        alias: { // 配置别名
+            '@': path.resolve(__dirname, 'src/'),
+            'apiModel': path.join(__dirname, '../client/api-model/client-api.js')
+        },
+        extensions: ['.js', '.vue', '.json'] // 默认值: [".js",".json"]  模块名字可以省略的后缀名
+    }
 }

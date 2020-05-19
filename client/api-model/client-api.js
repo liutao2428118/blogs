@@ -21,6 +21,6 @@ const handleRequest = (request) => {
 
 export default {
   getAllCategorys () {
-    return handleRequest(request.get('/api/category/all'))
+    return handleRequest(request.get('/client/all'))
   }
 }

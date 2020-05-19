@@ -1,9 +1,9 @@
-// import apiModel from 'apiModel'
+import apiModel from 'apiModel'
 
-// export default {
-//   fetchCategorys ({ commit }) {
-//     return apiModel.getAllCategorys().then(data => {
-//       commit('setCategoryArr', data)
-//     })
-//   }
-// }
+export default {
+  fetchCategorys ({ commit }) {
+    return apiModel.getAllCategorys().then(data => {
+      commit('setCategoryArr', data)
+    })
+  }
+}

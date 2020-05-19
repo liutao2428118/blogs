@@ -4,10 +4,10 @@ import glob from 'glob'
 import R from 'ramda'
 import _ from 'lodash'
 
-export let routersMap = new Map()
-export const symbolPrefix = Symbol('prefix')
-export const isArray = v => _.isArray(v) ? v : [v]
-export const normalizePath = path => path.startsWith('/') ? path : `/${path}`
+let routersMap = new Map()
+const symbolPrefix = Symbol('prefix')
+const isArray = v => _.isArray(v) ? v : [v]
+const normalizePath = path => path.startsWith('/') ? path : `/${path}`
 
 export class Route {
     constructor(app, apiPath) {
@@ -34,7 +34,7 @@ export class Route {
     }
 }
 
-export const router = conf => (target, key, desc) => {
+const router = conf => (target, key, desc) => {
     conf.path = normalizePath(conf.path)
 
     routersMap.set({

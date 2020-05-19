@@ -1,4 +1,3 @@
-
 import  { Route } from '../decorator/router'
 import path from 'path'
 
