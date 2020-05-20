@@ -7,7 +7,7 @@
                     关于自己
                 </h5>
                 <div class="statement">
-                    <div class="item">it技术的探索者</div>
+                    <div class="item">寻找诗和远方</div>
                     <div class="item">座右铭：向上的路并不拥挤，而大多数人选择了安逸。</div>
                 </div>
                 <div class="statement">

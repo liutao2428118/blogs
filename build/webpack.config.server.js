@@ -31,7 +31,8 @@ module.exports = merge(base, {
     resolve:{
         alias: { // 配置别名
             'apiModel': path.join(__dirname, '../client/api-model/server-api.js')
-        }
+        },
+        extensions: ['.js', '.vue', '.json'] 
     },
     module: {
         rules: [

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<el-menu :default-active="activeIndex" class="d-flex" :router="true" mode="horizontal"  type="flex">
+		<el-menu :default-active="$route.path" class="d-flex" :router="true" mode="horizontal"  type="flex">
 			<el-menu-item class="mr-auto">BLOG</el-menu-item>
 			<el-menu-item index="/">首页</el-menu-item>
 			<el-menu-item index="/archive">归档</el-menu-item>
