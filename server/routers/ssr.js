@@ -47,6 +47,7 @@ class SsrController {
         if (isDev) {
             if (!bundle) {
                 ctx.body = '你等一会，别着急......'
+                return
             }
             const renderer = devSsr(bundle)
             await renderer(ctx, next)

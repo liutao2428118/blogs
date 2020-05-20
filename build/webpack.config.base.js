@@ -20,7 +20,8 @@ module.exports = {
                 use: [{
                     loader: 'url-loader', // 根据图片大小，把图片优化成base64
                     options: {
-                        limit: 10000 // 图片小于10k就转成base64
+                        limit: 10000, // 图片小于10k就转成base64
+                        esModule: false
                     }
                 }]
             },
