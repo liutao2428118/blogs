@@ -95,52 +95,52 @@
 
 <style lang="stylus" scoped>
 #artcle-info 
-    padding: 20px;
-    /* background-image: url(../assets/vue.jpg); */
-    margin-bottom: 40px;
+    padding: 20px
+    /* background-image: url(../assets/vue.jpg) */
+    margin-bottom: 40px
     .abstract 
-        color: #ffffff;
-        border-left: 3px solid #F56C6C;
-        padding: 10px;
-        background-color: rgba(126, 129, 135, 0.3);
+        color: #ffffff
+        border-left: 3px solid #F56C6C
+        padding: 10px
+        background-color: rgba(126, 129, 135, 0.3)
 
     .timeAndView 
-        padding: 20px;
-        line-height: 30px;
-        font-size: 16px;
-        color: #ffffff;
+        padding: 20px
+        line-height: 30px
+        font-size: 16px
+        color: #ffffff
 #artcle-content
     .blockquote
-        background-color: #f5f2f0;
-        padding: 1em;
-        margin: 2em 2em;
-        font-family: Consolas,Monaco,"Andale Mono",monospace;
-        border-radius: 1em;
-        border-width: .2em;
-        border-color: #e0dfcc;
-        border-style: solid;
-        text-shadow: 0 1px white;
+        background-color: #f5f2f0
+        padding: 1em
+        margin: 2em 2em
+        font-family: Consolas,Monaco,"Andale Mono",monospace
+        border-radius: 1em
+        border-width: .2em
+        border-color: #e0dfcc
+        border-style: solid
+        text-shadow: 0 1px white
         .has 
-            background: #f5f2f0;
-            color: black;
-            text-shadow: 0 1px white;
-            font-family: monospace,Consolas,Monaco,"Andale Mono";
-            direction: ltr;
-            text-align: left;
-            white-space: pre;
-            word-spacing: normal;
-            font-size: 1.2em;
-            tab-size: 4;
-            hyphens: none;
-            padding: 0em 0em .5em 0em;
-            // overflow: auto;
+            background: #f5f2f0
+            color: black
+            text-shadow: 0 1px white
+            font-family: monospace,Consolas,Monaco,"Andale Mono"
+            direction: ltr
+            text-align: left
+            white-space: pre
+            word-spacing: normal
+            font-size: 1.2em
+            tab-size: 4
+            hyphens: none
+            padding: 0em 0em .5em 0em
+            // overflow: auto
             font-size: 14px
 
     img
-        width: 100%;
+        width: 100%
 
 #statement 
-    border-left: 3px solid #F56C6C;
-    padding: 20px;
-    background-color: #EBEEF5;
+    border-left: 3px solid #F56C6C
+    padding: 20px
+    background-color: #EBEEF5
 </style>
