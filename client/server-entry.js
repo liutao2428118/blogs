@@ -5,7 +5,7 @@ export default context => {
         const { app, router, store } = createApp()
 
         router.push(context.url)
-
+        
         router.onReady(() => {
             const matchedComponents = router.getMatchedComponents()
             console.log(matchedComponents)
@@ -15,6 +15,7 @@ export default context => {
             const promiseArr = matchedComponents.map(Component => {
                 if (Component.asyncData) {
                     return Component.asyncData({
+                        app,
                         router,
                         store
                     })

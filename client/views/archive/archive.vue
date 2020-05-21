@@ -5,15 +5,15 @@
                 <div class="count">归档：234篇</div>
                 <el-timeline>
                     <el-timeline-item
-                        v-for="(activity, index) in activities"
+                        v-for="(activity, index) in essayArr"
                         :key="index"
                         :color="activity.color"
-                        :timestamp="activity.timestamp"
+                        :timestamp="activity.meta.createdAt"
                         placement="top"
                         @mouseenter="hoverLine(activity)"
                     >
                         <div class="line-item">
-                            <router-link to="/article" tag="span">{{activity.content}}</router-link>
+                            <router-link to="/article" tag="span">{{activity.title}}</router-link>
                         </div>
                     </el-timeline-item>
                 </el-timeline>
@@ -29,6 +29,7 @@
 
 <script>
 import Tag from "../../components/tag/tag.vue";
+import { mapState, mapActions } from "vuex";
 export default {
     name: "archive",
     data() {
@@ -48,6 +49,16 @@ export default {
                 }
             ]
         };
+    },
+    created() {},
+    asyncData({ app, router, store }) {
+        return  Promise.all([
+            store.dispatch("fetchAllEssay", app.$route.params.id),
+            store.dispatch("fetchCategorys")
+        ])
+    },
+    computed: {
+        ...mapState(["essayArr"])
     },
     methods: {
         hoverLine(activity) {

@@ -6,29 +6,27 @@
 				<span>分类</span>
 			</div>
 			<div class="text item">
-                <el-row>
-                    <el-col :span="24"><el-tag size="mini" class="tag-item" @click="tag('Java')">计算机基础（10）</el-tag></el-col>
-                    <el-col :span="24"><el-tag size="mini" class="tag-item" @click="tag('Java')">JavaScript（12）</el-tag></el-col>
-                    <el-col :span="24"><el-tag size="mini" class="tag-item" type="info" @click="tag('HTML')">Html（8）</el-tag></el-col>
-                    <el-col :span="24"><el-tag size="mini" class="tag-item" type="warning" @click="tag('Mysql')">Mysql（5）</el-tag></el-col>
-                    <el-col :span="24"><el-tag size="mini" class="tag-item" type="danger" @click="tag('Vue')">Vue（3）</el-tag></el-col>
-                    <el-col :span="24"><el-tag size="mini" class="tag-item" type="info" @click="tag('jQuery')">JQuery（6）</el-tag></el-col>
-                </el-row>
+                <template v-for="item in categoryArr">
+                    <el-row>
+                        <el-col :span="24"><el-tag size="mini" class="tag-item" @click="tag(item._id)">{{item.name}}（{{item.essays_arr.length}}）</el-tag></el-col>
+                    </el-row>
+                </template>
 			</div>
 		</el-card>
 	</div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 	export default {
-		name: 'tag',
+        name: 'tag',
+        computed: {
+            ...mapState(["categoryArr"])
+        },
 		methods: {
-			tag(name) {
+			tag(id) {
 				this.$router.push({
-					name: 'tag',
-					params: {
-						'name': name
-					}
+					path: '/archive/' + id,
 				});
 			}
 		}

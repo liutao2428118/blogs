@@ -20,6 +20,7 @@ export const devSsr = function (bundle) {
         
         // 设置返回文件类型是html
         ctx.headers['Content-Type'] = 'text/html'
+        console.log(ctx.path)
         // 服务端与客户端沟通的上下文对象context
         const context = { url: ctx.path }
 

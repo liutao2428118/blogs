@@ -30,15 +30,33 @@ export const database = app => {
     console.log('Connected to MongoDB ', config.db)
 
     const Category = mongoose.model('Category')
+    const Essay = mongoose.model('Essay')
+
+    const existEssay = await Essay.find({}).exec()
 
     const existCategory = await Category.find({}).exec()
 
     if(!existCategory.length) {
         let cat = new Category({
-            name: 'vue',
+            name: 'Nodejs',
             genre:  1
         })
         await cat.save()
+    }
+
+    if(!existEssay.length) {
+        let ess = new Essay({
+            title: 'JavaScript精选',
+            category: '5ec63e3f78f60027fc330950',
+            outline: '我是JavaScript精选概要！！！',
+            content: '我JavaScript精选主要内容！！！！',
+            issued: 1,
+            reprint: 1,
+            pageview: 200,
+            like: 200
+        })
+
+        await ess.save()
     }
   })
 }

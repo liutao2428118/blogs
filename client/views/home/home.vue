@@ -66,21 +66,22 @@ export default {
         };
     },
     created() {
-        if (this.categoryArr && this.categoryArr.length < 1) {
-            this.fetchCategorys();
-        }
+        // if (this.categoryArr && this.categoryArr.length < 1) {
+        //     this.fetchCategorys();
+        // }
     },
     computed: {
-        ...mapState(["categoryArr"])
+       
     },
     beforeMount() {},
     mounted() {},
     asyncData({ router, store }) {
+        console.log('home')
         return store.dispatch("fetchCategorys");
     },
     filters: {},
     methods: {
-        ...mapActions(["fetchCategorys"])
+        // ...mapActions(["fetchCategorys"])
     },
 
     components: {

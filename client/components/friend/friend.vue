@@ -9,7 +9,8 @@
 		    </el-button>
 		  </div>
 		  <div class="text item"><a href="#">我的github</a></div>
-		  <!-- <div class="text item"><a href="#">某某的博客</a></div> -->
+          <div class="text item"><a href="#">我的gitlab</a></div>
+		  <div class="text item"><a href="#">我的码云</a></div>
 		</el-card>
 	</div>
 </template>
@@ -22,7 +23,8 @@ export default {
 
 <style lang="stylus" scoped>
 .box-card 
-    .item 
+    .item
+        padding: 5px 0
         a
 	        text-decoration: none
     span
