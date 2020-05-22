@@ -7,13 +7,12 @@
                     <el-timeline-item
                         v-for="(activity, index) in essayArr"
                         :key="index"
-                        :color="activity.color"
-                        :timestamp="activity.meta.createdAt"
+                        :timestamp="activity._id.year + '年'"
                         placement="top"
                         @mouseenter="hoverLine(activity)"
                     >
-                        <div class="line-item">
-                            <router-link to="/article" tag="span">{{activity.title}}</router-link>
+                        <div class="line-item" v-for="c in activity.item">
+                            <router-link :to="'/article/' + c.id" tag="span">{{c.title}}</router-link>
                         </div>
                     </el-timeline-item>
                 </el-timeline>
@@ -50,7 +49,9 @@ export default {
             ]
         };
     },
-    created() {},
+    created() {
+        console.log(this.essayArr)
+    },
     asyncData({ app, router, store }) {
         return  Promise.all([
             store.dispatch("fetchAllEssay", app.$route.params.id),
@@ -79,7 +80,8 @@ export default {
 }
 
 .line-item {
-    display: inline-block;
+    // display: inline-block;
+    padding: 5px 0
 
     :hover {
         cursor: pointer;

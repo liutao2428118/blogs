@@ -10,8 +10,37 @@ export async function getAllCategorys() {
 }
 
 export async function getAllEssay(id) {
-    const existEssay = await Essay.find({category: mongoose.Types.ObjectId(id)}).exec()
-    console.log(existEssay)
+
+    const existEssay = await Essay.aggregate(
+        [
+            {
+                $match:
+                {
+                    category: mongoose.Types.ObjectId(id)
+                }
+            },
+            {
+                $group:
+                {
+                    _id: { year: { $year: "$meta.createdAt" } },//{}内的是分组条件
+                    item: {
+                        $push:
+                        {
+                            id: "$_id",
+                            title: "$title",
+                            category: "$category",
+                            outline: "$outline",
+                            content: "$content"
+                        }
+                    }
+                },
+            }
+        ]
+    )
+
+
+
+    console.log(JSON.stringify(existEssay))
 
     return existEssay
 }

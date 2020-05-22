@@ -21,7 +21,7 @@ export default () => {
                 component: home
             },
             {
-                path: '/article',
+                path: '/article/:id',
                 name: 'article',
                 component: article
             },
