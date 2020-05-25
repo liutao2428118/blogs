@@ -1,7 +1,7 @@
 /**
  * ssr路由
  */
-import path  from 'path'
+import path from 'path'
 import MemoryFS from 'memory-fs'
 import webpack from 'webpack'
 import { devSsr, porSsr } from '../controllers/ssr'
@@ -41,7 +41,7 @@ if (isDev) {
 
 @Controller('')
 class SsrController {
-   
+
     @Get('*')
     async all(ctx, next) {
         console.log(ctx.path)

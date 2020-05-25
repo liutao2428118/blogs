@@ -7,9 +7,9 @@ export const addSend = app => {
     app.use(async (ctx, next) => {
         if (ctx.path === '/favicon.ico') {
             await send(ctx, '/favicon.ico', {
-                root: path.join(__dirname, '../static/favicon.ico')
+                root: path.join(__dirname, '../static')
             })
-        } else if(ctx.path.match(reg)) {
+        } else if (ctx.path.match(reg)) {
             await send(ctx, ctx.path)
         }
         else {
