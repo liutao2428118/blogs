@@ -129,10 +129,10 @@ module.exports = merge(base, {
             filename: '[name][hash].css', // 设置最终输出的文件名
             chunkFilename: '[id][hash].css'
         }),
-        new CopyWebpackPlugin([{
-            from: path.resolve(__dirname, '../server/static'), // 拷贝不需要打包的文件夹路径
-            to: path.resolve(__dirname, '../public')
-        }])
+        // new CopyWebpackPlugin([{
+        //     from: path.resolve(__dirname, '../server/static'), // 拷贝不需要打包的文件夹路径
+        //     to: path.resolve(__dirname, '../public')
+        // }])
     ]),
     optimization: {
         minimizer: [

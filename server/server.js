@@ -12,22 +12,40 @@ const MIDDLEWARES = ['database', 'common', 'router']
 class Server {
     constructor() {
         this.app = new Koa()
+        this.init(this.app)
         this.useMiddlewares(this.app)(MIDDLEWARES)
     }
 
-   useMiddlewares(app) {
+    init(app) {
+        app.use(async (ctx, next) => {
+            try {
+                console.log(`request with path ${ctx.path}`)
+                await next()
+            } catch (err) {
+                console.log(err)
+                ctx.status = 500
+                if (isDev) {
+                    ctx.body = err.message
+                } else {
+                    ctx.bosy = 'please try again later'
+                }
+            }
+        })
+    }
+
+    useMiddlewares(app) {
         return R.map(
-          R.compose(
-            R.map(i => i(app)),
-            require,
-            i => `${r('./middlewares')}/${i}`
-          )
+            R.compose(
+                R.map(i => i(app)),
+                require,
+                i => `${r('./middlewares')}/${i}`
+            )
         )
-      }
+    }
 
     async start() {
         this.app.listen(port, host)
-        console.log('Server listening on ' + host + ':' + port) 
+        console.log('Server listening on ' + host + ':' + port)
     }
 }
 

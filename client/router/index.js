@@ -21,12 +21,12 @@ export default () => {
                 component: home
             },
             {
-                path: '/article/:id',
+                path: '/article',
                 name: 'article',
                 component: article
             },
             {
-                path: '/archive/:id',
+                path: '/archive',
                 name: 'archive',
                 component: archive
             },

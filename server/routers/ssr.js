@@ -44,6 +44,7 @@ class SsrController {
    
     @Get('*')
     async all(ctx, next) {
+        console.log(ctx.path)
         if (isDev) {
             if (!bundle) {
                 ctx.body = '你等一会，别着急......'

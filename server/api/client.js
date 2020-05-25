@@ -30,17 +30,20 @@ export async function getAllEssay(id) {
                             title: "$title",
                             category: "$category",
                             outline: "$outline",
-                            content: "$content"
+                            content: "$content",
+                            meta: "$meta"
                         }
                     }
                 },
+            },
+            {
+                $sort:
+                {
+                    "_id.year": -1 //排序规则,倒序
+                }
             }
         ]
     )
-
-
-
-    console.log(JSON.stringify(existEssay))
-
+    
     return existEssay
 }

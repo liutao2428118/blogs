@@ -25,9 +25,7 @@ import { mapState } from "vuex";
         },
 		methods: {
 			tag(id) {
-				this.$router.push({
-					path: '/archive/' + id,
-				});
+				this.$router.replace('/archive');
 			}
 		}
 	}

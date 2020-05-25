@@ -76,8 +76,7 @@ export default {
     beforeMount() {},
     mounted() {},
     asyncData({ router, store }) {
-        console.log('home')
-        return store.dispatch("fetchCategorys");
+        // return store.dispatch("fetchCategorys");
     },
     filters: {},
     methods: {

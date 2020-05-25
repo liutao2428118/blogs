@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<el-menu :default-active="$route.path" class="d-flex" :router="true" mode="horizontal"  type="flex">
-			<el-menu-item class="mr-auto">BLOG</el-menu-item>
+			<!-- <el-menu-item class="mr-auto">BLOG</el-menu-item> -->
 			<el-menu-item index="/">首页</el-menu-item>
-			<el-menu-item index="/archive/5ec3506989f9411decf0220d">归档</el-menu-item>
+			<el-menu-item index="/archive">归档</el-menu-item>
 			<el-menu-item index="/about">关于</el-menu-item>
 			<!-- <el-submenu index="1">
 				<template slot="title"></template>

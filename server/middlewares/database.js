@@ -46,14 +46,17 @@ export const database = app => {
 
     if(!existEssay.length) {
         let ess = new Essay({
-            title: 'JavaScript精选',
-            category: '5ec63e3f78f60027fc330950',
-            outline: '我是JavaScript精选概要！！！',
-            content: '我JavaScript精选主要内容！！！！',
+            title: 'vue的真的2018',
+            category: '5ec3506989f9411decf0220d',
+            outline: 'vue的真的2018',
+            content: 'vue的真的2018的主要内容！！！！',
             issued: 1,
             reprint: 1,
             pageview: 200,
-            like: 200
+            like: 500,
+            meta: {
+                createdAt: new Date('2018/02/25 00:00:00').getTime()
+            }
         })
 
         await ess.save()

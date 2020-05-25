@@ -29,7 +29,7 @@ module.exports = merge(base, {
             index: '/public/index.html'
         },
         proxy: { // 设置代理
-            '/': 'http://127.0.0.1:3000'
+            // '/': 'http://127.0.0.1:3000'
             // '/user': 'http://127.0.0.1:3333'
         },
         hot: true // 启用 webpack 的模块热替换特性, 这个需要配合： webpack.HotModuleReplacementPlugin插件

@@ -2,7 +2,7 @@
     <div class="archive">
         <el-row id="artList" type="flex" justify="space-around">
             <el-col :span="16">
-                <div class="count">归档：234篇</div>
+                <div class="count">归档：100篇</div>
                 <el-timeline>
                     <el-timeline-item
                         v-for="(activity, index) in essayArr"
@@ -12,7 +12,8 @@
                         @mouseenter="hoverLine(activity)"
                     >
                         <div class="line-item" v-for="c in activity.item">
-                            <router-link :to="'/article/' + c.id" tag="span">{{c.title}}</router-link>
+                            <!-- <router-link :to="'/article/' + c.id + '?tim=' + Date.now()" tag="span">{{c.title}}</router-link> -->
+                            <span @click="to(c.id)">{{c.title}}</span>
                         </div>
                     </el-timeline-item>
                 </el-timeline>
@@ -50,7 +51,12 @@ export default {
         };
     },
     created() {
-        console.log(this.essayArr)
+        // console.log(this.essayArr)
+    },
+    mounted () {
+        // if (this.essayArr && this.essayArr.length < 1) {
+        //     // this.fetchTodos()
+        // }
     },
     asyncData({ app, router, store }) {
         return  Promise.all([
@@ -64,7 +70,16 @@ export default {
     methods: {
         hoverLine(activity) {
             activity.color = "#409eff";
-        }
+        },
+        to(id) {
+            //  + id + '?tim=' + Date.now()
+            this.$router.replace('/article')
+        },
+
+        ...mapActions([
+            'fetchAllEssay',
+            
+        ])
     },
     components: {
         Tag

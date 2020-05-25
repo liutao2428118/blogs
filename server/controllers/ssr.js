@@ -20,7 +20,6 @@ export const devSsr = function (bundle) {
         
         // 设置返回文件类型是html
         ctx.headers['Content-Type'] = 'text/html'
-        console.log(ctx.path)
         // 服务端与客户端沟通的上下文对象context
         const context = { url: ctx.path }
 
@@ -28,7 +27,7 @@ export const devSsr = function (bundle) {
             // 调用renderToString生成DOM元素字符串
             const appString = await renderer.renderToString(context)
 
-            console.log(context.router.currentRoute.fullPath, '----------------', ctx.path)
+            // console.log(context.router.currentRoute.fullPath, '----------------', ctx.path)
 
             if (context.router.currentRoute.fullPath !== ctx.path) {
                 return ctx.redirect(context.router.currentRoute.fullPath)
