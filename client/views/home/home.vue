@@ -2,18 +2,19 @@
     <div class="home">
         <el-row id="artList" type="flex" justify="space-around">
             <el-col :span="16">
-                <el-row class="art-item">
+                <el-row class="art-item" v-for="item in essayTop">
                     <el-card shadow="hover">
                         <h5>
-                            <router-link to="/article" tag="span" class="art-title">JavaScript的一些看法</router-link>
+                            <!-- <router-link to="/article" tag="span" class="art-title">{{item.title}}</router-link> -->
+                            <a :href="/article/+item._id" class="art-title">{{item.title}}</a>
                         </h5>
                         <el-row class="art-info d-flex align-items-center justify-content-start">
                             <div class="art-time">
-                                <i class="el-icon-time"></i>：2019-03-24
+                                <i class="el-icon-time"></i>:{{item.meta.createdAt | dateFrm}}
                             </div>
                             <div class="d-flex align-items-center">
                                 <img class="tag" src="../../assets/image/tag.png" />：
-                                <el-tag size="mini">JavaScript</el-tag>
+                                <el-tag size="mini">{{item.category.name}}</el-tag>
                             </div>
                         </el-row>
                         <el-row class="art-body">
@@ -21,19 +22,19 @@
                                 <img class="art-banner" src="../../assets/image/vue.jpg" />
                             </div>
                             <div class="side-abstract">
-                                <div class="art-abstract">Iconfont-国内功能很强大且图标内容很丰富的矢量图标库, 提供矢量图标下载</div>
+                                <div class="art-abstract">{{item.outline}}</div>
                                 <div class="art-more">
-                                    <router-link to="/article" tag="span">
+                                    <a :href="/article/+item._id" >
                                         <el-button plain>阅读全文</el-button>
-                                    </router-link>
+                                    </a>
                                     <div class="view">
-                                        <i class="el-icon-view"></i>12414
+                                        <i class="el-icon-view"></i>{{item.pageview}}
                                     </div>
                                 </div>
                             </div>
                         </el-row>
                     </el-card>
-                    <!-- <img class="star" src="../assets/star.png" /> -->
+                    <img class="star" src="../../assets/image/star.png" />
                 </el-row>
             </el-col>
             <el-col :span="6" class="hidden-sm-and-down" id="side">
@@ -52,6 +53,7 @@
 import { mapState, mapActions } from "vuex";
 import Friend from "../../components/friend/friend.vue";
 import Tag from "../../components/tag/tag.vue";
+import moment from "moment"
 export default {
     name: "home",
     props: [""],
@@ -66,19 +68,27 @@ export default {
         };
     },
     created() {
-        // if (this.categoryArr && this.categoryArr.length < 1) {
-        //     this.fetchCategorys();
-        // }
+        console.log(this.essayTop)
     },
-    computed: {
-       
-    },
+   
     beforeMount() {},
     mounted() {},
     asyncData({ router, store }) {
-        // return store.dispatch("fetchCategorys");
+        return Promise.all([
+            store.dispatch("fetchCategorys"),
+            store.dispatch("fetchTopEssay")
+        ])
     },
-    filters: {},
+    computed: {
+       ...mapState([
+           "essayTop"
+       ])
+    },
+    filters: {
+        dateFrm(date) {
+            return moment(date).format("YYYY-MM-DD")
+        }
+    },
     methods: {
         // ...mapActions(["fetchCategorys"])
     },
@@ -107,8 +117,10 @@ export default {
         width: 16px
         height: 16px
     .art-title 
+        text-decoration: none
         border-left: 3px solid #f56c6c
         padding-left: 5px
+        color: blue
         cursor: pointer
         & :hover 
             padding-left: 10px

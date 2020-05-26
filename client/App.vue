@@ -1,5 +1,5 @@
 <template>
-    <div id="ni">
+    <div class="app">
         <m-header></m-header>
         <el-row type="flex" justify="center" id="content">
             <el-col :xs="20" :md="20" :style="{'minHeight':minHeight+'px'}">

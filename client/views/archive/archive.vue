@@ -2,17 +2,16 @@
     <div class="archive">
         <el-row id="artList" type="flex" justify="space-around">
             <el-col :span="16">
-                <div class="count">归档：100篇</div>
+                <div class="count">归档：{{essayList.count}}篇</div>
                 <el-timeline>
                     <el-timeline-item
-                        v-for="(activity, index) in essayArr"
+                        v-for="(activity, index) in essayList.data"
                         :key="index"
-                        :timestamp="activity._id.year + '年'"
+                        :timestamp="activity._id + '年'"
                         placement="top"
                         @mouseenter="hoverLine(activity)"
                     >
                         <div class="line-item" v-for="c in activity.item">
-                            <!-- <router-link :to="'/article/' + c.id + '?tim=' + Date.now()" tag="span">{{c.title}}</router-link> -->
                             <span @click="to(c.id)">{{c.title}}</span>
                         </div>
                     </el-timeline-item>
@@ -34,52 +33,33 @@ export default {
     name: "archive",
     data() {
         return {
-            activities: [
-                {
-                    content: "springBoot整合Redis",
-                    timestamp: "2018-04-15"
-                },
-                {
-                    content: "Activiti工作流",
-                    timestamp: "2018-04-13"
-                },
-                {
-                    content: "Vue路由",
-                    timestamp: "2018-04-11"
-                }
-            ]
+    
         };
     },
     created() {
-        // console.log(this.essayArr)
+        console.log(this.essayList)
     },
-    mounted () {
-        // if (this.essayArr && this.essayArr.length < 1) {
-        //     // this.fetchTodos()
-        // }
-    },
+    mounted () {},
     asyncData({ app, router, store }) {
         return  Promise.all([
-            store.dispatch("fetchAllEssay", app.$route.params.id),
+            store.dispatch("fetchEssayList", app.$route.params.id),
             store.dispatch("fetchCategorys")
         ])
     },
     computed: {
-        ...mapState(["essayArr"])
+        ...mapState(["essayList"])
     },
     methods: {
         hoverLine(activity) {
             activity.color = "#409eff";
         },
         to(id) {
-            //  + id + '?tim=' + Date.now()
-            this.$router.replace('/article')
+            window.location.href = `/article/${id}`
         },
 
-        ...mapActions([
-            'fetchAllEssay',
-            
-        ])
+        // ...mapActions([
+        //     'fetchAllEssay',
+        // ])
     },
     components: {
         Tag
@@ -88,19 +68,16 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.count {
-    margin-bottom: 20px;
-    font-size: 20px;
-    color: #e6a23c;
-}
+.count 
+    margin-bottom: 20px
+    font-size: 20px
+    color: #e6a23c
 
-.line-item {
-    // display: inline-block;
+
+.line-item 
     padding: 5px 0
 
-    :hover {
-        cursor: pointer;
-        color: #409eff;
-    }
-}
+    :hover 
+        cursor: pointer
+        color: #409eff
 </style>

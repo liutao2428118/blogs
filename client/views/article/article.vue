@@ -3,27 +3,28 @@
 		<el-row class="main" type="flex" justify="center">
 			<el-col :span="16">
 				<div id="artcle-info">
-					<h2 class="text-center"><strong>Springboot—整合swagger2</strong></h2>
+					<h2 class="text-center"><strong>{{EssayOne.title}}</strong></h2>
 					<!-- 描述：文章信息 -->
 					<div class="text-center timeAndView">
 						<span class="article-time">
 							<i class="el-icon-time"></i>
-							发表于：<span>2018-08-02</span>
+							发表于：<span>{{EssayOne.meta.createdAt | dateFrm}}</span>
 						</span>
 						&nbsp;|&nbsp;
 						<span class="article-views">
 							<i class="el-icon-view"></i>
-							阅读量：<span>1</span>万
+							阅读量：<span>{{EssayOne.pageview}}</span>万
 						</span>
 					</div>
 					<p class="abstract">
-						前言：swagger2功能非常强大，用自己的一句话概括：它是一个构建强大的RESTful API文档以及调试的框架。
+						{{EssayOne.outline}}
 					</p>
 				</div>
 				<hr />
 				<div id="artcle-content">
-					<p>官方地址：
-						<!-- <a href="https://swagger.io/" rel="nofollow" target="_blank">https://swagger.io/</a> -->
+                    {{EssayOne.content}}
+					<!-- <p>官方地址：
+						
 					</p>
 
 					<p>springboot整合非常简单，易学易用，步骤如下：</p>
@@ -73,7 +74,7 @@
 
 					<p>&nbsp;</p>
 
-					<p><span style="color:#3399ea;"><em>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 向上的路并不拥挤，到多数人选择了安逸！--it疯子也</em></span></p>
+					<p><span style="color:#3399ea;"><em>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 向上的路并不拥挤，到多数人选择了安逸！--it疯子也</em></span></p> -->
 				</div>
 				<!-- <div id="statement">
 					<div class="item">{{$t('article.author')}}：it疯子也</div>
@@ -88,9 +89,41 @@
 </template>
 
 <script>
-	export default {
-		name: 'article'
-	}
+import { mapState, mapActions } from "vuex";
+import moment from "moment"
+export default {
+    name: "artile",
+    data() {
+        return {};
+    },
+    created() {
+        console.log(this.EssayOne)
+    },
+    beforeMount() {},
+    mounted() {},
+    asyncData({ app, router, store }) {
+        return Promise.all([
+            store.dispatch("fetchEssayFindOne", app.$route.params.id)
+        ])
+    },
+    computed: {
+       ...mapState([
+           "EssayOne"
+       ])
+    },
+    filters: {
+        dateFrm(date) {
+            return moment(date).format("YYYY-MM-DD")
+        }
+    },
+    methods: {
+        
+    },
+
+    components: {
+       
+    }
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -108,7 +141,7 @@
         padding: 20px
         line-height: 30px
         font-size: 16px
-        color: #ffffff
+        color: #000
 #artcle-content
     .blockquote
         background-color: #f5f2f0

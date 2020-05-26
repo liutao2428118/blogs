@@ -6,9 +6,19 @@ export default {
       commit('setCategoryArr', data)
     })
   },
-  fetchAllEssay ({ commit }, id) {
-    return apiModel.getAllEssay(id).then(data => {
+  fetchEssayList ({ commit }, id) {
+    return apiModel.getAllEssayList(id).then(data => {
       commit('setEssayArr', data)
+    })
+  },
+  fetchTopEssay({ commit }) {
+    return apiModel.getTopEssay().then(data => {
+        commit('setEssayTop', data)
+    })
+  },
+  fetchEssayFindOne({ commit }, id) {
+    return apiModel.getEssayFindOne(id).then(data => {
+        commit('setEssayOne', data)
     })
   }
 }

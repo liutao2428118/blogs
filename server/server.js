@@ -33,6 +33,7 @@ class Server {
         })
     }
 
+    // 加载中间件
     useMiddlewares(app) {
         return R.map(
             R.compose(

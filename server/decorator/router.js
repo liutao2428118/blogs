@@ -1,3 +1,7 @@
+/**
+ *  路由装饰器
+ */
+ 
 import Router from 'koa-router'
 import { resolve } from 'path'
 import glob from 'glob'

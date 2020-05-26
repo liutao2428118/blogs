@@ -3,9 +3,7 @@ import createApp from './app'
 export default context => {
     return new Promise((resolve, reject) => {
         const { app, router, store } = createApp()
-
-        console.log("client------------------",context.url)
-
+        
         router.push(context.url)
         
         router.onReady(() => {

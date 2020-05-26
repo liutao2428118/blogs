@@ -8,7 +8,7 @@
 			<div class="text item">
                 <template v-for="item in categoryArr">
                     <el-row>
-                        <el-col :span="24"><el-tag size="mini" class="tag-item" @click="tag(item._id)">{{item.name}}（{{item.essays_arr.length}}）</el-tag></el-col>
+                        <el-col :span="24" class="col"><el-tag size="mini" class="tag-item" @click="tag(item._id)">{{item.name}}（{{item.essays_arr.length}}）</el-tag></el-col>
                     </el-row>
                 </template>
 			</div>
@@ -25,7 +25,7 @@ import { mapState } from "vuex";
         },
 		methods: {
 			tag(id) {
-				this.$router.replace('/archive');
+                window.location.href = `/archive/${id}`
 			}
 		}
 	}
@@ -34,6 +34,8 @@ import { mapState } from "vuex";
 <style lang="stylus" scoped>
 .box-card 
     .item
+        .col
+            margin 2px 0
         .tag-item 
             margin-right: 10px
         &:hover 

@@ -6,11 +6,6 @@ import archive from '../views/archive/archive.vue'
 import about from '../views/about/about.vue'
 Vue.use(VueRouter)
 
-// const VueRouterPush = Router.prototype.push
-// Router.prototype.push = function push(to) {
-//     return VueRouterPush.call(this, to).catch(err => err)
-// }
-
 export default () => {
     return new VueRouter({
         mode: 'history',
@@ -21,12 +16,12 @@ export default () => {
                 component: home
             },
             {
-                path: '/article',
+                path: '/article/:id',
                 name: 'article',
                 component: article
             },
             {
-                path: '/archive',
+                path: '/archive/:id',
                 name: 'archive',
                 component: archive
             },

@@ -2,7 +2,13 @@ export default {
   setCategoryArr (state, arr) {
     state.categoryArr = arr
   },
-  setEssayArr (state, arr) {
-    state.essayArr = arr
+  setEssayArr (state, data) {
+    state.essayList = data
+  },
+  setEssayTop (state, data) {
+    state.essayTop = data
+  },
+  setEssayOne (state, data) {
+    state.EssayOne = data
   }
 }

@@ -1,4 +1,6 @@
 export default {
   categoryArr: [],
-  essayArr: []
+  essayList: {},
+  essayTop: [],
+  EssayOne: {}
 }

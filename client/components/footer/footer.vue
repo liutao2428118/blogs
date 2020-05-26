@@ -17,7 +17,7 @@
                 <el-col :span="8" class="item-col weside">
                     <div class="item">
                         <i class="el-icon-caret-right"></i>
-                        生活不止有眼前的苟且，还有诗和远方
+                        寻找诗和远方
                     </div>
                     <div class="item">
                         <i class="el-icon-caret-right"></i>
@@ -40,42 +40,42 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.f-footer {
-    padding: 20px;
-    text-align: center;
-    color: #fff;
-    background-color: #555;
-}
+.f-footer 
+    padding: 20px
+    text-align: center
+    color: #fff
+    background-color: #555
 
-.main {
-    width: 70%;
-    margin: 0 auto;
-    color: #ccc;
-}
 
-.out-link {
-    text-decoration: none;
-    color: #ccc;
-}
+.main 
+    width: 70%
+    margin: 0 auto
+    color: #ccc
 
-.out-link:hover {
-    color: #ffffff;
-}
 
-.item-col {
-    text-align: left;
-}
+.out-link 
+    text-decoration: none
+    color: #ccc
 
-.item-col.weside {
-    font-size: 14px;
-}
 
-.item-col .title {
-    color: #ddd;
-    margin-bottom: 10px;
-}
+.out-link:hover 
+    color: #ffffff
 
-.item span {
-    margin-right: 5px;
-}
+
+.item-col 
+    text-align: left
+
+
+.item-col.weside 
+    font-size: 14px
+
+
+.item-col .title 
+    color: #ddd
+    margin-bottom: 10px
+
+
+.item span 
+    margin-right: 5px
+
 </style>
