@@ -76,13 +76,17 @@
 
 					<p><span style="color:#3399ea;"><em>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 向上的路并不拥挤，到多数人选择了安逸！--it疯子也</em></span></p> -->
 				</div>
-				<!-- <div id="statement">
-					<div class="item">{{$t('article.author')}}：it疯子也</div>
-					<div class="item">{{$t('article.originalLink')}}：
+				<div id="statement">
+					<div class="item"></div>
+					<div class="item">
 						<a href="https://www.fengziy.cn/">https://www.fengziy.cn/</a>
 					</div>
-					<div class="item">{{$t('article.copyright')}}：本博客所有文章除特别声明外,转载请注明出处!</div>
-				</div> -->
+					<div class="item">本博客所有文章除特别声明外,转载请注明出处!</div>
+				</div>
+                <div class="comments">
+                    <div class="title">评论区</div>
+                    <comments :eid="$route.params.id"></comments>
+                </div>
 			</el-col>
 		</el-row>
 	</div>
@@ -91,6 +95,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import moment from "moment"
+import Comments from "../../components/comments/comments.vue"
 export default {
     name: "artile",
     data() {
@@ -121,7 +126,7 @@ export default {
     },
 
     components: {
-       
+       Comments
     }
 };
 </script>
@@ -176,4 +181,11 @@ export default {
     border-left: 3px solid #F56C6C
     padding: 20px
     background-color: #EBEEF5
+.comments
+    padding 40px 0
+    .title
+        font-size 18px
+        font-weight 800
+        border-bottom 1px solid #ddd
+        padding-bottom: 10px 
 </style>

@@ -90,3 +90,28 @@ export async function getAllEssayList(id) {
         data: existEssay
     }
 }
+
+// 添加评论
+export async function setComments(data) {
+    try {
+        const essay = await Essay
+            .findOne({_id: mongoose.Types.ObjectId(data.eid)})
+            .exec()
+            
+        if(!essay) {
+            return false
+        }
+
+        let { reply } = essay
+
+        reply.push(data)
+    
+        await essay.save()
+    
+        return essay
+    } catch (error) {
+        
+    }
+  
+
+}

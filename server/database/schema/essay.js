@@ -17,6 +17,7 @@ const essaySchema = new Schema({
     user: { type: ObjectId, ref: 'Uesr' }, // 管理员回复
     from: { type: ObjectId, ref: 'Visitor' }, // 当前游客
     to: { type: ObjectId, ref: 'Visitor' }, // 需要回复的游客
+    superiorId: String,
     content: String // 回复的内容
   }],
   pageview: Number, // 阅读数

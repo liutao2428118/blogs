@@ -10,5 +10,8 @@ export default {
   },
   setEssayOne (state, data) {
     state.EssayOne = data
-  }
+  },
+  doLogin (state, data) {
+    state.user = data
+  },
 }

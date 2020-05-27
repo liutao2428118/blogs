@@ -1,6 +1,8 @@
 import * as client from './client'
+import * as user from './user'
 
 
 export default {
-    client: client
+    client: client,
+    user: user
 }

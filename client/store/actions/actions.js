@@ -20,5 +20,18 @@ export default {
     return apiModel.getEssayFindOne(id).then(data => {
         commit('setEssayOne', data)
     })
+  },
+  visitorLogin({ commit }, user) {
+    return apiModel.visitorLogin(user).then(data => {
+        commit('doLogin', data)
+
+        window.localStorage.setItem("user", JSON.stringify(data))
+
+    })
+  },
+  submitComments({ commit }, data) {
+    return apiModel.submitComments(data).then(data => {
+        // commit('doLogin', data)
+    })
   }
 }
