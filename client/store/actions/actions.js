@@ -24,7 +24,7 @@ export default {
   visitorLogin({ commit }, user) {
     return apiModel.visitorLogin(user).then(data => {
         commit('doLogin', data)
-
+        
         window.localStorage.setItem("user", JSON.stringify(data))
 
     })

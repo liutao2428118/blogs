@@ -18,26 +18,28 @@
                 <el-button class="reply-btn" size="medium" @click="sendComment" type="primary">发表评论</el-button>
             </div>
         </div>
-        <div v-for="(item,i) in comments" :key="i" class="author-title reply-father">
-            <el-avatar class="header-img" :size="40" :src="item.headImg"></el-avatar>
+        <div v-for="(item,i) in reply" :key="i" class="author-title reply-father">
+            <el-avatar class="header-img" :size="40" src="https://ae01.alicdn.com/kf/Hd60a3f7c06fd47ae85624badd32ce54dv.jpg"></el-avatar>
             <div class="author-info">
-                <span class="author-name">{{item.name}}</span>
-                <span class="author-time">{{item.time}}</span>
+                <span class="author-name">{{item.from.username}}</span>
+                <!-- <span class="author-time">{{item.time}}</span> -->
             </div>
             <div class="icon-btn">
-                <span @click="showReplyInput(i,item.name,item.id)">
+                <!-- @click="showReplyInput(i,item.name,item.id)" -->
+                <span @click="showReplyInput(i,item.from.name,item._id)">
                     <i class="iconfont el-icon-s-comment"></i>
-                    {{item.commentNum}}
+                    回复
+                    <!-- {{item.commentNum}} -->
                 </span>
                 <i class="iconfont el-icon-caret-top"></i>
-                {{item.like}}
+                <!-- {{item.like}} -->
             </div>
             <div class="talk-box">
                 <p>
-                    <span class="reply">{{item.comment}}</span>
+                    <span class="reply">{{item.content}}</span>
                 </p>
             </div>
-            <div class="reply-box">
+            <!-- <div class="reply-box">
                 <div v-for="(reply,j) in item.reply" :key="j" class="author-title">
                     <el-avatar class="header-img" :size="40" :src="reply.fromHeadImg"></el-avatar>
                     <div class="author-info">
@@ -60,7 +62,7 @@
                     </div>
                     <div class="reply-box"></div>
                 </div>
-            </div>
+            </div> -->
             <div v-show="_inputShow(i)" class="my-reply my-comment-reply">
                 <el-avatar class="header-img" :size="40" :src="myHeader"></el-avatar>
                 <div class="reply-info">
@@ -235,8 +237,12 @@ export default {
         };
     },
     props: {
-        eid: {
+        essayId: {
             type: String,
+            required: true
+        },
+        reply: {
+            type: Array,
             required: true
         }
     },
@@ -259,7 +265,7 @@ export default {
             replyInput.focus();
         },
         showReplyBtn() {
-            this.dialogVisible = true
+            // this.dialogVisible = true
             this.btnShow = true;
         },
         hideReplyBtn() {
@@ -285,16 +291,16 @@ export default {
                     message: "评论不能为空"
                 });
             } else {
+                let user = JSON.parse(window.localStorage.getItem('user')) 
                 let data = {
-                    eid: this.eid,
-                    user: "",
-                    from: "",
-                    to: "",
+                    essayId: this.essayId,
+                    from: user._id,
+                    to: this.essayId,
                     superiorId: "",
-                    content: ""
+                    content: this.replyComment
 
                 }
-                // this.submitComments(data)
+                this.submitComments(data)
                 let a = {};
                 let input = document.getElementById("replyInput");
                 let timeNow = new Date().getTime();

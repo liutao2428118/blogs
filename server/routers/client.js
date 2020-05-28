@@ -22,10 +22,21 @@ class ClientController {
     }
 
     @Post('/comments')
-    async setComments() {
+    async setComments(ctx, next) {
         let data = ctx.request.body
 
+        console.log(data)
+
         const essay =  await api.client.setComments(data)
+
+
+        if(!essay) {
+            ctx.body = {
+                errorCode: 0,
+                errorMessage: '添加失败',
+                data: essay
+            }
+        }
 
         ctx.body = {
             errorCode: 200,

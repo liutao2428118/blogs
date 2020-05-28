@@ -28,6 +28,10 @@ export async function getTopEssay() {
 export async function getEssayFindOne(id) {
     const essayOne = await Essay
         .findOne({_id: mongoose.Types.ObjectId(id)})
+        .populate({
+            path: 'reply.from reply.to',
+            select: '_id username'
+        })
         .exec()
 
     return essayOne
@@ -95,8 +99,10 @@ export async function getAllEssayList(id) {
 export async function setComments(data) {
     try {
         const essay = await Essay
-            .findOne({_id: mongoose.Types.ObjectId(data.eid)})
+            .findOne({_id: mongoose.Types.ObjectId(data.essayId)})
             .exec()
+
+            console.log(essay)
             
         if(!essay) {
             return false
@@ -104,13 +110,17 @@ export async function setComments(data) {
 
         let { reply } = essay
 
+       
+
         reply.push(data)
-    
+
         await essay.save()
+
+        console.log("-----------------------",essay)
     
         return essay
     } catch (error) {
-        
+        console.log(error)
     }
   
 

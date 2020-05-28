@@ -85,7 +85,7 @@
 				</div>
                 <div class="comments">
                     <div class="title">评论区</div>
-                    <comments :eid="$route.params.id"></comments>
+                    <comments :essayId="$route.params.id" :reply="EssayOne.reply"></comments>
                 </div>
 			</el-col>
 		</el-row>

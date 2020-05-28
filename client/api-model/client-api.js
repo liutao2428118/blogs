@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const ERR_OK = 0
+const ERR_OK = 200
 
 const request = axios.create({
     // baseURL: '/'
