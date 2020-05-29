@@ -18,7 +18,12 @@ const essaySchema = new Schema({
     from: { type: ObjectId, ref: 'Visitor' }, // 当前游客
     to: { type: ObjectId, ref: 'Visitor' }, // 需要回复的游客
     superiorId: String,
-    content: String // 回复的内容
+    content: String, // 回复的内容
+    time: {
+        type: Date,
+        default: Date.now()
+    },
+    replyTo: Array
   }],
   pageview: Number, // 阅读数
   like: Number, // 点赞数

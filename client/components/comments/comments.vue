@@ -22,48 +22,45 @@
             <el-avatar class="header-img" :size="40" src="https://ae01.alicdn.com/kf/Hd60a3f7c06fd47ae85624badd32ce54dv.jpg"></el-avatar>
             <div class="author-info">
                 <span class="author-name">{{item.from.username}}</span>
-                <!-- <span class="author-time">{{item.time}}</span> -->
+                <span class="author-time">{{item.time | dateStr}}</span>
             </div>
             <div class="icon-btn">
-                <!-- @click="showReplyInput(i,item.name,item.id)" -->
-                <span @click="showReplyInput(i,item.from.name,item._id)">
+                <span @click="showReplyInput(i, item.from.username, item.from._id, item._id)">
                     <i class="iconfont el-icon-s-comment"></i>
                     回复
-                    <!-- {{item.commentNum}} -->
                 </span>
                 <i class="iconfont el-icon-caret-top"></i>
-                <!-- {{item.like}} -->
             </div>
             <div class="talk-box">
                 <p>
                     <span class="reply">{{item.content}}</span>
                 </p>
             </div>
-            <!-- <div class="reply-box">
-                <div v-for="(reply,j) in item.reply" :key="j" class="author-title">
+            <div class="reply-box">
+                <div v-for="(reply,j) in item.replyTo" :key="j" class="author-title">
                     <el-avatar class="header-img" :size="40" :src="reply.fromHeadImg"></el-avatar>
                     <div class="author-info">
-                        <span class="author-name">{{reply.from}}</span>
-                        <span class="author-time">{{reply.time}}</span>
+                        <span class="author-name">{{reply.from.username}}</span>
+                        <span class="author-time">{{reply.time | dateStr}}</span>
                     </div>
                     <div class="icon-btn">
-                        <span @click="showReplyInput(i,reply.from,reply.id)">
+                        <span @click="showReplyInput(i,reply.from.username, reply.from._id, item._id)">
                             <i class="iconfont el-icon-s-comment"></i>
-                            {{reply.commentNum}}
+                            回复
                         </span>
                         <i class="iconfont el-icon-caret-top"></i>
-                        {{reply.like}}
                     </div>
                     <div class="talk-box">
                         <p>
-                            <span>回复 {{reply.to}}:</span>
-                            <span class="reply">{{reply.comment}}</span>
+                            <span>回复 {{reply.to.username}}:</span>
+                            <span class="reply">{{reply.content}}</span>
                         </p>
                     </div>
                     <div class="reply-box"></div>
                 </div>
-            </div> -->
-            <div v-show="_inputShow(i)" class="my-reply my-comment-reply">
+            </div>
+            <!-- v-show="_inputShow(i)" -->
+            <div class="my-reply my-comment-reply">
                 <el-avatar class="header-img" :size="40" :src="myHeader"></el-avatar>
                 <div class="reply-info">
                     <div
@@ -79,7 +76,7 @@
                     <el-button
                         class="reply-btn"
                         size="medium"
-                        @click="sendCommentReply(i,j)"
+                        @click="sendCommentReply()"
                         type="primary"
                     >发表评论</el-button>
                 </div>
@@ -152,8 +149,9 @@ export default {
             myHeader:
                 "https://ae01.alicdn.com/kf/Hd60a3f7c06fd47ae85624badd32ce54dv.jpg",
             myId: 19870621,
-            to: "",
-            toId: -1,
+            toName: "",
+            toId: "",
+            superiorId: "",
             comments: [
                 {
                     name: "Lana Del Rey",
@@ -247,102 +245,13 @@ export default {
         }
     },
     directives: { clickoutside },
-    methods: {
-        submit(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                   this.visitorLogin(this.form)
-                } else {
-                    return false;
-                }
-            });
-            
-        },
-        inputFocus() {
-            var replyInput = document.getElementById("replyInput");
-            replyInput.style.padding = "8px 8px";
-            replyInput.style.border = "2px solid blue";
-            replyInput.focus();
-        },
-        showReplyBtn() {
-            // this.dialogVisible = true
-            this.btnShow = true;
-        },
-        hideReplyBtn() {
-            this.btnShow = false;
-            replyInput.style.padding = "10px";
-            replyInput.style.border = "none";
-        },
-        showReplyInput(i, name, id) {
-            this.comments[this.index].inputShow = false;
-            this.index = i;
-            this.comments[i].inputShow = true;
-            this.to = name;
-            this.toId = id;
-        },
-        _inputShow(i) {
-            return this.comments[i].inputShow;
-        },
-        sendComment() {
-            if (!this.replyComment) {
-                this.$message({
-                    showClose: true,
-                    type: "warning",
-                    message: "评论不能为空"
-                });
-            } else {
-                let user = JSON.parse(window.localStorage.getItem('user')) 
-                let data = {
-                    essayId: this.essayId,
-                    from: user._id,
-                    to: this.essayId,
-                    superiorId: "",
-                    content: this.replyComment
-
-                }
-                this.submitComments(data)
-                let a = {};
-                let input = document.getElementById("replyInput");
-                let timeNow = new Date().getTime();
-                let time = this.dateStr(timeNow);
-                a.name = this.myName;
-                a.comment = this.replyComment;
-                a.headImg = this.myHeader;
-                a.time = time;
-                a.commentNum = 0;
-                a.like = 0;
-                this.comments.push(a);
-                this.replyComment = "";
-                input.innerHTML = "";
-            }
-        },
-        sendCommentReply(i, j) {
-            if (!this.replyComment) {
-                this.$message({
-                    showClose: true,
-                    type: "warning",
-                    message: "评论不能为空"
-                });
-            } else {
-                let a = {};
-                let timeNow = new Date().getTime();
-                let time = this.dateStr(timeNow);
-                a.from = this.myName;
-                a.to = this.to;
-                a.fromHeadImg = this.myHeader;
-                a.comment = this.replyComment;
-                a.time = time;
-                a.commentNum = 0;
-                a.like = 0;
-                this.comments[i].reply.push(a);
-                this.replyComment = "";
-                document.getElementsByClassName("reply-comment-input")[i].innerHTML = "";
-            }
-        },
-        onDivInput: function(e) {
-            this.replyComment = e.target.innerHTML;
-        },
-        dateStr(date) {
+    created() {},
+    mounted() {
+        this.user = JSON.parse(window.localStorage.getItem('user')) 
+    },
+    filters: {
+         dateStr(date) {
+             date = new Date(date).getTime()
             //获取js 时间戳
             var time = new Date().getTime();
             //去掉 js 时间戳后三位，与php 时间戳保持一致
@@ -375,6 +284,131 @@ export default {
                     date.getDate()
                 );
             }
+        }
+    },
+    methods: {
+        submit(formName) {
+            this.$refs[formName].validate(async (valid) => {
+                if (valid) {
+                   await this.visitorLogin(this.form)
+                   this.$message({
+                        showClose: true,
+                        type: "warning",
+                        message: "登录/注册成功"
+                    });
+                    this.dialogVisible = false
+                } else {
+                    return false;
+                }
+            });
+            
+        },
+        inputFocus() {
+            var replyInput = document.getElementById("replyInput");
+            replyInput.style.padding = "8px 8px";
+            replyInput.style.border = "2px solid blue";
+            replyInput.focus();
+        },
+        showReplyBtn() {
+            if(!this.user) {
+                this.dialogVisible = true
+            } else {
+                this.btnShow = true;
+            }
+        },
+        hideReplyBtn() {
+            this.btnShow = false;
+            replyInput.style.padding = "10px";
+            replyInput.style.border = "none";
+        },
+        showReplyInput(i, name, toId, id) {
+            // this.comments[this.index].inputShow = false;
+            // this.index = i;
+            // this.comments[i].inputShow = true;
+            console.log("toName:"+name, "toId:"+toId, "superiorId:"+ id)
+            this.toName = name;
+            this.toId = toId;
+            this.superiorId = id
+        },
+        _inputShow(i) {
+            return this.comments[i].inputShow;
+        },
+        sendComment() {
+            if (!this.replyComment) {
+                this.$message({
+                    showClose: true,
+                    type: "warning",
+                    message: "评论不能为空"
+                });
+                return
+            }
+                let data = {
+                    essayId: this.essayId,
+                    from: this.user._id,
+                    to: this.essayId,
+                    superiorId: "",
+                    content: this.replyComment
+                }
+                this.submitComments(data)
+               
+                let input = document.getElementById("replyInput");
+                input.innerHTML = "";
+                this.replyComment = "";
+
+                // let a = {};
+                // let timeNow = new Date().getTime();
+                // let time = this.dateStr(timeNow);
+                // a.name = this.myName;
+                // a.comment = this.replyComment;
+                // a.headImg = this.myHeader;
+                // a.time = time;
+                // a.commentNum = 0;
+                // a.like = 0;
+                // this.comments.push(a);
+                
+                
+            
+        },
+        sendCommentReply() {
+            if (!this.replyComment) {
+                this.$message({
+                    showClose: true,
+                    type: "warning",
+                    message: "评论不能为空"
+                });
+                return
+            } 
+
+            let data = {
+                essayId: this.essayId,
+                from: this.user._id,
+                to: this.toId,
+                superiorId: this.superiorId,
+                content: this.replyComment
+            }
+            this.submitComments(data)
+
+            let input = document.getElementsByClassName("reply-comment-input")
+            input.innerHTML = "";
+            this.replyComment = "";
+           
+
+            // let a = {};
+            // let timeNow = new Date().getTime();
+            // let time = this.dateStr(timeNow);
+            // a.from = this.myName;
+            // a.to = this.to;
+            // a.fromHeadImg = this.myHeader;
+            // a.comment = this.replyComment;
+            // a.time = time;
+            // a.commentNum = 0;
+            // a.like = 0;
+            // this.comments[i].reply.push(a);
+            
+            
+        },
+        onDivInput: function(e) {
+            this.replyComment = e.target.innerHTML;
         },
 
         ...mapActions([

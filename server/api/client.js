@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import R from 'ramda'
 
 
 const Category = mongoose.model('Category') // 分类集合
@@ -33,6 +34,22 @@ export async function getEssayFindOne(id) {
             select: '_id username'
         })
         .exec()
+
+        let { reply } = essayOne
+
+        // const s =  R.converge(R.divide, [R.map(i => i.superiorId === ""), ])(reply)
+        // const s =  R.differenceWith((x,y) => mongoose.Types.ObjectId(x._id).toString() === y.superiorId)(reply, reply)
+        // console.log("---------------------------123",s)
+
+        essayOne.reply = R.map(i => {
+            if(i.superiorId === "") {
+                R.map(r => {
+                    if(r.superiorId === mongoose.Types.ObjectId(i._id).toString()) i.replyTo.push(r)
+                })(reply)
+                return i
+            }
+        })(reply)
+
 
     return essayOne
 }
@@ -101,8 +118,6 @@ export async function setComments(data) {
         const essay = await Essay
             .findOne({_id: mongoose.Types.ObjectId(data.essayId)})
             .exec()
-
-            console.log(essay)
             
         if(!essay) {
             return false
