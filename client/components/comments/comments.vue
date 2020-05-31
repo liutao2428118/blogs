@@ -1,10 +1,9 @@
 <template>
     <div>
         <div v-clickoutside="hideReplyBtn" @click="inputFocus" class="my-reply">
-            <el-avatar class="header-img" :size="40" :src="myHeader"></el-avatar>
+            <i class="el-icon-user-solid icon"></i>
             <div class="reply-info">
                 <div
-                    tabindex="0"
                     contenteditable="true"
                     id="replyInput"
                     spellcheck="false"
@@ -19,7 +18,7 @@
             </div>
         </div>
         <div v-for="(item,i) in reply" :key="i" class="author-title reply-father">
-            <el-avatar class="header-img" :size="40" src="https://ae01.alicdn.com/kf/Hd60a3f7c06fd47ae85624badd32ce54dv.jpg"></el-avatar>
+            <i class="el-icon-user-solid icon"></i>
             <div class="author-info">
                 <span class="author-name">{{item.from.username}}</span>
                 <span class="author-time">{{item.time | dateStr}}</span>
@@ -38,7 +37,7 @@
             </div>
             <div class="reply-box">
                 <div v-for="(reply,j) in item.replyTo" :key="j" class="author-title">
-                    <el-avatar class="header-img" :size="40" :src="reply.fromHeadImg"></el-avatar>
+                    <i class="el-icon-user-solid icon"></i>
                     <div class="author-info">
                         <span class="author-name">{{reply.from.username}}</span>
                         <span class="author-time">{{reply.time | dateStr}}</span>
@@ -59,12 +58,10 @@
                     <div class="reply-box"></div>
                 </div>
             </div>
-            <!-- v-show="_inputShow(i)" -->
-            <div class="my-reply my-comment-reply">
-                <el-avatar class="header-img" :size="40" :src="myHeader"></el-avatar>
+            <div v-show="i === showIndex" class="my-reply my-comment-reply">
+                <i class="el-icon-user-solid icon"></i>
                 <div class="reply-info">
                     <div
-                        tabindex="0"
                         contenteditable="true"
                         spellcheck="false"
                         placeholder="输入评论..."
@@ -76,13 +73,13 @@
                     <el-button
                         class="reply-btn"
                         size="medium"
-                        @click="sendCommentReply()"
+                        @click="sendCommentReply(i)"
                         type="primary"
                     >发表评论</el-button>
                 </div>
             </div>
         </div>
-        <el-dialog title="注册/登录" :visible.sync="dialogVisible" width="30%">
+        <el-dialog title="注册/登录" :visible.sync="dialogVisible" width="20%" top="40vh">
             <el-form ref="form" :model="form"  :rules="rules" label-width="80px">
                 <el-form-item label="取个名字" prop="username">
                     <el-input v-model="form.username"></el-input>
@@ -129,7 +126,6 @@ export default {
     name: "ArticleComment",
     data() {
         return {
-            dialogVisible: false,
             form:{
                 username: "",
                 email: ""
@@ -142,96 +138,12 @@ export default {
                     { required: true, message: '请填写下邮箱', trigger: 'blur' }
                 ]
             },
+            showIndex: -1,
             btnShow: false,
-            index: "0",
-            replyComment: "",
-            myName: "Lana Del Rey",
-            myHeader:
-                "https://ae01.alicdn.com/kf/Hd60a3f7c06fd47ae85624badd32ce54dv.jpg",
-            myId: 19870621,
+            dialogVisible: false,
             toName: "",
             toId: "",
-            superiorId: "",
-            comments: [
-                {
-                    name: "Lana Del Rey",
-                    id: 19870621,
-                    headImg:
-                        "https://ae01.alicdn.com/kf/Hd60a3f7c06fd47ae85624badd32ce54dv.jpg",
-                    comment:
-                        "我发布一张新专辑Norman Fucking Rockwell,大家快来听啊",
-                    time: "2019年9月16日 18:43",
-                    commentNum: 2,
-                    like: 15,
-                    inputShow: false,
-                    reply: [
-                        {
-                            from: "Taylor Swift",
-                            fromId: 19891221,
-                            fromHeadImg:
-                                "https://ae01.alicdn.com/kf/H94c78935ffa64e7e977544d19ecebf06L.jpg",
-                            to: "Lana Del Rey",
-                            toId: 19870621,
-                            comment: "我很喜欢你的新专辑！！",
-                            time: "2019年9月16日 18:43",
-                            commentNum: 1,
-                            like: 15,
-                            inputShow: false
-                        },
-                        {
-                            from: "Ariana Grande",
-                            fromId: 1123,
-                            fromHeadImg:
-                                "https://ae01.alicdn.com/kf/Hf6c0b4a7428b4edf866a9fbab75568e6U.jpg",
-                            to: "Lana Del Rey",
-                            toId: 19870621,
-                            comment: "别忘记宣传我们的合作单曲啊",
-                            time: "2019年9月16日 18:43",
-                            commentNum: 0,
-                            like: 5,
-                            inputShow: false
-                        }
-                    ]
-                },
-                {
-                    name: "Taylor Swift",
-                    id: 19891221,
-                    headImg:
-                        "https://ae01.alicdn.com/kf/H94c78935ffa64e7e977544d19ecebf06L.jpg",
-                    comment: "我发行了我的新专辑Lover",
-                    time: "2019年9月16日 18:43",
-                    commentNum: 1,
-                    like: 5,
-                    inputShow: false,
-                    reply: [
-                        {
-                            from: "Lana Del Rey",
-                            fromId: 19870621,
-                            fromHeadImg:
-                                "https://ae01.alicdn.com/kf/Hd60a3f7c06fd47ae85624badd32ce54dv.jpg",
-                            to: "Taylor Swift",
-                            toId: 19891221,
-                            comment: "新专辑和speak now 一样棒！",
-                            time: "2019年9月16日 18:43",
-                            commentNum: 25,
-                            like: 5,
-                            inputShow: false
-                        }
-                    ]
-                },
-                {
-                    name: "Norman Fucking Rockwell",
-                    id: 20190830,
-                    headImg:
-                        "https://ae01.alicdn.com/kf/Hdd856ae4c81545d2b51fa0c209f7aa28Z.jpg",
-                    comment: "Plz buy Norman Fucking Rockwell on everywhere",
-                    time: "2019年9月16日 18:43",
-                    commentNum: 0,
-                    like: 5,
-                    inputShow: false,
-                    reply: []
-                }
-            ]
+            superiorId: ""
         };
     },
     props: {
@@ -297,6 +209,7 @@ export default {
                         message: "登录/注册成功"
                     });
                     this.dialogVisible = false
+                    window.location.reload()
                 } else {
                     return false;
                 }
@@ -322,16 +235,16 @@ export default {
             replyInput.style.border = "none";
         },
         showReplyInput(i, name, toId, id) {
-            // this.comments[this.index].inputShow = false;
-            // this.index = i;
-            // this.comments[i].inputShow = true;
-            console.log("toName:"+name, "toId:"+toId, "superiorId:"+ id)
-            this.toName = name;
-            this.toId = toId;
+             if(!this.user) { 
+                this.dialogVisible = true
+                return
+             }
+            this.showIndex = i
+            this.toName = name
+            this.toId = toId
             this.superiorId = id
-        },
-        _inputShow(i) {
-            return this.comments[i].inputShow;
+
+            console.log("toName:"+name, "toId:"+toId, "superiorId:"+ id)
         },
         sendComment() {
             if (!this.replyComment) {
@@ -347,7 +260,8 @@ export default {
                     from: this.user._id,
                     to: this.essayId,
                     superiorId: "",
-                    content: this.replyComment
+                    content: this.replyComment,
+                    time: new Date().getTime()
                 }
                 this.submitComments(data)
                
@@ -355,21 +269,14 @@ export default {
                 input.innerHTML = "";
                 this.replyComment = "";
 
-                // let a = {};
-                // let timeNow = new Date().getTime();
-                // let time = this.dateStr(timeNow);
-                // a.name = this.myName;
-                // a.comment = this.replyComment;
-                // a.headImg = this.myHeader;
-                // a.time = time;
-                // a.commentNum = 0;
-                // a.like = 0;
-                // this.comments.push(a);
-                
-                
-            
+                data.from = {
+                    username: this.user.username,
+                    _id: this.user._id
+                }
+
+                this.reply.push(data);
         },
-        sendCommentReply() {
+        sendCommentReply(i) {
             if (!this.replyComment) {
                 this.$message({
                     showClose: true,
@@ -384,27 +291,26 @@ export default {
                 from: this.user._id,
                 to: this.toId,
                 superiorId: this.superiorId,
-                content: this.replyComment
+                content: this.replyComment,
+                time: new Date().getTime()
             }
             this.submitComments(data)
 
             let input = document.getElementsByClassName("reply-comment-input")
             input.innerHTML = "";
             this.replyComment = "";
-           
 
-            // let a = {};
-            // let timeNow = new Date().getTime();
-            // let time = this.dateStr(timeNow);
-            // a.from = this.myName;
-            // a.to = this.to;
-            // a.fromHeadImg = this.myHeader;
-            // a.comment = this.replyComment;
-            // a.time = time;
-            // a.commentNum = 0;
-            // a.like = 0;
-            // this.comments[i].reply.push(a);
-            
+            data.from = {
+                username: this.user.username,
+                _id: this.user._id
+            }
+
+            data.to = {
+                username: this.toName,
+                _id: this.toId
+            }
+
+            this.reply[i].replyTo.push(data);
             
         },
         onDivInput: function(e) {
@@ -414,7 +320,7 @@ export default {
         ...mapActions([
             'visitorLogin',
             'submitComments'
-            ]),
+        ]),
     }
 };
 </script>
@@ -506,4 +412,7 @@ export default {
     .reply-box
         margin 10px 0 0 50px
         background-color #efefef
+.icon 
+    font-size 36px
+    vertical-align top
 </style>

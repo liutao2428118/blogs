@@ -15,7 +15,7 @@ export async function getAllCategorys() {
 // 首页top文章
 export async function getTopEssay() {
     const essayTop = await Essay
-        .find({"like": { $gt: 400} })
+        .find({ "like": { $gt: 400 } })
         .populate({
             path: 'category',
             select: '_id name'
@@ -28,27 +28,32 @@ export async function getTopEssay() {
 // 获取文章
 export async function getEssayFindOne(id) {
     const essayOne = await Essay
-        .findOne({_id: mongoose.Types.ObjectId(id)})
+        .findOne({ _id: mongoose.Types.ObjectId(id) })
         .populate({
             path: 'reply.from reply.to',
             select: '_id username'
         })
         .exec()
 
-        let { reply } = essayOne
+    let { reply } = essayOne
 
-        // const s =  R.converge(R.divide, [R.map(i => i.superiorId === ""), ])(reply)
-        // const s =  R.differenceWith((x,y) => mongoose.Types.ObjectId(x._id).toString() === y.superiorId)(reply, reply)
-        // console.log("---------------------------123",s)
+    let arr = []
 
-        essayOne.reply = R.map(i => {
-            if(i.superiorId === "") {
-                R.map(r => {
-                    if(r.superiorId === mongoose.Types.ObjectId(i._id).toString()) i.replyTo.push(r)
-                })(reply)
-                return i
-            }
-        })(reply)
+    // const s =  R.converge(R.divide, [R.map(i => i.superiorId === ""), ])(reply)
+    // const s =  R.differenceWith((x,y) => mongoose.Types.ObjectId(x._id).toString() === y.superiorId)(reply, reply)
+    // console.log("---------------------------123",s)
+
+    R.map(i => {
+        if (i.superiorId === "") {
+            R.map(r => {
+                if (r.superiorId === mongoose.Types.ObjectId(i._id).toString()) i.replyTo.push(r)
+            })(reply)
+            arr.push(i)
+        }
+    })(reply)
+
+
+    essayOne.reply = arr
 
 
     return essayOne
@@ -93,7 +98,7 @@ export async function getAllEssayList(id) {
     )
 
     // 获取分类的总条数
-    const count = await  Essay.aggregate([
+    const count = await Essay.aggregate([
         {
             $match:
             {
@@ -101,11 +106,11 @@ export async function getAllEssayList(id) {
             }
         },
         {
-            $count:"count"
+            $count: "count"
         }
 
     ])
-    
+
     return {
         count: count.length > 0 ? count[0].count : 0,
         data: existEssay
@@ -116,27 +121,24 @@ export async function getAllEssayList(id) {
 export async function setComments(data) {
     try {
         const essay = await Essay
-            .findOne({_id: mongoose.Types.ObjectId(data.essayId)})
+            .findOne({ _id: mongoose.Types.ObjectId(data.essayId) })
             .exec()
-            
-        if(!essay) {
+
+        if (!essay) {
             return false
         }
 
         let { reply } = essay
 
-       
 
         reply.push(data)
 
         await essay.save()
 
-        console.log("-----------------------",essay)
-    
         return essay
     } catch (error) {
         console.log(error)
     }
-  
+
 
 }
