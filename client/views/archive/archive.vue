@@ -36,9 +36,7 @@ export default {
     
         };
     },
-    created() {
-        console.log(this.essayList)
-    },
+    created() {},
     mounted () {},
     asyncData({ app, router, store }) {
         return  Promise.all([

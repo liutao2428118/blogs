@@ -101,9 +101,7 @@ export default {
     data() {
         return {};
     },
-    created() {
-        console.log(this.EssayOne)
-    },
+    created() {},
     beforeMount() {},
     mounted() {},
     asyncData({ app, router, store }) {

@@ -67,10 +67,7 @@ export default {
             }
         };
     },
-    created() {
-        console.log(this.essayTop)
-    },
-   
+    created() {},
     beforeMount() {},
     mounted() {},
     asyncData({ router, store }) {

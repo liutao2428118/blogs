@@ -25,10 +25,7 @@ class ClientController {
     async setComments(ctx, next) {
         let data = ctx.request.body
 
-        console.log(data)
-
         const essay =  await api.client.setComments(data)
-
 
         if(!essay) {
             ctx.body = {
