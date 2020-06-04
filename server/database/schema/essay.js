@@ -14,9 +14,8 @@ const essaySchema = new Schema({
     reprint: Number, // 是否转载 1原创 2转载
     reprint_url: String, // 转载链接
     reply: [{ // 评论回复
-        // user: { type: ObjectId, ref: 'Uesr' }, // 管理员回复
-        from: { type: ObjectId, ref: 'Visitor' }, // 当前游客
-        to: { type: ObjectId, ref: 'Visitor' }, // 需要回复的游客
+        from: { type: ObjectId, ref: 'Uesr' }, // 当前
+        to: { type: ObjectId, ref: 'Uesr' }, // 需要回复的
         superiorId: String,
         content: String, // 回复的内容
         time: {

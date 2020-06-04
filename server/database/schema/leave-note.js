@@ -4,19 +4,14 @@ const ObjectId = Schema.Types.ObjectId
 
 const leaveNoteSchema = new Schema({
   content: String, // 留言的类容
-  user: { // 管理回复
+  from: { // 当前用户
     type: ObjectId,
     ref: 'Uesr'
   },
-  from: { // 当前用户
-    type: ObjectId,
-    ref: 'Visitor'
-  },
   to: { // 需要回复的用户
     type: ObjectId,
-    ref: 'Visitor'
+    ref: 'Uesr'
   },
-
   meta: {
     createdAt: {
       type: Date,

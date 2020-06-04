@@ -9,9 +9,9 @@ const uesrSchema = new Schema({
     type: String
   },
   password: { // 登入密码
-    unique: true,
     type: String
   },
+  email: String, // 邮箱
   role: { // 角色
     type: String,
     default: 'user'
