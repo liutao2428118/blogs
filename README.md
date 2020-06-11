@@ -9,6 +9,9 @@
   <a href="https://github.com/ElemeFE/element">
     <img src="https://img.shields.io/badge/element--ui-2.7.0-brightgreen.svg" alt="element-ui">
   </a>
+  <a href="https://github.com/nodejs/node">
+    <img src="https://img.shields.io/badge/node-10.6.10-brightgreen.svg" alt="node">
+  </a>
   <a href="https://github.com/liutao2428118/blogs/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="license">
   </a>
