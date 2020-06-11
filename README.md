@@ -36,3 +36,5 @@ ps:项目整体虽然不大，也算不上特别复杂，不过一个人做，�
 - 4.什么是持续集成，持续集成服务（Continuous Integration，简称 CI）。只要有新的代码，就会自动抓取。然后，提供一个运行环境，执行测试，完成构建，还能部署到服务器。
 - 5.有人可能会问我代码仓库放在github上为啥没用TravisCI，其实吧我对gitlab-CICD这套东西比较熟悉点，现在大部分公司里面也都是用gitlab这套东西，github仓库主要做展示，CICD我还是放在gitlab上完成
 - 6.下面说下CICD大致步骤，开发人员push代码到gitlab，在到gitlab打个tag触发对应的脚本，代码自动上传到测试服务器->自动构建docker容器部署->跑完单元测试->测试通过后，正式服务器拉取容器镜像，构建容器部署（以上步骤全部是打完tag后连续触发）。这里就简单的讲下CICD的大致步骤，具体就不展开说了。[gitlab文档](https://docs.gitlab.com/ee/README.html)
+
+## 目录结构
