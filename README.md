@@ -21,24 +21,33 @@
 
 
 ## 简介
-先来说下我做这个项目的初衷吧，初衷很简单用一个项目把前面自己学到的一些技术栈串起来，更好的巩固知识面，在一个就是搭建这个博客网站也方便以后自己写写网络日志，记录下自己的成长。整体项目分三个端，客户端，服务端，admin端，客户端[vue-ssr](https://ssr.vuejs.org/zh/)(服务端渲染)，服务端node([koa](https://github.com/koajs/koa))，admin端[vue](https://github.com/vuejs/vue)+[element-ui](https://github.com/ElemeFE/element)(前端渲染)。
+[blogs](https://github.com/liutao2428118/blogs)服务器端渲染(SSR)博客网站，它基于[vue](https://github.com/vuejs/vue)、[vue-ssr](https://ssr.vuejs.org/zh/)、[element-ui](https://github.com/ElemeFE/element)、[node](https://github.com/nodejs/node)实现。使用了最新的前端技术栈，功能较简单，博客网站来说也完全够用，适合喜欢简洁风格的你哦。项目分三个端，客户端、服务端、admin端。
 
-ps:项目整体虽然不大，也算不上特别复杂，不过一个人做，从零到有再到发布流程，工作量和代码量也不算小了，全部是碎片时间在撸。
+- [在线预览](https://panjiachen.github.io/vue-element-admin)
 
-下面在介绍用到了那些技术
-- 本地工程化 webpack4.x babel7.x
-- 代码层面 vue vue-ssr node koa es6 es7
-- 数据库 mongodb mongoose
-- 持续集成与持续部署 gitlab-CICD
-- 服务器环境 docker
+- [Gitter 讨论组](https://gitter.im/vue-element-admin/discuss)
+
+- [Wiki](https://github.com/PanJiaChen/vue-element-admin/wiki)
+
+- [Gitee](https://panjiachen.gitee.io/vue-element-admin/) 在线预览（国内用户可访问该地址）
+
+## 前序准备
+你需要在本地安装 [node](http://nodejs.org/) 和 [git](https://git-scm.com/)。本项目技术栈基于 [ES6+](http://es6.ruanyifeng.com/)、[vue](https://cn.vuejs.org/index.html)、[vuex](https://vuex.vuejs.org/zh-cn/)、[vue-router](https://router.vuejs.org/zh-cn/) 、[vue-ssr](https://ssr.vuejs.org/zh/)、[webpack4.x](https://www.webpackjs.com/) 、[babel7.x](https://www.babeljs.cn/)、[axios](https://github.com/axios/axios)、[koa](https://koa.bootcss.com/)、[mongodb](https://www.mongodb.com/)、[mongoose](http://www.nodeclass.com/api/mongoose.html#quick_start) 和 [element-ui](https://github.com/ElemeFE/element)，持续集成与持续部署基于[gitlab-CICD](https://docs.gitlab.com/ee/README.html)，服务器环境搭建依赖[docker](https://www.docker.com/), 提前了解和学习这些知识会对使用本项目有很大的帮助。
+
+同时配套了系列教程文章，如何从零构建后一个完整的ssr博客网站，建议大家可以看看
+
+- [手摸手，带你用 vue-ssr 撸博客网站 系列一(本地工程化篇)](https://www.baidu.com)
+- [手摸手，带你用 vue-ssr撸后台 系列二 (实战篇)](https://www.baidu.com)
+- [手摸手，带你用合理的姿势使用 webpack4（上）](https://juejin.im/post/5b56909a518825195f499806)
+- [手摸手，带你用合理的姿势使用 webpack4（下）](https://juejin.im/post/5b5d6d6f6fb9a04fea58aabc)
+
 
 说明：
-- 1.因为此项目没用到现成服务端渲染框架nuxt，所以本地工程化构建完完全全从0开始，vue普通项目与vue服务端渲染项目本地构建区别还是挺大的，具体实现可以看代码！既然是学习的项目肯定是不能拿现成的框架来用咯，更好理解学习vue-ssr那就是从0开始做起。
-- 2.项目本身不大，服务端开发用koa也完全可以应付，后端路由通过es7装饰器语法封装具体实现可以看代码。
-- 3.目前手上有两台腾讯云的服务器，分别模拟测试环境、正式环境。
-- 4.什么是持续集成，持续集成服务（Continuous Integration，简称 CI）。只要有新的代码，就会自动抓取。然后，提供一个运行环境，执行测试，完成构建，还能部署到服务器。
-- 5.有人可能会问我，代码仓库放在github上为啥没用TravisCI，其实吧，我对gitlab-CICD这套东西比较熟悉点，现在大部分公司里面也都是用gitlab这套东西，github仓库主要做展示，CICD我还是放在gitlab上完成
-- 6.下面说下CICD大致步骤，开发人员push代码到gitlab，在到gitlab打个tag触发对应的脚本，代码自动上传到测试服务器->自动构建docker容器部署->跑完单元测试->测试通过后，正式服务器拉取容器镜像，构建容器部署（以上步骤全部是打完tag后连续触发）。这里就简单的讲下CICD的大致步骤，具体就不展开说了。[gitlab文档](https://docs.gitlab.com/ee/README.html)
+- 1.项目没用到现成服务端渲染框架nuxt，所以本地工程化构建完完全全从0开始，vue普通项目与vue服务端渲染项目本地构建区别还是挺大的，具体实现可以看代码！既然是学习的项目肯定是不能拿现成的框架来用咯，更好理解学习vue-ssr那就是从0开始做起。
+- 2.目前手上有两台腾讯云的服务器，分别模拟测试环境、正式环境。
+- 3.什么是持续集成，持续集成服务（Continuous Integration，简称 CI）。只要有新的代码，就会自动抓取。然后，提供一个运行环境，执行测试，完成构建，还能部署到服务器。
+- 4.代码仓库放在github上为啥没用TravisCI，gitlab-CICD实际工作中用的多一点。
+- 5.下面说下CICD大致步骤，开发人员push代码到gitlab，在到gitlab打tag触发对应的脚本，代码自动抓取到测试服务器->自动构建docker容器部署->跑完单元测试->测试通过后，正式服务器拉取容器镜像，构建容器部署（以上步骤全部是打完tag后连续触发）。这里就简单的讲下CICD的大致步骤，具体就不展开说了。
 
 ## 目录结构
 
