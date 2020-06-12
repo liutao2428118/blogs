@@ -23,7 +23,7 @@
 ps:项目整体虽然不大，也算不上特别复杂，不过一个人做，从零到有再到发布流程，工作量和代码量也不算小了，全部是碎片时间在撸。
 
 下面在介绍用到了那些技术
-- 本地工程化 webpack babel
+- 本地工程化 webpack4.x babel7.x
 - 代码层面 vue vue-ssr node koa es6 es7
 - 数据库 mongodb mongoose
 - 持续集成与持续部署 gitlab-CICD
