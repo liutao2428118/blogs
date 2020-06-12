@@ -32,7 +32,7 @@
 - [Gitee](https://panjiachen.gitee.io/vue-element-admin/) 在线预览（国内用户可访问该地址）
 
 ## 前序准备
-你需要在本地安装 [node](http://nodejs.org/) 和 [git](https://git-scm.com/)。本项目技术栈基于 [ES6+](http://es6.ruanyifeng.com/)、[vue](https://cn.vuejs.org/index.html)、[vuex](https://vuex.vuejs.org/zh-cn/)、[vue-router](https://router.vuejs.org/zh-cn/) 、[vue-ssr](https://ssr.vuejs.org/zh/)、[webpack4.x](https://www.webpackjs.com/) 、[babel7.x](https://www.babeljs.cn/)、[axios](https://github.com/axios/axios)、[koa](https://koa.bootcss.com/)、[mongodb](https://www.mongodb.com/)、[mongoose](http://www.nodeclass.com/api/mongoose.html#quick_start) 和 [element-ui](https://github.com/ElemeFE/element)，持续集成与持续部署基于[gitlab-CICD](https://docs.gitlab.com/ee/README.html)，服务器环境搭建依赖[docker](https://www.docker.com/), 提前了解和学习这些知识会对使用本项目有很大的帮助。
+你需要在本地安装 [node](http://nodejs.org/) 和 [git](https://git-scm.com/)。本项目技术栈基于 [ES6+](http://es6.ruanyifeng.com/)、[vue](https://cn.vuejs.org/index.html)、[vuex](https://vuex.vuejs.org/zh-cn/)、[vue-router](https://router.vuejs.org/zh-cn/) 、[vue-ssr](https://ssr.vuejs.org/zh/)、[webpack4.x](https://www.webpackjs.com/) 、[babel7.x](https://www.babeljs.cn/)、[axios](https://github.com/axios/axios)、[koa](https://koa.bootcss.com/)、[mongodb](https://www.mongodb.com/)、[mongoose](http://www.nodeclass.com/api/mongoose.html#quick_start) 和 [element-ui](https://element.eleme.cn/#/zh-CN)，持续集成与持续部署基于[gitlab-CICD](https://docs.gitlab.com/ee/README.html)，服务器环境搭建依赖[docker](https://www.docker.com/), 提前了解和学习这些知识会对使用本项目有很大的帮助。
 
 同时配套了系列教程文章，如何从零构建后一个完整的ssr博客网站，建议大家可以看看
 
