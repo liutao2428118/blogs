@@ -21,7 +21,7 @@
 
 
 ## 简介
-[blogs](https://github.com/liutao2428118/blogs)服务器端渲染(SSR)博客网站，它基于[vue](https://github.com/vuejs/vue)、[vue-ssr](https://ssr.vuejs.org/zh/)、[element-ui](https://github.com/ElemeFE/element)、[node](https://github.com/nodejs/node)实现。使用了最新的前端技术栈，功能较简单，不过也完全够用，适合喜欢简洁风格的你哦。项目分三个端，客户端、服务端、admin端。
+[blogs](https://github.com/liutao2428118/blogs)服务器端渲染(SSR)博客网站，它基于[vue](https://github.com/vuejs/vue)、[vue-ssr](https://ssr.vuejs.org/zh/)、[element-ui](https://github.com/ElemeFE/element)、[node](https://github.com/nodejs/node)实现。使用了最新的前端技术栈，功能较简单，不过也完全够用，适合喜欢简洁风格的各位。项目分三个端，客户端、服务端、admin端。
 
 - [在线预览](https://panjiachen.github.io/vue-element-admin)
 
