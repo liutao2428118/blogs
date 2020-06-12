@@ -37,7 +37,7 @@
 同时配套了系列教程文章，如何从零构建后一个完整的ssr博客网站，建议大家可以看看
 
 - [手摸手，带你用 vue-ssr 撸博客网站 系列一(本地工程化篇)](https://www.baidu.com)
-- [手摸手，带你用 vue-ssr撸后台 系列二 (实战篇)](https://www.baidu.com)
+- [手摸手，带你用 vue-ssr 撸博客网站 系列二 (实战篇)](https://www.baidu.com)
 - [手摸手，带你用合理的姿势使用 webpack4（上）](https://juejin.im/post/5b56909a518825195f499806)
 - [手摸手，带你用合理的姿势使用 webpack4（下）](https://juejin.im/post/5b5d6d6f6fb9a04fea58aabc)
 
