@@ -50,25 +50,25 @@ userSchema.pre('save', function (next) {
 
     // 产生一个salt
     bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
-        if(err) return next(err)
+        if (err) return next(err)
 
         //  结合salt产生新的hash
         bcrypt.hash(this.password, salt, (error, hash) => {
-            if(error) return next(error)
+            if (error) return next(error)
 
             // 使用hash覆盖明文密码
             this.password = hash
             next()
         })
     })
-   
+
 })
 
 // 添加自定义实例方法
 userSchema.methods = {
     // 比对密码
     comparePassword: (_password, password) => {
-        return Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             // compare函数验证密码
             bcrypt.compare(_password, password, (err, isMatch) => {
                 if (!err) resolve(isMatch)

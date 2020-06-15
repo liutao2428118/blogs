@@ -31,10 +31,21 @@ export const database = app => {
 
         const Category = mongoose.model('Category')
         const Essay = mongoose.model('Essay')
+        const User = mongoose.model('User')
 
         const existEssay = await Essay.find({}).exec()
 
         const existCategory = await Category.find({}).exec()
+
+        const existUser = await User.find({}).exec()
+
+        if (!existUser.length) {
+            let user = new User({
+                username: 'admin',
+                password: 123456
+            })
+            await user.save()
+        }
 
         if (!existCategory.length) {
             let cat = new Category({
