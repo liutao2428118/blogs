@@ -1,15 +1,15 @@
 import mongoose from 'mongoose'
 
-const Uesr = mongoose.model('Uesr') // Uesr访客
+const User = mongoose.model('User') // User访客
 
 export async function visitorLogin(body) {
     try {
-        let user = await Uesr
+        let user = await User
             .findOne({'username': body.username, 'email': body.email})
             .exec()
 
         if(!user) {
-            user = new Uesr(body)
+            user = new User(body)
 
             user.role = 'visitor'
 
@@ -17,6 +17,29 @@ export async function visitorLogin(body) {
         }
          
         return user
+    } catch (error) {
+        console.log(error)
+    }
+    
+}
+
+export async function adminLogin(body) {
+    let match = false
+
+    const { username, password } = body
+    try {
+        let user = await User
+            .findOne({ username, role: 'user'})
+            .exec()
+
+        if(user) {
+           match = await user.comparePassword(password, user.password)
+        }
+         
+        return {
+            match,
+            user
+        }
     } catch (error) {
         console.log(error)
     }

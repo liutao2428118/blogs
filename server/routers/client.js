@@ -6,8 +6,7 @@ class ClientController {
 
     @Post('/login')
     async login(ctx, next) {
-        let user = ctx.request.body
-
+        
         ctx.session.user = {
             username: user.username
         }

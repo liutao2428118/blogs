@@ -2,6 +2,7 @@ import { resolve } from 'path'
 import Koa from 'koa'
 import R from 'ramda'
 
+const isDev = process.env.NODE_ENV === 'development'
 const r = path => resolve(__dirname, path)
 const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 3000
@@ -22,7 +23,6 @@ class Server {
                 console.log(`request with path ${ctx.path}`)
                 await next()
             } catch (err) {
-                console.log(err)
                 ctx.status = 500
                 if (isDev) {
                     ctx.body = err.message
