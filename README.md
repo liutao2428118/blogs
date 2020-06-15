@@ -40,11 +40,13 @@
 - [vue-ssr](https://ssr.vuejs.org/zh/)、
 - [axios](https://github.com/axios/axios)、
 - [element-ui](https://element.eleme.cn/#/zh-CN)、
-- [node](http://nodejs.org/)、[koa2](https://koa.bootcss.com/)、
+- [node](http://nodejs.org/)、
+- [koa2](https://koa.bootcss.com/)、
 - [mongodb](https://www.mongodb.com/)、
 - [mongoose](http://www.nodeclass.com/api/mongoose.html#quick_start)、
 - [webpack4.x](https://www.webpackjs.com/)、
 - [babel7.x](https://www.babeljs.cn/) 
+
 持续集成与持续部署基于[gitlab-CICD](https://docs.gitlab.com/ee/README.html)，服务器环境搭建依赖[docker](https://www.docker.com/), 提前了解和学习这些知识会对使用本项目有很大的帮助。
 
 同时配套了系列教程文章，如何从零构建一个完整的ssr博客网站，建议大家可以看看
