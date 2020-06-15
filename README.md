@@ -21,7 +21,7 @@
 
 
 ## 简介
-[blogs](https://github.com/liutao2428118/blogs)服务器端渲染(SSR)博客网站，它基于[vue](https://github.com/vuejs/vue)、[vue-ssr](https://ssr.vuejs.org/zh/)、[element-ui](https://github.com/ElemeFE/element)、[node](https://github.com/nodejs/node)实现。使用了最新的前端技术栈，功能较简单（基本文章分类管理年限划分，文章发布编辑，图片等资源上传七牛云，无限评论回复等等)。也完全够用，简洁风格。项目分三个端，客户端、服务端、admin端。
+[blogs](https://github.com/liutao2428118/blogs)服务器端渲染(SSR)博客网站，它基于[vue](https://github.com/vuejs/vue)、[vue-ssr](https://ssr.vuejs.org/zh/)、[element-ui](https://github.com/ElemeFE/element)、[node](https://github.com/nodejs/node)实现。使用了最新的前端技术栈，功能较简单（文章分类管理年限划分，文章发布编辑，图片等资源上传七牛云，无限评论回复等等)。也完全够用，简洁风格。项目分三个端，客户端、服务端、admin端。
 
 - [在线预览](https://www.baidu.com/)
 
