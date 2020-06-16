@@ -10,6 +10,7 @@ import _ from 'lodash'
 
 let routersMap = new Map()
 const symbolPrefix = Symbol('prefix')
+const symbolAuth = Symbol('auth')
 const isArray = v => _.isArray(v) ? v : [v]
 const normalizePath = path => path.startsWith('/') ? path : `/${path}`
 
@@ -24,7 +25,11 @@ export class Route {
         glob.sync(resolve(this.apiPath, './*.js')).forEach(require)
 
         for (let [conf, controller] of routersMap) {
+
             const controllers = isArray(controller)
+
+            if (conf.target[symbolAuth]) controllers.unshift(middleware)
+
             let prefixPath = conf.target[symbolPrefix]
             if (prefixPath) prefixPath = normalizePath(prefixPath)
 
@@ -47,7 +52,16 @@ const router = conf => (target, key, desc) => {
     }, target[key])
 }
 
+const convertAll = () => {
+    return target => {
+        target.prototype[symbolAuth] = true
+        return target
+    }
+}
+
 export const Controller = path => target => target.prototype[symbolPrefix] = path
+
+export const AuthAll = convertAll()
 
 export const Get = path => router({
     method: 'get',
@@ -80,7 +94,7 @@ const decorate = (args, middleware) => {
 
 export const convert = middleware => (...args) => decorate(args, middleware)
 
-export const auth = convert(async (ctx, next) => {
+const middleware = async (ctx, next) => {
     console.log('ctx.session.user')
     console.log(ctx.session.user)
     if (!ctx.session.user) {
@@ -94,7 +108,9 @@ export const auth = convert(async (ctx, next) => {
     }
 
     await next()
-})
+}
+
+export const Auth = convert(middleware)
 
 export const Required = rules => convert(async (ctx, next) => {
     let errors = []
