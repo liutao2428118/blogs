@@ -1,7 +1,7 @@
 /**
  *  路由装饰器
  */
- 
+
 import Router from 'koa-router'
 import { resolve } from 'path'
 import glob from 'glob'
@@ -79,6 +79,22 @@ const decorate = (args, middleware) => {
 }
 
 export const convert = middleware => (...args) => decorate(args, middleware)
+
+export const auth = convert(async (ctx, next) => {
+    console.log('ctx.session.user')
+    console.log(ctx.session.user)
+    if (!ctx.session.user) {
+        return (
+            ctx.body = {
+                success: false,
+                code: 401,
+                err: '登录信息失效，重新登录'
+            }
+        )
+    }
+
+    await next()
+})
 
 export const Required = rules => convert(async (ctx, next) => {
     let errors = []

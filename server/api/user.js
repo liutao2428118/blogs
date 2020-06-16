@@ -25,6 +25,7 @@ export async function visitorLogin(body) {
 
 export async function adminLogin(body) {
     let match = false
+    let inc = false
 
     const { username, password } = body
     try {
@@ -35,10 +36,13 @@ export async function adminLogin(body) {
         console.log(user)
 
         if (user) {
+            inc = await user.incLoginAttepts(user)
             match = await user.comparePassword(password, user.password)
+            
         }
 
         return {
+            inc,
             match,
             user
         }

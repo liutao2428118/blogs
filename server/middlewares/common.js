@@ -23,7 +23,7 @@ export const addCommon = app => {
 
     app.keys = ['vue ssr tech']
     app.use(koaSession({
-        key: 'v-ssr-id',
+        key: 'userKey',
         maxAge: 2 * 60 * 60 * 1000
     }, app))
 
