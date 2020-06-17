@@ -23,6 +23,8 @@
 ## 简介
 [blogs](https://github.com/liutao2428118/blogs)服务器端渲染(SSR)博客网站，它基于[vue](https://github.com/vuejs/vue)、[vue-ssr](https://ssr.vuejs.org/zh/)、[element-ui](https://github.com/ElemeFE/element)、[node](https://github.com/nodejs/node)实现。使用了最新的前端技术栈，功能较简单（文章分类管理年限划分，文章发布编辑，图片等资源上传七牛云，无限评论回复等等)。也完全够用，简洁风格。项目分三个端，客户端、服务端、[admin端](https://github.com/liutao2428118/blogs-admin)。
 
+项目本身也是一次尝试，从需求分析->本地工程化->前后端开发->数据库设计->自动化发布部署（持续集成）->服务器环境搭建（微服务）,从头到尾自己一个人独立完成，也算是完整体系开发项目的一次试水
+
 - [在线预览](https://www.baidu.com/)
 
 - [在线预览admin](https://www.baidu.com/)
