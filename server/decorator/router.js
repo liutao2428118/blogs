@@ -59,6 +59,31 @@ const convertAll = () => {
     }
 }
 
+const decorate = (args, middleware) => {
+    let [target, key, descriptor] = args
+
+    target[key] = isArray(target[key])
+    target[key].unshift(middleware)
+
+    return descriptor
+}
+
+const middleware = async (ctx, next) => {
+    console.log('ctx.session.user')
+    console.log(ctx.session.user)
+    if (!ctx.session.user) {
+        return (
+            ctx.body = {
+                success: false,
+                code: 401,
+                err: '登录信息失效，重新登录'
+            }
+        )
+    }
+
+    await next()
+}
+
 export const Controller = path => target => target.prototype[symbolPrefix] = path
 
 export const AuthAll = convertAll()
@@ -83,32 +108,7 @@ export const Del = path => router({
     path: path
 })
 
-const decorate = (args, middleware) => {
-    let [target, key, descriptor] = args
-
-    target[key] = isArray(target[key])
-    target[key].unshift(middleware)
-
-    return descriptor
-}
-
 export const convert = middleware => (...args) => decorate(args, middleware)
-
-const middleware = async (ctx, next) => {
-    console.log('ctx.session.user')
-    console.log(ctx.session.user)
-    if (!ctx.session.user) {
-        return (
-            ctx.body = {
-                success: false,
-                code: 401,
-                err: '登录信息失效，重新登录'
-            }
-        )
-    }
-
-    await next()
-}
 
 export const Auth = convert(middleware)
 

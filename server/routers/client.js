@@ -13,11 +13,7 @@ class ClientController {
 
         user = await api.user.visitorLogin(user)
 
-        ctx.body = {
-            errorCode: 200,
-            errorMessage: '登录成功',
-            data: user
-        }
+       return ctx.success('登录成功', user)
     }
 
     @Post('/comments')
@@ -27,17 +23,9 @@ class ClientController {
         const essay =  await api.client.setComments(data)
 
         if(!essay) {
-            ctx.body = {
-                errorCode: 0,
-                errorMessage: '添加失败',
-                data: essay
-            }
+            ctx.fail('添加失败')
         }
 
-        ctx.body = {
-            errorCode: 200,
-            errorMessage: '添加成功',
-            data: essay
-        }
+        ctx.success('添加成功', essay)
     }
 }
