@@ -13,6 +13,7 @@ const essaySchema = new Schema({
     issued: Number, // 是否发布 1直接发布，0暂时不发布
     reprint: Number, // 是否转载 1原创 2转载
     reprint_url: String, // 转载链接
+    image_uri: String,
     reply: [{ // 评论回复
         from: { type: ObjectId, ref: 'User' }, // 当前
         to: { type: ObjectId, ref: 'User' }, // 需要回复的
@@ -41,13 +42,13 @@ const essaySchema = new Schema({
 
 // 保存前的中间件
 essaySchema.pre('save', function (next) {
-  if (this.isNew) {
-    this.meta.createdAt = this.meta.updatedAt = Date.now()
-  } else {
-    this.meta.updatedAt = Date.now()
-  }
+    if (this.isNew) {
+        this.meta.createdAt = this.meta.updatedAt = Date.now()
+    } else {
+        this.meta.updatedAt = Date.now()
+    }
 
-  next()
+    next()
 })
 
 mongoose.model('Essay', essaySchema)
