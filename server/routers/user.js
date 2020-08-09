@@ -9,6 +9,7 @@ class AdminController {
 
         let user = ctx.request.body
 
+        console.log(user)
         const matchData = await api.user.adminLogin(user)
 
         if (!matchData.user) {

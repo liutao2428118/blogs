@@ -20,7 +20,7 @@
         <div v-for="(item,i) in reply" :key="i" class="author-title reply-father">
             <i class="el-icon-user-solid icon"></i>
             <div class="author-info">
-                <span class="author-name">{{item.from.username}}</span>
+                <span class="author-name">{{item.from && item.from.username}}</span>
                 <span class="author-time">{{item.time | dateStr}}</span>
             </div>
             <div class="icon-btn">
@@ -200,16 +200,19 @@ export default {
     },
     methods: {
         submit(formName) {
-            this.$refs[formName].validate(async (valid) => {
+            this.$refs[formName].validate( (valid) => {
                 if (valid) {
-                   await this.visitorLogin(this.form)
+                   
+                    this.visitorLogin(this.form)
+
+                    console.log(123)
                    this.$message({
                         showClose: true,
                         type: "warning",
                         message: "登录/注册成功"
                     });
                     this.dialogVisible = false
-                    window.location.reload()
+                    // window.location.reload()
                 } else {
                     return false;
                 }

@@ -2,40 +2,41 @@
     <div class="home">
         <el-row id="artList" type="flex" justify="space-around">
             <el-col :span="16">
-                <el-row class="art-item" v-for="item in essayTop">
-                    <el-card shadow="hover">
-                        <h5>
-                            <!-- <router-link to="/article" tag="span" class="art-title">{{item.title}}</router-link> -->
-                            <a :href="/article/+item._id" class="art-title">{{item.title}}</a>
-                        </h5>
-                        <el-row class="art-info d-flex align-items-center justify-content-start">
-                            <div class="art-time">
-                                <i class="el-icon-time"></i>:{{item.meta.createdAt | dateFrm}}
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <img class="tag" src="../../assets/image/tag.png" />：
-                                <el-tag size="mini">{{item.category.name}}</el-tag>
-                            </div>
-                        </el-row>
-                        <el-row class="art-body">
-                            <div class="side-img hidden-sm-and-down">
-                                <img class="art-banner" src="../../assets/image/vue.jpg" />
-                            </div>
-                            <div class="side-abstract">
-                                <div class="art-abstract">{{item.outline}}</div>
-                                <div class="art-more">
-                                    <a :href="/article/+item._id" >
-                                        <el-button plain>阅读全文</el-button>
-                                    </a>
-                                    <div class="view">
-                                        <i class="el-icon-view"></i>{{item.pageview}}
+                <template v-for="item in essayTop">
+                    <el-row class="art-item" :key="item._id">
+                        <el-card shadow="hover" v-if="item.issued === 1">
+                            <h5>
+                                <a :href="/article/+item._id" class="art-title">{{item.title}}</a>
+                            </h5>
+                            <el-row class="art-info d-flex align-items-center justify-content-start">
+                                <div class="art-time">
+                                    <i class="el-icon-time"></i>:{{item.meta.createdAt | dateFrm}}
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <img class="tag" src="../../assets/image/tag.png" />：
+                                    <el-tag size="mini">{{item.category && item.category.name}}</el-tag>
+                                </div>
+                            </el-row>
+                            <el-row class="art-body">
+                                <div class="side-img hidden-sm-and-down">
+                                    <img class="art-banner" :src="item.image_uri" />
+                                </div>
+                                <div class="side-abstract">
+                                    <div class="art-abstract">{{item.outline}}</div>
+                                    <div class="art-more">
+                                        <a :href="/article/+item._id" >
+                                            <el-button plain>阅读全文</el-button>
+                                        </a>
+                                        <div class="view">
+                                            <i class="el-icon-view"></i>{{item.pageview}}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </el-row>
-                    </el-card>
-                    <img class="star" src="../../assets/image/star.png" />
-                </el-row>
+                            </el-row>
+                        </el-card>
+                        <img class="star" src="../../assets/image/star.png" />
+                    </el-row>
+                </template>
             </el-col>
             <el-col :span="6" class="hidden-sm-and-down" id="side">
                 <div class="item">

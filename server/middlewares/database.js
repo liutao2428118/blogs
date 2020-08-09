@@ -28,49 +28,5 @@ export const database = app => {
 
     mongoose.connection.on('open', async () => {
         console.log('Connected to MongoDB ', config.db)
-
-        const Category = mongoose.model('Category')
-        const Essay = mongoose.model('Essay')
-        const User = mongoose.model('User')
-
-        const existEssay = await Essay.find({}).exec()
-
-        const existCategory = await Category.find({}).exec()
-
-        const existUser = await User.find({}).exec()
-
-        if (!existUser.length) {
-            let user = new User({
-                username: 'admin',
-                password: 123456
-            })
-            await user.save()
-        }
-
-        if (!existCategory.length) {
-            let cat = new Category({
-                name: 'Vue',
-                genre: 1
-            })
-            await cat.save()
-        }
-
-        if (!existEssay.length) {
-            let ess = new Essay({
-                title: 'vue的真的2018',
-                category: '5ed34cbc9f136530d0c676cc',
-                outline: 'vue的真的2018',
-                content: 'vue的真的2018的主要内容！！！！',
-                issued: 1,
-                reprint: 1,
-                pageview: 200,
-                like: 500,
-                meta: {
-                    createdAt: new Date('2018/02/25 00:00:00').getTime()
-                }
-            })
-
-            await ess.save()
-        }
     })
 }

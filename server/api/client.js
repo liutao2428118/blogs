@@ -14,8 +14,9 @@ export async function getAllCategorys() {
 
 // 首页top文章
 export async function getTopEssay() {
+    // "like": { $gt: 0 } 
     const essayTop = await Essay
-        .find({ "like": { $gt: 400 } })
+        .find({})
         .populate({
             path: 'category',
             select: '_id name'

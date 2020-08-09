@@ -10,7 +10,7 @@ const handleRequest = (request) => {
     return new Promise((resolve, reject) => {
         request.then(resp => {
             const res = resp.data
-            if (res.errorCode === ERR_OK) {
+            if (res.code === ERR_OK) {
                 resolve(res.data)
             }
         }).catch(err => {
