@@ -3,7 +3,7 @@
         <el-row id="artList" type="flex" justify="space-around">
             <el-col :span="16">
                 <template v-for="item in essayTop">
-                    <el-row class="art-item" :key="item._id">
+                    <el-row class="art-item" :key="item.name">
                         <el-card shadow="hover" v-if="item.issued === 1">
                             <h5>
                                 <a :href="/article/+item._id" class="art-title">{{item.title}}</a>

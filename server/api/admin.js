@@ -90,7 +90,7 @@ export async function isShowArticle(body) {
 
 export async function articleList(body) {
 
-    const page = body.page || 0
+    const page = body.page - 1 || 0
 
     const page_size = body.page_size || 10
 
