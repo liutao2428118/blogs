@@ -1,65 +1,64 @@
 import mongoose from 'mongoose'
 import R from 'ramda'
 
-const Category = mongoose.model('Category')
-const Essay = mongoose.model('Essay')
+const Classify = mongoose.model('Classify')
+const Article = mongoose.model('Article')
+const Reply = mongoose.model('Reply')
 
-export async function addCategory(body) {
-    const doc = await Category
+// 添加分类
+export async function addClassify(body) {
+    const doc = await Classify
         .findOne({ name: body.name })
         .exec()
 
     if (doc) return false
 
-    const category = new Category(body)
+    const classify = new Classify(body)
 
-    await category.save()
+    await classify.save()
 
-    return category
+    return classify
 }
 
-export async function alterCategory(body) {
-    const doc = await Category
-        .findOne({ _id: mongoose.Types.ObjectId(body._id) })
+// 修改分类
+export async function alterClassify(body) {
+    const doc = await Classify
+        .findByIdAndUpdate({ _id: mongoose.Types.ObjectId(body._id)}, body)
         .exec()
 
     if (!doc) return false
 
-    doc.name = body.name
-    doc.genre = body.genre
-
-    await doc.save()
-
     return doc
 }
 
-
+// 添加文章
 export async function addArticle(body) {
 
     try {
-        const doc = await Category
-            .findOne({ _id: mongoose.Types.ObjectId(body.category) })
+        const doc = await Classify
+            .findOne({ _id: mongoose.Types.ObjectId(body.classify) })
             .exec()
 
-        const essay = new Essay(body)
+            console.log(doc)
+        const article = new Article(body)
 
-        await essay.save()
+        await article.save()
 
-        doc.essays_arr.push(essay._id)
+        doc.articleArr.push(article._id)
 
         await doc.save()
 
-        return essay
+        return article
     } catch (error) {
         throw error
     }
 }
 
-
+// 修改文章
 export async function amendArticle(body) {
     try {
 
-        const doc = await Essay
+        const doc = await Article
             .findByIdAndUpdate({ _id: mongoose.Types.ObjectId(body._id) }, body)
             .exec()
 
@@ -72,10 +71,11 @@ export async function amendArticle(body) {
     }
 }
 
+// 文章是否显示
 export async function isShowArticle(body) {
     try {
 
-        const doc = await Essay
+        const doc = await Article
             .findByIdAndUpdate({ _id: mongoose.Types.ObjectId(body.id) }, { issued: body.issued })
             .exec()
 
@@ -88,6 +88,7 @@ export async function isShowArticle(body) {
     }
 }
 
+// 文章列表
 export async function articleList(body) {
 
     const page = body.page - 1 || 0
@@ -95,12 +96,12 @@ export async function articleList(body) {
     const page_size = body.page_size || 10
 
     try {
-        const total = await Essay
+        const total = await Article
             .count()
 
-        const docs = await Essay
+        const docs = await Article
             .find()
-            .populate('category', 'name')
+            .populate('classify', 'name')
             .skip(page * page_size)
             .limit(page_size)
             .sort({ '_id': -1 })
@@ -116,15 +117,39 @@ export async function articleList(body) {
     }
 }
 
+// 文章详情
 export async function articleOne(body) {
 
     try {
-        const doc = await Essay
+        const doc = await Article
             .findOne({ _id: mongoose.Types.ObjectId(body.id) })
             .exec()
 
         return doc
     } catch (error) {
         throw error
+    }
+}
+
+export async function replyList(body) {
+    const page = body.page - 1 || 0
+
+    const page_size = body.page_size || 10
+    try {
+        const doc = await Reply
+            .find()
+            .populate('articleId', 'title')
+            .populate({
+                path: 'from to',
+                select: 'username'
+            })
+            .skip(page * page_size)
+            .limit(page_size)
+            .sort({ '_id': -1 })
+            .exec()
+
+            return doc
+    } catch (error) {
+        
     }
 }

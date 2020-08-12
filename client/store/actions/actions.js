@@ -2,7 +2,7 @@ import apiModel from 'apiModel'
 
 export default {
     fetchCategorys({ commit }) {
-        return apiModel.getAllCategorys().then(data => {
+        return apiModel.getAllClassifys().then(data => {
             commit('setCategoryArr', data)
         })
     },

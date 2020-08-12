@@ -28,5 +28,14 @@ export const database = app => {
 
     mongoose.connection.on('open', async () => {
         console.log('Connected to MongoDB ', config.db)
+
+        // const User = mongoose.model('User')
+
+        // let user = new User({
+        //     username: 'admin',
+        //     password: '123456'
+        // })
+
+        // await user.save()
     })
 }

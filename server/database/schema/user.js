@@ -27,15 +27,13 @@ const userSchema = new Schema({
         default: 0
     },
     lockUntil: Number,
-    meta: {
-        createdAt: {
-            type: Date,
-            default: Date.now()
-        },
-        updatedAt: {
-            type: Date,
-            default: Date.now()
-        }
+    createdAt: {
+        type: Date,
+        default: Date.now()
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now()
     }
 })
 
@@ -46,9 +44,9 @@ userSchema.virtual('isLocked').get(function () {
 // 每次保存后都会调用save
 userSchema.pre('save', function (next) {
     if (this.isNew) {
-        this.meta.createdAt = this.meta.updatedAt = Date.now()
+        this.createdAt = this.updatedAt = Date.now()
     } else {
-        this.meta.updatedAt = Date.now()
+        this.updatedAt = Date.now()
     }
 
     next()

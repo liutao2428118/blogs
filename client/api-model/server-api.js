@@ -3,9 +3,9 @@ import api from '../../server/api'
 import { ap } from 'ramda'
 
 export default {
-    getAllCategorys() {
+    getAllClassifys() {
         return new Promise(async (resolve, reject) => {
-            const data = await api.client.getAllCategorys()
+            const data = await api.client.getAllClassifys()
             resolve(data)
         })
     },

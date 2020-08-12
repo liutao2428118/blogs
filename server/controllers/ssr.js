@@ -7,6 +7,7 @@ import ejs from 'ejs'
 // 读取ejs模板
 const template = fs.readFileSync(path.join(__dirname, '../../template/server.template.ejs'), 'utf-8')
 
+// dev-ssr
 export const devSsr = function (bundle) {
     return async function (ctx, next) {
         // 发起一个get请求获取客户端vue-ssr-client-manifest
@@ -50,6 +51,7 @@ export const devSsr = function (bundle) {
 
 }
 
+// por-ssr
 export const porSsr = async function (ctx, next) {
     const bundle = require('../../server-build/server-entry').default
     const clientManifest = require('../../public/vue-ssr-client-manifest.json')

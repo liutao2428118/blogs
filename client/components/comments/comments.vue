@@ -2,6 +2,7 @@
     <div>
         <div v-clickoutside="hideReplyBtn" @click="inputFocus" class="my-reply">
             <i class="el-icon-user-solid icon"></i>
+            {{user && user.username}}
             <div class="reply-info">
                 <div
                     contenteditable="true"
@@ -21,7 +22,7 @@
             <i class="el-icon-user-solid icon"></i>
             <div class="author-info">
                 <span class="author-name">{{item.from && item.from.username}}</span>
-                <span class="author-time">{{item.time | dateStr}}</span>
+                <span class="author-time">{{item.createdAt | dateStr}}</span>
             </div>
             <div class="icon-btn">
                 <span @click="showReplyInput(i, item.from.username, item.from._id, item._id)">
@@ -40,7 +41,7 @@
                     <i class="el-icon-user-solid icon"></i>
                     <div class="author-info">
                         <span class="author-name">{{reply.from.username}}</span>
-                        <span class="author-time">{{reply.time | dateStr}}</span>
+                        <span class="author-time">{{reply.createdAt | dateStr}}</span>
                     </div>
                     <div class="icon-btn">
                         <span @click="showReplyInput(i,reply.from.username, reply.from._id, item._id)">
@@ -64,7 +65,7 @@
                     <div
                         contenteditable="true"
                         spellcheck="false"
-                        placeholder="输入评论..."
+                        :placeholder="'回复' + placeholder"
                         @input="onDivInput($event)"
                         class="reply-input reply-comment-input"
                     ></div>
@@ -126,6 +127,7 @@ export default {
     name: "ArticleComment",
     data() {
         return {
+            user: {},
             form:{
                 username: "",
                 email: ""
@@ -143,11 +145,12 @@ export default {
             dialogVisible: false,
             toName: "",
             toId: "",
-            superiorId: ""
+            superiorId: "",
+            placeholder: ""
         };
     },
     props: {
-        essayId: {
+        articleId: {
             type: String,
             required: true
         },
@@ -157,7 +160,9 @@ export default {
         }
     },
     directives: { clickoutside },
-    created() {},
+    created() {
+        console.log(this.reply)
+    },
     mounted() {
         this.user = JSON.parse(window.localStorage.getItem('user')) 
     },
@@ -212,7 +217,7 @@ export default {
                         message: "登录/注册成功"
                     });
                     this.dialogVisible = false
-                    // window.location.reload()
+                    window.location.reload()
                 } else {
                     return false;
                 }
@@ -242,6 +247,7 @@ export default {
                 this.dialogVisible = true
                 return
              }
+            this.placeholder = name
             this.showIndex = i
             this.toName = name
             this.toId = toId
@@ -259,12 +265,12 @@ export default {
                 return
             }
                 let data = {
-                    essayId: this.essayId,
+                    articleId: this.articleId,
                     from: this.user._id,
-                    to: this.essayId,
-                    superiorId: "",
+                    to: this.articleId,
+                    fatherId: this.articleId,
                     content: this.replyComment,
-                    time: new Date().getTime()
+                    createdAt: new Date().getTime()
                 }
                 this.submitComments(data)
                
@@ -290,12 +296,12 @@ export default {
             } 
 
             let data = {
-                essayId: this.essayId,
+                articleId: this.articleId,
                 from: this.user._id,
                 to: this.toId,
-                superiorId: this.superiorId,
+                fatherId: this.superiorId,
                 content: this.replyComment,
-                time: new Date().getTime()
+                createdAt: new Date().getTime()
             }
             this.submitComments(data)
 

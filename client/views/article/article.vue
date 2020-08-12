@@ -2,13 +2,13 @@
 	<div>
 		<el-row class="main" type="flex" justify="center">
 			<el-col :span="16">
-				<div class="artcle-info" :style="{backgroundImage: `url('${EssayOne.image_uri}')`}">
+				<div class="artcle-info" :style="{backgroundImage: `url('${EssayOne.imageUrl}')`}">
 					<h2 class="text-center"><strong>{{EssayOne.title}}</strong></h2>
 					<!-- 描述：文章信息 -->
 					<div class="text-center timeAndView">
 						<span class="article-time">
 							<i class="el-icon-time"></i>
-							发表于：<span>{{EssayOne.meta.createdAt | dateFrm}}</span>
+							发表于：<span>{{EssayOne.createdAt | dateFrm}}</span>
 						</span>
 						&nbsp;|&nbsp;
 						<span class="article-views">
@@ -34,7 +34,7 @@
 				</div>
                 <div class="comments">
                     <div class="title">评论区</div>
-                    <comments :essayId="$route.params.id" :reply="EssayOne.reply"></comments>
+                    <comments :articleId="$route.params.id" :reply="EssayOne.reply"></comments>
                 </div>
 			</el-col>
 		</el-row>

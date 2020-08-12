@@ -2,16 +2,16 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const ObjectId = Schema.Types.ObjectId
 
-const leaveNoteSchema = new Schema({
-  content: String, // 留言的类容
-  from: { // 当前用户
-    type: ObjectId,
-    ref: 'Uesr'
+const classifySchema = new Schema({
+  name: { // 分类名称
+    type: String,
+    unique: true
   },
-  to: { // 需要回复的用户
+  genre: Number, // 类型 1技术，2生活
+  articleArr: [{ // 当前分类下面的文章
     type: ObjectId,
-    ref: 'Uesr'
-  },
+    ref: 'Article'
+  }],
   createdAt: {
     type: Date,
     default: Date.now()
@@ -22,8 +22,7 @@ const leaveNoteSchema = new Schema({
   }
 })
 
-// 保存前的中间件
-leaveNoteSchema.pre('save', function (next) {
+classifySchema.pre('save', function (next) {
   if (this.isNew) {
     this.createdAt = this.updatedAt = Date.now()
   } else {
@@ -33,4 +32,4 @@ leaveNoteSchema.pre('save', function (next) {
   next()
 })
 
-mongoose.model('LeaveNote', leaveNoteSchema)
+mongoose.model('Classify', classifySchema)

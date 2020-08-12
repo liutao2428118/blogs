@@ -10,16 +10,16 @@
                             </h5>
                             <el-row class="art-info d-flex align-items-center justify-content-start">
                                 <div class="art-time">
-                                    <i class="el-icon-time"></i>:{{item.meta.createdAt | dateFrm}}
+                                    <i class="el-icon-time"></i>:{{item.createdAt | dateFrm}}
                                 </div>
                                 <div class="d-flex align-items-center">
                                     <img class="tag" src="../../assets/image/tag.png" />：
-                                    <el-tag size="mini">{{item.category && item.category.name}}</el-tag>
+                                    <el-tag size="mini">{{item.classify && item.classify.name}}</el-tag>
                                 </div>
                             </el-row>
                             <el-row class="art-body">
                                 <div class="side-img hidden-sm-and-down">
-                                    <img class="art-banner" :src="item.image_uri" />
+                                    <img class="art-banner" :src="item.imageUrl" />
                                 </div>
                                 <div class="side-abstract">
                                     <div class="art-abstract">{{item.outline}}</div>

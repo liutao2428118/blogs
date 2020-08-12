@@ -8,9 +8,9 @@
 		    	<router-link to="/apply" tag="span"></router-link>
 		    </el-button>
 		  </div>
-		  <div class="text item"><a href="#">我的github</a></div>
-          <div class="text item"><a href="#">我的gitlab</a></div>
-		  <div class="text item"><a href="#">我的码云</a></div>
+		  <div class="text item"><a href="https://github.com/liutao2428118" target="_Blank">我的github</a></div>
+          <div class="text item"><a href="#" target="_Blank">我的gitlab</a></div>
+		  <div class="text item"><a href="https://www.yuque.com/kuangyedeluobu" target="_Blank">我的语雀</a></div>
 		</el-card>
 	</div>
 </template>

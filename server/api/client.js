@@ -1,24 +1,27 @@
 import mongoose from 'mongoose'
 import R from 'ramda'
 
+const ObjectId = mongoose.Types.ObjectId
 
-const Category = mongoose.model('Category') // 分类集合
-const Essay = mongoose.model('Essay') // 文章集合
+
+const Classify = mongoose.model('Classify') // 分类集合
+const Article = mongoose.model('Article') // 文章集合
+const Reply = mongoose.model('Reply') // 回复集合
 
 // 全部分类
-export async function getAllCategorys() {
-    const existCategory = await Category.find({}).exec()
+export async function getAllClassifys() {
+    const existClassify = await Classify.find({}).exec()
 
-    return existCategory
+    return existClassify
 }
 
 // 首页top文章
 export async function getTopEssay() {
     // "like": { $gt: 0 } 
-    const essayTop = await Essay
+    const essayTop = await Article
         .find({})
         .populate({
-            path: 'category',
+            path: 'classify',
             select: '_id name'
         })
         .exec()
@@ -26,13 +29,16 @@ export async function getTopEssay() {
     return essayTop
 }
 
-// 获取文章
+// 获取文章包括文章评论
 export async function getEssayFindOne(id) {
-    const essayOne = await Essay
-        .findOne({ _id: mongoose.Types.ObjectId(id) })
+    const essayOne = await Article
+        .findOne({ _id: ObjectId(id) })
         .populate({
-            path: 'reply.from reply.to',
-            select: '_id username'
+            path: 'reply',
+            populate: {
+                path: 'from to',
+                select: 'username'
+            }
         })
         .exec()
 
@@ -40,14 +46,12 @@ export async function getEssayFindOne(id) {
 
     let arr = []
 
-    // const s =  R.converge(R.divide, [R.map(i => i.superiorId === ""), ])(reply)
-    // const s =  R.differenceWith((x,y) => mongoose.Types.ObjectId(x._id).toString() === y.superiorId)(reply, reply)
-    // console.log("---------------------------123",s)
-
     R.map(i => {
-        if (i.superiorId === "") {
+        if (i.fatherId === id) {
             R.map(r => {
-                if (r.superiorId === mongoose.Types.ObjectId(i._id).toString()) i.replyTo.push(r)
+                if (r.fatherId === ObjectId(i._id).toString()) {
+                    i.replyTo.push(r)
+                }
             })(reply)
             arr.push(i)
         }
@@ -56,7 +60,6 @@ export async function getEssayFindOne(id) {
 
     essayOne.reply = arr
 
-
     return essayOne
 }
 
@@ -64,24 +67,24 @@ export async function getEssayFindOne(id) {
 export async function getAllEssayList(id) {
 
     // 聚合管道，分类类型删选，年份分组，年份倒序排序
-    const existEssay = await Essay.aggregate(
+    const existEssay = await Article.aggregate(
         [
             {
                 $match:
                 {
-                    category: mongoose.Types.ObjectId(id)
+                    classify: ObjectId(id)
                 }
             },
             {
                 $group:
                 {
-                    _id: { $year: "$meta.createdAt" },//{}内的是分组条件
+                    _id: { $year: "$createdAt" },//{}内的是分组条件
                     item: {
                         $push:
                         {
                             id: "$_id",
                             title: "$title",
-                            category: "$category",
+                            classify: "$classify",
                             outline: "$outline",
                             content: "$content",
                             meta: "$meta"
@@ -99,11 +102,11 @@ export async function getAllEssayList(id) {
     )
 
     // 获取分类的总条数
-    const count = await Essay.aggregate([
+    const count = await Article.aggregate([
         {
             $match:
             {
-                category: mongoose.Types.ObjectId(id)
+                classify: ObjectId(id)
             }
         },
         {
@@ -119,24 +122,25 @@ export async function getAllEssayList(id) {
 }
 
 // 添加评论
-export async function setComments(data) {
+export async function setComments(body) {
     try {
-        const essay = await Essay
-            .findOne({ _id: mongoose.Types.ObjectId(data.essayId) })
+        const articleDoc = await Article
+            .findOne({ _id: ObjectId(body.articleId) })
             .exec()
 
-        if (!essay) {
-            return false
-        }
+        const replyDoc = new Reply(body)
 
-        let { reply } = essay
+        await replyDoc.save()
 
 
-        reply.push(data)
+        let { reply } = articleDoc
 
-        await essay.save()
 
-        return essay
+        reply.push(replyDoc._id)
+
+        await articleDoc.save()
+
+        return replyDoc
     } catch (error) {
         console.log(error)
     }
