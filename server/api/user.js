@@ -2,7 +2,11 @@ import mongoose from 'mongoose'
 
 const User = mongoose.model('User')
 
-// 访客登录
+
+/**
+ * 访客登录
+ * @param {Object} body 
+ */
 export async function visitorLogin(body) {
     try {
         let user = await User
@@ -24,7 +28,10 @@ export async function visitorLogin(body) {
 
 }
 
-// 后台登录
+/**
+ * 后台登录
+ * @param {*} body 
+ */
 export async function adminLogin(body) {
     let match = false
     let inc = false

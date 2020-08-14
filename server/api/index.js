@@ -1,10 +1,12 @@
-import * as client from './client'
+import * as article from './article'
+import * as classify from './classify'
+import * as reply from './reply'
 import * as user from './user'
-import * as admin from './admin'
 
 
 export default {
-    client: client,
-    user: user,
-    admin: admin
+    article,
+    classify,
+    reply,
+    user
 }

@@ -1,29 +1,28 @@
 // 服务端渲染的数据不用经过后端接口路由,直接数据库取
 import api from '../../server/api'
-import { ap } from 'ramda'
 
 export default {
-    getAllClassifys() {
+    getClassifyAll() {
         return new Promise(async (resolve, reject) => {
-            const data = await api.client.getAllClassifys()
+            const data = await api.classify.getClassifyAll()
             resolve(data)
         })
     },
-    getAllEssayList(id) {
+    getArticleYearData(id) {
         return new Promise(async (resolve, reject) => {
-            const data = await api.client.getAllEssayList(id)
+            const data = await api.article.getArticleAll(id)
             resolve(data)
         })
     },
-    getTopEssay() {
+    getTopArticle() {
         return new Promise(async (resolve, reject) => {
-            const data = await api.client.getTopEssay()
+            const data = await api.article.getTopArticle()
             resolve(data)
         })
     },
-    getEssayFindOne(id) {
+    getArticleDetails(id) {
         return new Promise(async (resolve, reject) => {
-            const data = await api.client.getEssayFindOne(id)
+            const data = await api.article.getArticledOne(id)
             resolve(data)
         })
     }

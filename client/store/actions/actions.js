@@ -1,36 +1,64 @@
 import apiModel from 'apiModel'
 
 export default {
-    fetchCategorys({ commit }) {
-        return apiModel.getAllClassifys().then(data => {
-            commit('setCategoryArr', data)
+    /**
+     * 获取全部分类
+     * @param {*} param0 
+     */
+    fetchClassify({ commit }) {
+        return apiModel.getClassifyAll().then(data => {
+            commit('setClassify', data)
         })
     },
-    fetchEssayList({ commit }, id) {
-        return apiModel.getAllEssayList(id).then(data => {
-            commit('setEssayArr', data)
+    /**
+     * 获取归档列表
+     * @param {*} param0 
+     * @param {*} id 
+     */
+    fetchArticleYearData({ commit }, id) {
+        return apiModel.getArticleYearData(id).then(data => {
+            commit('setArticleYearData', data)
         })
     },
-    fetchTopEssay({ commit }) {
-        return apiModel.getTopEssay().then(data => {
-            commit('setEssayTop', data)
+    /**
+     * 获取首页top文章
+     * @param {*} param0 
+     */
+    fetchTopArticle({ commit }) {
+        return apiModel.getTopArticle().then(data => {
+            commit('setArticTop', data)
         })
     },
-    fetchEssayFindOne({ commit }, id) {
-        return apiModel.getEssayFindOne(id).then(data => {
-            commit('setEssayOne', data)
+    /**
+     * 获取文章详情
+     * @param {*} param0 
+     * @param {*} id 
+     */
+    fetchArticleDetails({ commit }, id) {
+        return apiModel.getArticleDetails(id).then(data => {
+            commit('setArticleOne', data)
         })
     },
-    visitorLogin({ commit }, user) {
-        return apiModel.visitorLogin(user).then(data => {
+    /**
+     * 登录
+     * @param {*} param0 
+     * @param {*} user 
+     */
+    login({ commit }, user) {
+        return apiModel.login(user).then(data => {
             commit('doLogin', data)
 
             window.localStorage.setItem("user", JSON.stringify(data))
 
         })
     },
-    submitComments({ commit }, data) {
-        return apiModel.submitComments(data).then(data => {
+    /**
+     * 提交新增评论回复
+     * @param {*} param0 
+     * @param {*} data 
+     */
+    submitReply({ commit }, data) {
+        return apiModel.submitReply(data).then(data => {
             // commit('doLogin', data)
         })
     }

@@ -2,7 +2,6 @@
  *  路由装饰器
  */
 
-import Router from 'koa-router'
 import { resolve } from 'path'
 import glob from 'glob'
 import R from 'ramda'
@@ -15,9 +14,9 @@ const isArray = v => _.isArray(v) ? v : [v]
 const normalizePath = path => path.startsWith('/') ? path : `/${path}`
 
 export class Route {
-    constructor(app, apiPath) {
+    constructor(app, router, apiPath) {
         this.app = app
-        this.router = new Router()
+        this.router = router
         this.apiPath = apiPath
     }
 

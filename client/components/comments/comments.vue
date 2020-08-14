@@ -1,8 +1,8 @@
 <template>
     <div>
         <div v-clickoutside="hideReplyBtn" @click="inputFocus" class="my-reply">
-            <i class="el-icon-user-solid icon"></i>
-            {{user && user.username}}
+            <el-avatar class="icon" size="medium" icon="el-icon-user-solid"></el-avatar>
+            <span class="username">{{user && user.username}}</span>
             <div class="reply-info">
                 <div
                     contenteditable="true"
@@ -19,13 +19,17 @@
             </div>
         </div>
         <div v-for="(item,i) in reply" :key="i" class="author-title reply-father">
-            <i class="el-icon-user-solid icon"></i>
+            <el-avatar class="icon" size="medium" icon="el-icon-user-solid"></el-avatar>
             <div class="author-info">
                 <span class="author-name">{{item.from && item.from.username}}</span>
                 <span class="author-time">{{item.createdAt | dateStr}}</span>
             </div>
             <div class="icon-btn">
-                <span @click="showReplyInput(i, item.from.username, item.from._id, item._id)">
+                <span
+                    :class="{active: hash === item._id}"
+                    :id="item._id"
+                    @click="showReplyInput(i, item.from.username, item.from._id, item._id)"
+                >
                     <i class="iconfont el-icon-s-comment"></i>
                     回复
                 </span>
@@ -38,13 +42,17 @@
             </div>
             <div class="reply-box">
                 <div v-for="(reply,j) in item.replyTo" :key="j" class="author-title">
-                    <i class="el-icon-user-solid icon"></i>
+                    <el-avatar class="icon" size="medium" icon="el-icon-user-solid"></el-avatar>
                     <div class="author-info">
                         <span class="author-name">{{reply.from.username}}</span>
                         <span class="author-time">{{reply.createdAt | dateStr}}</span>
                     </div>
                     <div class="icon-btn">
-                        <span @click="showReplyInput(i,reply.from.username, reply.from._id, item._id)">
+                        <span
+                            :class="{active: hash === reply._id}"
+                            :id="reply._id"
+                            @click="showReplyInput(i,reply.from.username, reply.from._id, item._id)"
+                        >
                             <i class="iconfont el-icon-s-comment"></i>
                             回复
                         </span>
@@ -52,7 +60,10 @@
                     </div>
                     <div class="talk-box">
                         <p>
-                            <span>回复 {{reply.to.username}}:</span>
+                            <span>
+                                回复
+                                <span class="to-name">{{reply.to.username}}</span> :
+                            </span>
                             <span class="reply">{{reply.content}}</span>
                         </p>
                     </div>
@@ -80,8 +91,8 @@
                 </div>
             </div>
         </div>
-        <el-dialog title="注册/登录" :visible.sync="dialogVisible" width="20%" top="40vh">
-            <el-form ref="form" :model="form"  :rules="rules" label-width="80px">
+        <el-dialog title="注册/登录" :visible.sync="dialogVisible" width="400px" top="40vh">
+            <el-form ref="form" :model="form" :rules="rules" label-width="80px">
                 <el-form-item label="取个名字" prop="username">
                     <el-input v-model="form.username"></el-input>
                 </el-form-item>
@@ -97,7 +108,7 @@
     </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions } from "vuex";
 const clickoutside = {
     // 初始化指令
     bind(el, binding, vnode) {
@@ -121,24 +132,28 @@ const clickoutside = {
         // 解除事件监听
         document.removeEventListener("click", el.vueClickOutside);
         delete el.vueClickOutside;
-    }
+    },
 };
 export default {
     name: "ArticleComment",
     data() {
         return {
             user: {},
-            form:{
+            form: {
                 username: "",
-                email: ""
+                email: "",
             },
             rules: {
                 username: [
-                    { required: true, message: '取个名字吧', trigger: 'blur' }
+                    { required: true, message: "取个名字吧", trigger: "blur" },
                 ],
                 email: [
-                    { required: true, message: '请填写下邮箱', trigger: 'blur' }
-                ]
+                    {
+                        required: true,
+                        message: "请填写下邮箱",
+                        trigger: "blur",
+                    },
+                ],
             },
             showIndex: -1,
             btnShow: false,
@@ -146,29 +161,32 @@ export default {
             toName: "",
             toId: "",
             superiorId: "",
-            placeholder: ""
+            placeholder: "",
+            hash: "",
         };
     },
     props: {
         articleId: {
             type: String,
-            required: true
+            required: true,
         },
         reply: {
             type: Array,
-            required: true
-        }
+            required: true,
+        },
     },
     directives: { clickoutside },
-    created() {
-        console.log(this.reply)
-    },
+    created() {},
     mounted() {
-        this.user = JSON.parse(window.localStorage.getItem('user')) 
+        this.hash =
+            window.location.hash.length > 0
+                ? window.location.hash.substring(1)
+                : "";
+        this.user = JSON.parse(window.localStorage.getItem("user"));
     },
     filters: {
-         dateStr(date) {
-             date = new Date(date).getTime()
+        dateStr(date) {
+            date = new Date(date).getTime();
             //获取js 时间戳
             var time = new Date().getTime();
             //去掉 js 时间戳后三位，与php 时间戳保持一致
@@ -201,28 +219,24 @@ export default {
                     date.getDate()
                 );
             }
-        }
+        },
     },
     methods: {
         submit(formName) {
-            this.$refs[formName].validate( (valid) => {
+            this.$refs[formName].validate((valid) => {
                 if (valid) {
-                   
-                    this.visitorLogin(this.form)
-
-                    console.log(123)
-                   this.$message({
+                    this.login(this.form)
+                    this.$message({
                         showClose: true,
                         type: "warning",
-                        message: "登录/注册成功"
+                        message: "登录/注册成功",
                     });
-                    this.dialogVisible = false
-                    window.location.reload()
+                    this.dialogVisible = false;
+                    window.location.reload();
                 } else {
                     return false;
                 }
             });
-            
         },
         inputFocus() {
             var replyInput = document.getElementById("replyInput");
@@ -231,8 +245,8 @@ export default {
             replyInput.focus();
         },
         showReplyBtn() {
-            if(!this.user) {
-                this.dialogVisible = true
+            if (!this.user) {
+                this.dialogVisible = true;
             } else {
                 this.btnShow = true;
             }
@@ -243,57 +257,62 @@ export default {
             replyInput.style.border = "none";
         },
         showReplyInput(i, name, toId, id) {
-             if(!this.user) { 
-                this.dialogVisible = true
-                return
-             }
-            this.placeholder = name
-            this.showIndex = i
-            this.toName = name
-            this.toId = toId
-            this.superiorId = id
+            if (!this.user) {
+                this.dialogVisible = true;
+                return;
+            }
+            this.placeholder = name;
+            this.showIndex = i;
+            this.toName = name;
+            this.toId = toId;
+            this.superiorId = id;
 
-            console.log("toName:"+name, "toId:"+toId, "superiorId:"+ id)
+            console.log("toName:" + name, "toId:" + toId, "superiorId:" + id);
         },
         sendComment() {
             if (!this.replyComment) {
                 this.$message({
                     showClose: true,
                     type: "warning",
-                    message: "评论不能为空"
+                    message: "评论不能为空",
                 });
-                return
+                return;
             }
-                let data = {
-                    articleId: this.articleId,
-                    from: this.user._id,
-                    to: this.articleId,
-                    fatherId: this.articleId,
-                    content: this.replyComment,
-                    createdAt: new Date().getTime()
-                }
-                this.submitComments(data)
-               
-                let input = document.getElementById("replyInput");
-                input.innerHTML = "";
-                this.replyComment = "";
+            let data = {
+                articleId: this.articleId,
+                from: this.user._id,
+                to: this.articleId,
+                fatherId: this.articleId,
+                content: this.replyComment,
+                createdAt: new Date().getTime(),
+            };
+            this.submitReply(data);
 
-                data.from = {
-                    username: this.user.username,
-                    _id: this.user._id
-                }
+            let input = document.getElementById("replyInput");
+            input.innerHTML = "";
+            this.replyComment = "";
 
-                this.reply.push(data);
+            data.from = {
+                username: this.user.username,
+                _id: this.user._id,
+            };
+
+            this.reply.push(data);
+
+            this.$message({
+                message: "评论成功！",
+                type: "success",
+            });
         },
         sendCommentReply(i) {
             if (!this.replyComment) {
                 this.$message({
                     showClose: true,
                     type: "warning",
-                    message: "评论不能为空"
+                    message: "评论不能为空",
                 });
-                return
-            } 
+                return;
+            }
 
             let data = {
                 articleId: this.articleId,
@@ -301,127 +320,197 @@ export default {
                 to: this.toId,
                 fatherId: this.superiorId,
                 content: this.replyComment,
-                createdAt: new Date().getTime()
-            }
-            this.submitComments(data)
+                createdAt: new Date().getTime(),
+            };
+            this.submitReply(data);
 
-            let input = document.getElementsByClassName("reply-comment-input")
+            let input = document.getElementsByClassName("reply-comment-input");
             input.innerHTML = "";
             this.replyComment = "";
 
             data.from = {
                 username: this.user.username,
-                _id: this.user._id
-            }
+                _id: this.user._id,
+            };
 
             data.to = {
                 username: this.toName,
-                _id: this.toId
-            }
+                _id: this.toId,
+            };
 
             this.reply[i].replyTo.push(data);
-            
+
+            this.$message({
+                message: "回复成功！",
+                type: "success",
+            });
         },
-        onDivInput: function(e) {
+        onDivInput: function (e) {
             this.replyComment = e.target.innerHTML;
         },
 
-        ...mapActions([
-            'visitorLogin',
-            'submitComments'
-        ]),
-    }
+        ...mapActions(["login", "submitReply"]),
+    },
 };
 </script>
 <style lang="stylus" scoped>
-.my-reply
-    padding 10px
-    background-color #fafbfc
-    .header-img
-        display inline-block
-        vertical-align top
-    .reply-info    
-        display inline-block
-        margin-left 5px
-        width 90%
-        @media screen and (max-width:1200px) {
-            width 80%
+.my-reply {
+    padding: 10px;
+    background-color: #fafbfc;
+
+    .username {
+        color: #576b95;
+        font-size: 18px;
+        padding: 10px 0;
+    }
+
+    .header-img {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .reply-info {
+        display: inline-block;
+        margin-left: 5px;
+        width: 90%;
+
+        @media screen and (max-width: 1200px) {
+            width: 80%;
         }
-        .reply-input
-            min-height 20px
-            line-height 22px
-            padding 10px 10px
-            color #ccc
-            background-color #fff
-            border-radius 5px
-            &:empty:before
-                content attr(placeholder)
-            &:focus:before
-                content none
-            &:focus
-                padding 8px 8px
-                border 2px solid blue
-                box-shadow none
-                outline none
-    .reply-btn-box
-        height 25px
-        margin 10px 0
-        .reply-btn
-            position relative
-            float right
-            margin-right 15px
-.my-comment-reply
-    margin-left 50px
-    .reply-input
-        width flex
-.author-title:not(:last-child)
-    border-bottom: 1px solid rgba(178,186,194,.3)
-.author-title
-    padding 10px
-    .header-img
-        display inline-block
-        vertical-align top
-    .author-info
-        display inline-block
-        margin-left 5px
-        width 60%
-        height 40px
-        line-height 20px
-        >span 
-            display block
-            cursor pointer
-            overflow hidden
-            white-space nowrap
-            text-overflow ellipsis
-        .author-name
-            color #000
-            font-size 18px
-            font-weight bold
-        .author-time
-            font-size 14px
-    .icon-btn
-        width 30%
-        padding 0 !important 
-        float right
-        @media screen and (max-width : 1200px){
-            width 20%
-            padding 7px
+
+        .reply-input {
+            min-height: 20px;
+            line-height: 22px;
+            padding: 10px 10px;
+            color: #ccc;
+            background-color: #fff;
+            border-radius: 5px;
+
+            &:empty:before {
+                content: attr(placeholder);
+            }
+
+            &:focus:before {
+                content: none;
+            }
+
+            &:focus {
+                padding: 8px 8px;
+                border: 2px solid blue;
+                box-shadow: none;
+                outline: none;
+            }
         }
-        >span 
-            cursor pointer
-        .iconfont 
-            margin 0 5px
-    .talk-box
-        margin 0 50px
-        >p
-           margin 0
-        .reply
-            font-size 16px
-            color #000
-    .reply-box
-        margin 10px 0 0 50px
-        background-color #efefef
-.icon 
-    font-size 36px
-    vertical-align top
+    }
+
+    .reply-btn-box {
+        height: 25px;
+        margin: 10px 0;
+
+        .reply-btn {
+            position: relative;
+            float: right;
+            margin-right: 15px;
+        }
+    }
+}
+
+.my-comment-reply {
+    margin-left: 50px;
+
+    .reply-input {
+        width: flex;
+    }
+}
+
+.author-title:not(:last-child) {
+    border-bottom: 1px solid rgba(178, 186, 194, 0.3);
+}
+
+.author-title {
+    padding: 10px;
+
+    .header-img {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .author-info {
+        display: inline-block;
+        margin-left: 5px;
+        width: 60%;
+        height: 40px;
+        line-height: 20px;
+
+        >span {
+            display: block;
+            cursor: pointer;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .author-name {
+            color: #576b95;
+            font-size: 18px;
+            padding: 10px 0;
+        }
+
+        .author-time {
+            font-size: 14px;
+        }
+    }
+
+    .icon-btn {
+        width: 30%;
+        padding: 0 !important;
+        float: right;
+
+        @media screen and (max-width: 1200px) {
+            width: 20%;
+            padding: 7px;
+        }
+
+        .active {
+            color: #67c23a;
+        }
+
+        >span {
+            cursor: pointer;
+        }
+
+        .iconfont {
+            margin: 0 5px;
+        }
+    }
+
+    .talk-box {
+        margin: 0 50px;
+
+        .to-name {
+            color: #576b95;
+            font-size: 18px;
+            padding: 10px 0;
+        }
+
+        >p {
+            margin: 0;
+        }
+
+        .reply {
+            font-size: 16px;
+            color: #000;
+        }
+    }
+
+    .reply-box {
+        margin: 10px 0 0 50px;
+        background-color: #efefef;
+    }
+}
+
+.icon {
+    font-size: 20px;
+    vertical-align: top;
+}
 </style>

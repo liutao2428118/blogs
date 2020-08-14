@@ -1,7 +1,10 @@
 import qiniu from 'qiniu'
 import config  from '../config/index'
 
-// 七牛云Token返回前端，前端直传
+
+/**
+ * 七牛云Token返回前端，前端直传
+ */
 export function getUploadToken() {
     const options = {
         scope: 'icelt',

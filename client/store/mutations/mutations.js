@@ -1,15 +1,15 @@
 export default {
-  setCategoryArr (state, arr) {
-    state.categoryArr = arr
+  setClassify (state, arr) {
+    state.classifyArr = arr
   },
-  setEssayArr (state, data) {
-    state.essayList = data
+  setArticleYearData (state, data) {
+    state.articleYearData = data
   },
-  setEssayTop (state, data) {
-    state.essayTop = data
+  setArticTop (state, data) {
+    state.articleTop = data
   },
-  setEssayOne (state, data) {
-    state.EssayOne = data
+  setArticleOne (state, data) {
+    state.articleOne = data
   },
   doLogin (state, data) {
     state.user = data

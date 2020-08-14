@@ -4,8 +4,8 @@
 import path from 'path'
 import MemoryFS from 'memory-fs'
 import webpack from 'webpack'
-import { devSsr, porSsr } from '../controllers/ssr'
-import { Controller, Get } from '../decorator/router'
+import { devSsr, porSsr } from '../../controllers/ssr'
+import { Controller, Get } from '../../decorator/router'
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -13,7 +13,7 @@ let bundle
 
 if (isDev) {
     // 获取服务端打包入口文件
-    const serverConfig = require('../../build/webpack.config.server')
+    const serverConfig = require('../../../build/webpack.config.server')
     // 调用webpack解析配置文件
     const serverCompiler = webpack(serverConfig)
     // 创建一个内存中读取文件的对象
@@ -44,7 +44,6 @@ class SsrController {
 
     @Get('*')
     async all(ctx, next) {
-        console.log(ctx.path)
         if (isDev) {
             if (!bundle) {
                 ctx.body = '你等一会，别着急......'

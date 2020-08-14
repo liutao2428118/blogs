@@ -2,10 +2,10 @@
     <div class="archive">
         <el-row id="artList" type="flex" justify="space-around">
             <el-col :span="16">
-                <div class="count">归档：{{essayList.count}}篇</div>
+                <div class="count">归档：{{articleYearData.count}}篇</div>
                 <el-timeline>
                     <el-timeline-item
-                        v-for="(activity, index) in essayList.data"
+                        v-for="(activity, index) in articleYearData.list"
                         :key="index"
                         :timestamp="activity._id + '年'"
                         placement="top"
@@ -40,12 +40,12 @@ export default {
     mounted () {},
     asyncData({ app, router, store }) {
         return  Promise.all([
-            store.dispatch("fetchEssayList", app.$route.params.id),
-            store.dispatch("fetchCategorys")
+            store.dispatch("fetchArticleYearData", app.$route.params.id),
+            store.dispatch("fetchClassify")
         ])
     },
     computed: {
-        ...mapState(["essayList"])
+        ...mapState(["articleYearData"])
     },
     methods: {
         hoverLine(activity) {
@@ -53,11 +53,7 @@ export default {
         },
         to(id) {
             window.location.href = `/article/${id}`
-        },
-
-        // ...mapActions([
-        //     'fetchAllEssay',
-        // ])
+        }
     },
     components: {
         Tag
@@ -70,11 +66,8 @@ export default {
     margin-bottom: 20px
     font-size: 20px
     color: #e6a23c
-
-
 .line-item 
     padding: 5px 0
-
     :hover 
         cursor: pointer
         color: #409eff

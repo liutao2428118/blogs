@@ -2,7 +2,7 @@
     <div class="home">
         <el-row id="artList" type="flex" justify="space-around">
             <el-col :span="16">
-                <template v-for="item in essayTop">
+                <template v-for="item in articleTop">
                     <el-row class="art-item" :key="item.name">
                         <el-card shadow="hover" v-if="item.issued === 1">
                             <h5>
@@ -73,13 +73,13 @@ export default {
     mounted() {},
     asyncData({ router, store }) {
         return Promise.all([
-            store.dispatch("fetchCategorys"),
-            store.dispatch("fetchTopEssay")
+            store.dispatch("fetchClassify"),
+            store.dispatch("fetchTopArticle")
         ])
     },
     computed: {
        ...mapState([
-           "essayTop"
+           "articleTop"
        ])
     },
     filters: {

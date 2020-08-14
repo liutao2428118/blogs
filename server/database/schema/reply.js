@@ -3,12 +3,16 @@ const Schema = mongoose.Schema
 const ObjectId = Schema.Types.ObjectId
 
 const replySchema = new Schema({
-    articleId: {type: ObjectId, ref: 'Article' },
+    articleId: { type: ObjectId, ref: 'Article' },
     from: { type: ObjectId, ref: 'User' }, // 当前
     to: { type: ObjectId, ref: 'User' }, // 需要回复的
     fatherId: String,
     content: String, // 回复的内容
     replyTo: Array,
+    isRead: {
+        type: Boolean,
+        default: false
+    },
     createdAt: {
         type: Date,
         default: new Date().getTime()

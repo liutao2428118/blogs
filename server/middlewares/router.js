@@ -1,9 +1,12 @@
-import  { Route } from '../decorator/router'
+import Router from 'koa-router'
+import { Route } from '../decorator/router'
 import path from 'path'
 
-export const router = app => {
-  const apiPath = path.resolve(__dirname, '../routers')
-  const router = new Route(app, apiPath)
+const router = new Router({
+    prefix: '/api'
+})
 
-  router.init()
+export const apiRouter = app => {
+    const apiPath = path.resolve(__dirname, '../routers/api')
+    new Route(app, router, apiPath).init()
 }

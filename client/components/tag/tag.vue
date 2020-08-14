@@ -6,7 +6,7 @@
 				<span>分类</span>
 			</div>
 			<div class="text item">
-                <template v-for="item in categoryArr">
+                <template v-for="item in classifyArr">
                     <el-row>
                         <el-col :span="24" class="col"><el-tag size="mini" class="tag-item" @click="tag(item._id)">{{item.name}}（{{item.articleArr.length}}）</el-tag></el-col>
                     </el-row>
@@ -21,7 +21,7 @@ import { mapState } from "vuex";
 	export default {
         name: 'tag',
         computed: {
-            ...mapState(["categoryArr"])
+            ...mapState(["classifyArr"])
         },
 		methods: {
 			tag(id) {

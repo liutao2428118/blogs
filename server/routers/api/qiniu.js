@@ -1,7 +1,7 @@
-import { Controller, Get, Post, Auth, AuthAll, Required } from '../decorator/router'
-import { getUploadToken } from '../controllers/qiniu'
+import { Controller, Get, Post, Auth, AuthAll, Required } from '../../decorator/router'
+import { getUploadToken } from '../../controllers/qiniu'
 
-@Controller('/admin/qiniu')
+@Controller('/qiniu')
 @AuthAll
 class AdminController {
 

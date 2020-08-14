@@ -2,28 +2,28 @@
 	<div>
 		<el-row class="main" type="flex" justify="center">
 			<el-col :span="16">
-				<div class="artcle-info" :style="{backgroundImage: `url('${EssayOne.imageUrl}')`}">
-					<h2 class="text-center"><strong>{{EssayOne.title}}</strong></h2>
+				<div class="artcle-info" :style="{backgroundImage: `url('${articleOne.imageUrl}')`}">
+					<h2 class="text-center"><strong>{{articleOne.title}}</strong></h2>
 					<!-- 描述：文章信息 -->
 					<div class="text-center timeAndView">
 						<span class="article-time">
 							<i class="el-icon-time"></i>
-							发表于：<span>{{EssayOne.createdAt | dateFrm}}</span>
+							发表于：<span>{{articleOne.createdAt | dateFrm}}</span>
 						</span>
 						&nbsp;|&nbsp;
 						<span class="article-views">
 							<i class="el-icon-view"></i>
-							阅读量：<span>{{EssayOne.pageview}}</span>万
+							阅读量：<span>{{articleOne.pageview}}</span>万
 						</span>
 					</div>
 					<p class="abstract">
-						{{EssayOne.outline}}
+						{{articleOne.outline}}
 					</p>
 				</div>
 				<hr />
 
                 <!-- 内容 -->
-				<div id="artcle-content" v-html="EssayOne.content" ></div>
+				<div id="artcle-content" v-html="articleOne.content" ></div>
 
 				<div id="statement">
 					<div class="item"></div>
@@ -34,7 +34,7 @@
 				</div>
                 <div class="comments">
                     <div class="title">评论区</div>
-                    <comments :articleId="$route.params.id" :reply="EssayOne.reply"></comments>
+                    <comments :articleId="$route.params.id" :reply="articleOne.reply"></comments>
                 </div>
 			</el-col>
 		</el-row>
@@ -55,12 +55,12 @@ export default {
     mounted() {},
     asyncData({ app, router, store }) {
         return Promise.all([
-            store.dispatch("fetchEssayFindOne", app.$route.params.id)
+            store.dispatch("fetchArticleDetails", app.$route.params.id)
         ])
     },
     computed: {
        ...mapState([
-           "EssayOne"
+           "articleOne"
        ])
     },
     filters: {

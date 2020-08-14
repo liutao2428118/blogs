@@ -1,7 +1,7 @@
 export default {
-  categoryArr: [],
-  essayList: {},
-  essayTop: [],
-  EssayOne: {},
-  user: null,
+    classifyArr: [],
+    articleYearData: {},
+    articleTop: [],
+    articleOne: {},
+    user: null,
 }

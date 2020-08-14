@@ -3,7 +3,7 @@ import axios from 'axios'
 const ERR_OK = 200
 
 const request = axios.create({
-    // baseURL: '/'
+    baseURL: '/api'
 })
 
 const handleRequest = (request) => {
@@ -20,10 +20,10 @@ const handleRequest = (request) => {
 }
 
 export default {
-    visitorLogin(user) {
+    login(user) {
         return handleRequest(request.post('/client/login', user))
     },
-    submitComments(data) {
-        return handleRequest(request.post('/client/comments', data))
+    submitReply(data) {
+        return handleRequest(request.post('/reply/add-reply', data))
     }
 }
