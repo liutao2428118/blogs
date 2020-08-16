@@ -43,11 +43,15 @@ export async function addClassify(body) {
  * @param {*} body 
  */
 export async function updateClassify(body) {
-    const doc = await Classify
-        .findByIdAndUpdate({ _id: ObjectId(body._id) }, body)
-        .exec()
 
-    if (!doc) return false
+    try {
+        const doc = await Classify
+            .findByIdAndUpdate({ _id: ObjectId(body._id) }, body)
+            .exec()
 
-    return doc
+        return doc
+    } catch (error) {
+        throw error
+    }
+
 }

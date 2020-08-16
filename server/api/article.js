@@ -34,36 +34,16 @@ export async function getTopArticle() {
  * @param {String} id 文章id
  */
 export async function getArticledOne(id) {
-    const essayOne = await Article
-        .findOne({ _id: ObjectId(id) })
-        .populate({
-            path: 'reply',
-            populate: {
-                path: 'from to',
-                select: 'username'
-            }
-        })
-        .exec()
+    try {
+        const article = await Article
+            .findOne({ _id: ObjectId(id) })
+            .exec()
 
-    let { reply } = essayOne
+        return article
+    } catch (error) {
+        throw error
+    }
 
-    let arr = []
-
-    R.map(i => {
-        if (i.fatherId === id) {
-            R.map(r => {
-                if (r.fatherId === ObjectId(i._id).toString()) {
-                    i.replyTo.push(r)
-                }
-            })(reply)
-            arr.push(i)
-        }
-    })(reply)
-
-
-    essayOne.reply = arr
-
-    return essayOne
 }
 
 
@@ -216,23 +196,6 @@ export async function getArticleList(title, classifyId, skip, page_size) {
             list: articles,
             total
         }
-    } catch (error) {
-        throw error
-    }
-}
-
-
-/**
- * 获取文章详情
- */
-export async function getArticleEditOne(id) {
-
-    try {
-        const article = await Article
-            .findOne({ _id: ObjectId(id) })
-            .exec()
-
-        return article
     } catch (error) {
         throw error
     }

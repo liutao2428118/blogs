@@ -1,11 +1,54 @@
+import mongoose from 'mongoose'
+const ObjectId = mongoose.Types.ObjectId
 import api from '../api'
-import { compose } from 'ramda'
 
 
+/**
+ * 客户端文章详情
+ * @param {*} id 
+ */
+export async function clientArticleDetails(id) {
+
+    if (!ObjectId.isValid(id)) return 'id不合法'
+    try {
+        const article = await api.article.getArticledOne(id)
+
+        const replys = await api.reply.replyIdAndList(id)
+
+        const { _doc } = Object.assign({}, article)
+
+        const newReplys = [...replys]
+
+        let replyArr = []
+
+        for (let i = 0; i < newReplys.length; i++) {
+            const newReply = { ...newReplys[i] }
+
+            const replyTo = await api.reply.replyIdAndList(newReply._doc._id)
+
+            newReply._doc.replyTo = replyTo
+
+            replyArr.push(newReply._doc)
+        }
+
+        _doc.reply = replyArr
+
+        return _doc
+
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
+/**
+ * 添加文章
+ * @param {*} ctx 
+ * @param {*} next 
+ */
 export async function addArticle(ctx, next) {
     const body = ctx.request.body
-    console.log(body)
-
     try {
         const data = await api.article.addArticle(body)
 
@@ -17,6 +60,11 @@ export async function addArticle(ctx, next) {
 }
 
 
+/**
+ * 修改文章
+ * @param {*} ctx 
+ * @param {*} next 
+ */
 export async function updateArticle(ctx, next) {
     const body = ctx.request.body
     try {
@@ -30,6 +78,11 @@ export async function updateArticle(ctx, next) {
 
 }
 
+/**
+ * 前台是否显示文章
+ * @param {*} ctx 
+ * @param {*} next 
+ */
 export async function isShowArticle(ctx, next) {
     const issued = ctx.request.body.issued
     const id = ctx.request.body.id
@@ -75,18 +128,18 @@ export async function articleList(ctx, next) {
 }
 
 /**
- * 文章详情
+ * 后台编辑文章详情
  * @param {*} ctx 
  * @param {*} next 
  */
 export async function articleDetails(ctx, next) {
     const id = ctx.request.body.id
 
-    if(!id) return ctx.throw(412, 'id不能为空')
+    if (!ObjectId.isValid(id)) return ctx.throw(412, 'id不合法！')
 
     try {
         const data = await api.article
-            .getArticleEditOne(id)
+            .getArticledOne(id)
 
         return ctx.success('获取成功', data)
     } catch (error) {

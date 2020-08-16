@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class="reply-content">
         <div v-clickoutside="hideReplyBtn" @click="inputFocus" class="my-reply">
             <el-avatar class="icon" size="medium" icon="el-icon-user-solid"></el-avatar>
-            <span class="username">{{user && user.username}}</span>
+            <!-- <span class="username">{{user && user.username}}</span> -->
             <div class="reply-info">
                 <div
                     contenteditable="true"
@@ -15,68 +15,39 @@
                 ></div>
             </div>
             <div class="reply-btn-box" v-show="btnShow">
-                <el-button class="reply-btn" size="medium" @click="sendComment" type="primary">发表评论</el-button>
+                <el-button class="reply-btn" size="medium" @click="sendComment" type="primary">评论</el-button>
             </div>
         </div>
-        <div v-for="(item,i) in reply" :key="i" class="author-title reply-father">
+        <!-- 评论列表 -->
+        <div v-for="(one,index) in reply" :key="one._id" class="author-title to-title reply-father">
             <el-avatar class="icon" size="medium" icon="el-icon-user-solid"></el-avatar>
             <div class="author-info">
-                <span class="author-name">{{item.from && item.from.username}}</span>
-                <span class="author-time">{{item.createdAt | dateStr}}</span>
+                <span class="author-name">{{one.from && one.from.username}}</span>
+            </div>
+            <div class="talk-box">
+                <p>
+                    <span class="reply">{{one.content}}</span>
+                </p>
             </div>
             <div class="icon-btn">
+                <span class="author-time">{{one.createdAt | dateStr}}</span>
                 <span
-                    :class="{active: hash === item._id}"
-                    :id="item._id"
-                    @click="showReplyInput(i, item.from.username, item.from._id, item._id)"
+                    class="comment"
+                    :class="{active: hash === one._id}"
+                    :id="one._id"
+                    @click="showReplyInput(one.from.username, one.from._id, one._id, one._id)"
                 >
                     <i class="iconfont el-icon-s-comment"></i>
                     回复
                 </span>
-                <i class="iconfont el-icon-caret-top"></i>
             </div>
-            <div class="talk-box">
-                <p>
-                    <span class="reply">{{item.content}}</span>
-                </p>
-            </div>
-            <div class="reply-box">
-                <div v-for="(reply,j) in item.replyTo" :key="j" class="author-title">
-                    <el-avatar class="icon" size="medium" icon="el-icon-user-solid"></el-avatar>
-                    <div class="author-info">
-                        <span class="author-name">{{reply.from.username}}</span>
-                        <span class="author-time">{{reply.createdAt | dateStr}}</span>
-                    </div>
-                    <div class="icon-btn">
-                        <span
-                            :class="{active: hash === reply._id}"
-                            :id="reply._id"
-                            @click="showReplyInput(i,reply.from.username, reply.from._id, item._id)"
-                        >
-                            <i class="iconfont el-icon-s-comment"></i>
-                            回复
-                        </span>
-                        <i class="iconfont el-icon-caret-top"></i>
-                    </div>
-                    <div class="talk-box">
-                        <p>
-                            <span>
-                                回复
-                                <span class="to-name">{{reply.to.username}}</span> :
-                            </span>
-                            <span class="reply">{{reply.content}}</span>
-                        </p>
-                    </div>
-                    <div class="reply-box"></div>
-                </div>
-            </div>
-            <div v-show="i === showIndex" class="my-reply my-comment-reply">
-                <i class="el-icon-user-solid icon"></i>
+            <!-- 回复input -->
+            <div v-show="showId === one._id" class="my-reply" style="margin: 10px 50px;">
                 <div class="reply-info">
                     <div
                         contenteditable="true"
                         spellcheck="false"
-                        :placeholder="'回复' + placeholder"
+                        :placeholder="'回复' + toName + '...'"
                         @input="onDivInput($event)"
                         class="reply-input reply-comment-input"
                     ></div>
@@ -85,9 +56,59 @@
                     <el-button
                         class="reply-btn"
                         size="medium"
-                        @click="sendCommentReply(i)"
+                        @click="sendCommentReply(index)"
                         type="primary"
-                    >发表评论</el-button>
+                    >评论</el-button>
+                </div>
+            </div>
+            <!-- 评论-to -->
+            <div class="reply-box" style="margin: 0 50px;">
+                <div v-for="two in one.replyTo && one.replyTo" :key="two._id" class="author-title">
+                    <el-avatar class="icon" size="medium" icon="el-icon-user-solid"></el-avatar>
+                    <div class="author-info">
+                        <span class="author-name">{{two.from.username}}</span>
+                    </div>
+                    <div class="talk-box">
+                        <p>
+                            <span v-show="one.from._id !== two.to._id">
+                                回复
+                                <span class="to-name">{{two.to.username}}</span> :
+                            </span>
+                            <span class="reply">{{two.content}}</span>
+                        </p>
+                    </div>
+                    <div class="icon-btn">
+                        <span class="author-time">{{two.createdAt | dateStr}}</span>
+                        <span
+                            class="comment"
+                            :class="{active: hash === two._id}"
+                            :id="two._id"
+                            @click="showReplyInput(two.from.username, two.from._id, one._id, two._id)"
+                        >
+                            <i class="iconfont el-icon-s-comment"></i>
+                            回复
+                        </span>
+                    </div>
+                     <!-- 回复input -->
+                    <div v-show="showId === two._id" class="my-reply my-comment-reply">
+                        <div class="reply-info">
+                            <div
+                                contenteditable="true"
+                                spellcheck="false"
+                                :placeholder="'回复' + toName+ '...'"
+                                @input="onDivInput($event)"
+                                class="reply-input reply-comment-input"
+                            ></div>
+                        </div>
+                        <div class="reply-btn-box">
+                            <el-button
+                                class="reply-btn"
+                                size="medium"
+                                @click="sendCommentReply(index)"
+                                type="primary"
+                            >评论</el-button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -108,6 +129,7 @@
     </div>
 </template>
 <script>
+import Cookies from 'js-cookie'
 import { mapActions } from "vuex";
 const clickoutside = {
     // 初始化指令
@@ -138,31 +160,26 @@ export default {
     name: "ArticleComment",
     data() {
         return {
-            user: {},
+            user: null,
             form: {
                 username: "",
                 email: "",
             },
+            btnShow: false,
+            dialogVisible: false,
+            toName: "",
+            toId: "",
+            replyId: "",
+            hash: "",
+            showId: '',
             rules: {
                 username: [
                     { required: true, message: "取个名字吧", trigger: "blur" },
                 ],
                 email: [
-                    {
-                        required: true,
-                        message: "请填写下邮箱",
-                        trigger: "blur",
-                    },
-                ],
-            },
-            showIndex: -1,
-            btnShow: false,
-            dialogVisible: false,
-            toName: "",
-            toId: "",
-            superiorId: "",
-            placeholder: "",
-            hash: "",
+                    {required: true,message: "请填写下邮箱",trigger: "blur"}
+                ]
+            }
         };
     },
     props: {
@@ -181,8 +198,10 @@ export default {
         this.hash =
             window.location.hash.length > 0
                 ? window.location.hash.substring(1)
-                : "";
-        this.user = JSON.parse(window.localStorage.getItem("user"));
+                : ""
+        this.userKey = Cookies.get('userKey')
+        const user = Cookies.get('user')
+        if(user) this.user = JSON.parse(user)
     },
     filters: {
         dateStr(date) {
@@ -222,30 +241,39 @@ export default {
         },
     },
     methods: {
+        /**
+         * 登录
+         */
         submit(formName) {
-            this.$refs[formName].validate((valid) => {
+            this.$refs[formName].validate(async (valid) => {
                 if (valid) {
-                    this.login(this.form)
+
+                    await this.login(this.form)
+
                     this.$message({
                         showClose: true,
                         type: "warning",
                         message: "登录/注册成功",
                     });
+
                     this.dialogVisible = false;
                     window.location.reload();
                 } else {
                     return false;
                 }
-            });
+            })
         },
+        /**
+         * 焦点改变样式
+         */
         inputFocus() {
             var replyInput = document.getElementById("replyInput");
             replyInput.style.padding = "8px 8px";
-            replyInput.style.border = "2px solid blue";
+            replyInput.style.border = "1px solid #007fff";
             replyInput.focus();
         },
         showReplyBtn() {
-            if (!this.user) {
+            if (!this.userKey) {
                 this.dialogVisible = true;
             } else {
                 this.btnShow = true;
@@ -256,20 +284,23 @@ export default {
             replyInput.style.padding = "10px";
             replyInput.style.border = "none";
         },
-        showReplyInput(i, name, toId, id) {
-            if (!this.user) {
-                this.dialogVisible = true;
-                return;
+        /**
+         * 回复按钮
+         */
+        showReplyInput(username, toId, replyId, showId) {
+            if (!this.userKey) {
+                this.dialogVisible = true
+                return false
             }
-            this.placeholder = name;
-            this.showIndex = i;
-            this.toName = name;
-            this.toId = toId;
-            this.superiorId = id;
-
-            console.log("toName:" + name, "toId:" + toId, "superiorId:" + id);
+            this.toName = username
+            this.toId = toId
+            this.replyId = replyId
+            this.showId = showId
         },
-        sendComment() {
+        /**
+         * 评论文章
+         */
+        async sendComment() {
             if (!this.replyComment) {
                 this.$message({
                     showClose: true,
@@ -278,33 +309,38 @@ export default {
                 });
                 return;
             }
+
             let data = {
                 articleId: this.articleId,
                 from: this.user._id,
                 to: this.articleId,
-                fatherId: this.articleId,
+                replyId: this.articleId,
                 content: this.replyComment,
-                createdAt: new Date().getTime(),
-            };
-            this.submitReply(data);
+                createdAt: new Date().getTime()
+            }
 
-            let input = document.getElementById("replyInput");
-            input.innerHTML = "";
-            this.replyComment = "";
+            await this.submitReply(data)
+
+            let input = document.getElementById("replyInput")
+            input.innerHTML = ""
+            this.replyComment = ""
 
             data.from = {
                 username: this.user.username,
                 _id: this.user._id,
             };
 
-            this.reply.push(data);
+            this.reply.push(data)
 
             this.$message({
                 message: "评论成功！",
                 type: "success",
-            });
+            })
         },
-        sendCommentReply(i) {
+        /**
+         * 回复评论
+         */
+       async sendCommentReply(i) {
             if (!this.replyComment) {
                 this.$message({
                     showClose: true,
@@ -318,15 +354,16 @@ export default {
                 articleId: this.articleId,
                 from: this.user._id,
                 to: this.toId,
-                fatherId: this.superiorId,
+                replyId: this.replyId,
                 content: this.replyComment,
                 createdAt: new Date().getTime(),
-            };
-            this.submitReply(data);
+            }
 
-            let input = document.getElementsByClassName("reply-comment-input");
-            input.innerHTML = "";
-            this.replyComment = "";
+            await this.submitReply(data);
+
+            let input = document.getElementsByClassName("reply-comment-input")
+            input.innerHTML = ""
+            this.replyComment = ""
 
             data.from = {
                 username: this.user.username,
@@ -336,9 +373,10 @@ export default {
             data.to = {
                 username: this.toName,
                 _id: this.toId,
-            };
+            }
 
-            this.reply[i].replyTo.push(data);
+            this.reply[i].replyTo.push(data)
+            
 
             this.$message({
                 message: "回复成功！",
@@ -354,6 +392,9 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
+.reply-content {
+    margin-top:20px;
+}
 .my-reply {
     padding: 10px;
     background-color: #fafbfc;
@@ -372,7 +413,10 @@ export default {
     .reply-info {
         display: inline-block;
         margin-left: 5px;
+        border: 1px solid #f1f1f1;
         width: 90%;
+        background-color: #fff;
+        border-radius: 4px;
 
         @media screen and (max-width: 1200px) {
             width: 80%;
@@ -396,7 +440,7 @@ export default {
 
             &:focus {
                 padding: 8px 8px;
-                border: 2px solid blue;
+                border: 1px solid  #007fff;
                 box-shadow: none;
                 outline: none;
             }
@@ -406,6 +450,7 @@ export default {
     .reply-btn-box {
         height: 25px;
         margin: 10px 0;
+        margin-right: 40px;
 
         .reply-btn {
             position: relative;
@@ -417,19 +462,22 @@ export default {
 
 .my-comment-reply {
     margin-left: 50px;
-
-    .reply-input {
-        width: flex;
-    }
+    margin-top: 20px;
+    background-color: #fff;
+    border: 1px solid #f1f1f2;
 }
 
 .author-title:not(:last-child) {
     border-bottom: 1px solid rgba(178, 186, 194, 0.3);
 }
 
+.to-title {
+    margin-left: 40px;
+}
+
 .author-title {
     padding: 10px;
-
+   
     .header-img {
         display: inline-block;
         vertical-align: top;
@@ -451,23 +499,32 @@ export default {
         }
 
         .author-name {
-            color: #576b95;
-            font-size: 18px;
+            color: #333;
+            font-size: 14px;
             padding: 10px 0;
         }
+
+        
+    }
+
+    .icon-btn {
+        padding: 0 !important;
+        margin: 0 50px;
+        color: #8a93a0;
+        font-size: 14px;
+        margin-top: 10px;
+        margin-bottom: 10px;
 
         .author-time {
             font-size: 14px;
         }
-    }
 
-    .icon-btn {
-        width: 30%;
-        padding: 0 !important;
-        float: right;
+        .comment {
+            float: right;
+        }
 
         @media screen and (max-width: 1200px) {
-            width: 20%;
+            // width: 20%;
             padding: 7px;
         }
 
@@ -486,10 +543,11 @@ export default {
 
     .talk-box {
         margin: 0 50px;
+        font-size: 14px;
 
         .to-name {
-            color: #576b95;
-            font-size: 18px;
+            color: #406599;
+            font-size: 14px;
             padding: 10px 0;
         }
 
@@ -498,14 +556,14 @@ export default {
         }
 
         .reply {
-            font-size: 16px;
-            color: #000;
+            font-size: 14px;
+            color: #505050;
         }
     }
 
     .reply-box {
         margin: 10px 0 0 50px;
-        background-color: #efefef;
+        background-color: #fafbfc;
     }
 }
 

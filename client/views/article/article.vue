@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<el-row class="main" type="flex" justify="center">
-			<el-col :span="16">
+			<el-col :span="16" class="col">
 				<div class="artcle-info" :style="{backgroundImage: `url('${articleOne.imageUrl}')`}">
 					<h2 class="text-center"><strong>{{articleOne.title}}</strong></h2>
 					<!-- 描述：文章信息 -->
@@ -23,7 +23,7 @@
 				<hr />
 
                 <!-- 内容 -->
-				<div id="artcle-content" v-html="articleOne.content" ></div>
+				<div id="artcle-content" v-html="content" ></div>
 
 				<div id="statement">
 					<div class="item"></div>
@@ -34,7 +34,7 @@
 				</div>
                 <div class="comments">
                     <div class="title">评论区</div>
-                    <comments :articleId="$route.params.id" :reply="articleOne.reply"></comments>
+                    <reply :articleId="$route.params.id" :reply="articleOne.reply"></reply>
                 </div>
 			</el-col>
 		</el-row>
@@ -43,16 +43,24 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import MarkdownIt  from 'markdown-it'
 import moment from "moment"
-import Comments from "../../components/comments/comments.vue"
+import Reply from "../../components/reply/reply.vue"
+
+const md = new MarkdownIt()
+
 export default {
     name: "artile",
     data() {
-        return {};
+        return {
+            content: ''
+        };
     },
     created() {},
     beforeMount() {},
-    mounted() {},
+    mounted() {
+        this.content = md.render(this.articleOne.content);
+    },
     asyncData({ app, router, store }) {
         return Promise.all([
             store.dispatch("fetchArticleDetails", app.$route.params.id)
@@ -73,12 +81,15 @@ export default {
     },
 
     components: {
-       Comments
+       Reply
     }
 };
 </script>
 
 <style lang="stylus" scoped>
+.col
+    background-color #fff
+    padding 20px
 .artcle-info 
     padding: 20px
     margin-bottom: 40px

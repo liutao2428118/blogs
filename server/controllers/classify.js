@@ -26,11 +26,16 @@ export async function addClassify(ctx, next) {
 export async function updateClassify(ctx, next) {
     const body = ctx.request.body
 
-    const data = await api.classify.updateClassify(body)
+    try {
+        const data = await api.classify.updateClassify(body)
 
-    if (!data) return ctx.fail('分类不存在')
+        return ctx.success('修改成功', data)
+    } catch (error) {
+        return ctx.fail('修改失败')
+        throw error
+    }
 
-    return ctx.success('修改成功', data)
+
 }
 
 

@@ -5,14 +5,14 @@ import { replyList, addReply, deleteReply, replyMessage, setReplyRead } from '..
 @AuthAll
 class ReplyController {
 
-    @Post('/reply-list')
+    @Get('/reply-list')
     async replyList(ctx, next) {
         await replyList(ctx, next)
     }
 
     @Post('/add-reply')
     async addReply(ctx, next) {
-       await addReply(ctx, next)
+        await addReply(ctx, next)
     }
 
     @Post('/delete-reply')
@@ -20,7 +20,7 @@ class ReplyController {
         await deleteReply(ctx, next)
     }
 
-    @Post('/reply-message')
+    @Get('/reply-message')
     async replyMessage(ctx, next) {
         await replyMessage(ctx, next)
 

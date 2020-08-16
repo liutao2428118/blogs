@@ -14,18 +14,14 @@ const articleSchema = new Schema({
     reprint: Number, // 是否转载 1原创 2转载
     reprintUrl: String, // 转载链接
     imageUrl: String,
-    reply: [{ // 评论回复
-        type: ObjectId,
-        ref: 'Reply'
-    }],
     pageview: { // 阅读数
         type: Number,
         default: 0
-    }, 
+    },
     like: { // 点赞数
         type: Number,
         default: 0
-    }, 
+    },
     createdAt: {
         type: Date,
         default: Date.now()
@@ -39,7 +35,7 @@ const articleSchema = new Schema({
 // 保存前的中间件
 articleSchema.pre('save', function (next) {
     if (this.isNew) {
-        this.createdAt = this.updatedAt = Date.now()
+        // this.createdAt = this.updatedAt = Date.now()
     } else {
         this.updatedAt = Date.now()
     }

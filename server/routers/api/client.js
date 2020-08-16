@@ -8,14 +8,17 @@ class ClientController {
     async login(ctx, next) {
         let body = ctx.request.body
 
+        const user = await api.user.visitorLogin(body)
+
+        if (!user) return ctx.fail('登录失败')
+
         ctx.session.user = {
             username: body.username
         }
 
-        const user = await api.user.visitorLogin(body)
 
         return ctx.success('登录成功', user)
     }
 
-   
+
 }

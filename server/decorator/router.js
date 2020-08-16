@@ -73,9 +73,8 @@ const middleware = async (ctx, next) => {
     if (!ctx.session.user) {
         return (
             ctx.body = {
-                success: false,
                 code: 401,
-                err: '登录信息失效，重新登录'
+                msg: '登录信息失效，重新登录'
             }
         )
     }
@@ -114,15 +113,20 @@ export const Auth = convert(middleware)
 export const Required = rules => convert(async (ctx, next) => {
     let errors = []
 
+    let errorVal = []
+
     const passRules = R.forEachObjIndexed(
         (value, key) => {
             errors = R.filter(i => !R.has(i, ctx.request[key]))(value)
+            errorVal = R.filter(j => ctx.request[key][j] === '')(value)
         }
     )
 
     passRules(rules)
 
     if (errors.length) ctx.throw(412, `${errors.join(', ')} 参数缺失`)
+
+    if (errorVal.length) ctx.throw(412, `${errorVal.join(', ')} 参数不能为空`)
 
     await next()
 })

@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import { MessageBox, Message } from 'element-ui'
+
 const ERR_OK = 200
 
 const request = axios.create({
@@ -12,8 +14,16 @@ const handleRequest = (request) => {
             const res = resp.data
             if (res.code === ERR_OK) {
                 resolve(res.data)
+            } else {
+                reject()
+                Message({
+                    message: res.msg || 'Error',
+                    type: 'error',
+                    duration: 5 * 1000
+                })
             }
         }).catch(err => {
+            reject(err)
             console.log('我是err:', err)
         })
     })

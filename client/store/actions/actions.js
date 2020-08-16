@@ -1,4 +1,6 @@
+import Cookies from 'js-cookie'
 import apiModel from 'apiModel'
+
 
 export default {
     /**
@@ -47,9 +49,7 @@ export default {
     login({ commit }, user) {
         return apiModel.login(user).then(data => {
             commit('doLogin', data)
-
-            window.localStorage.setItem("user", JSON.stringify(data))
-
+            Cookies.set('user', JSON.stringify(data))
         })
     },
     /**

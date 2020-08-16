@@ -9,10 +9,14 @@ const Article = mongoose.model('Article')
  * 获取评论回复列表
  * @param {Object} body 客户端传来的全部数据
  */
-export async function getReplyList(body) {
-    const page = body.page - 1 || 0
-
-    const page_size = body.page_size || 10
+export async function getReplyList(title, username, skip, page_size) {
+    const reg = new RegExp(title, 'i') //不区分大小写
+    // const reg2 = new RegExp(username, 'i')
+    const condition = {  //查询条件
+        $or: [
+            { title: { $regex: reg } }
+        ]
+    }
     try {
         const total = await Reply
             .count()
@@ -24,7 +28,7 @@ export async function getReplyList(body) {
                 path: 'from to',
                 select: 'username'
             })
-            .skip(page * page_size)
+            .skip(skip)
             .limit(page_size)
             .sort({ '_id': -1 })
             .exec()
@@ -110,15 +114,35 @@ export async function getNewReply() {
  * 将评论回复成已读
  * @param {*} body 
  */
-export async function updateReplyToRead(body) {
-    console.log(body)
+export async function updateReplyToRead(replyIds, isRead) {
     try {
         const doc = await Reply
-            .update({ _id: { $in: body.replyIds } }, { $set: { isRead: true } }, { multi: true })
+            .update({ _id: { $in: replyIds } }, { $set: { isRead: true } }, { multi: true })
             .exec()
 
         return doc
     } catch (error) {
 
+    }
+}
+
+
+/**
+ * 根据文章replyId获取该文章下的所有评论
+ * @param {ObjectId} id 文章ID
+ */
+export async function replyIdAndList(id) {
+    try {
+        const replys = await Reply
+            .find({ replyId: ObjectId(id) })
+            .populate({
+                path: 'from to',
+                select: 'username'
+            })
+            .exec()
+
+        return replys
+    } catch (error) {
+        throw error
     }
 }
