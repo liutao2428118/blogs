@@ -20,7 +20,7 @@
                         <span class="article-views">
                             <i class="el-icon-view"></i>
                             阅读量：
-                            <span>{{articleOne.pageview}}</span>万
+                            <span>{{articleOne.pageview}}</span>
                         </span>
                     </div>
                     <p class="abstract">{{articleOne.outline}}</p>

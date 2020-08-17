@@ -112,7 +112,7 @@
                 </div>
             </div>
         </div>
-        <el-dialog title="注册/登录" :visible.sync="dialogVisible" width="400px" top="40vh">
+        <el-dialog title="注册/登录" :visible.sync="dialogVisible" :close-on-click-modal="false" width="400px" top="20vh">
             <el-form ref="form" :model="form" :rules="rules" label-width="80px">
                 <el-form-item label="取个名字" prop="username">
                     <el-input v-model="form.username"></el-input>

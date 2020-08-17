@@ -33,9 +33,14 @@ export async function replyList(ctx, next) {
  */
 export async function addReply(ctx, next) {
     let data = ctx.request.body
-    console.log(data)
 
     const reply = await api.reply.addReply(data)
+
+    const message = await api.message
+        .setMessage({
+            type: 'reply',
+            topicId: data.articleId
+        })
 
     if (!reply) {
         ctx.fail('添加失败')

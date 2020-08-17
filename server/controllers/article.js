@@ -10,8 +10,13 @@ import api from '../api'
 export async function clientArticleDetails(id) {
 
     if (!ObjectId.isValid(id)) return 'id不合法'
+
     try {
         const article = await api.article.getArticledOne(id)
+
+        article.pageview += 1
+
+        await article.save()
 
         const replys = await api.reply.replyIdAndList(id)
 
