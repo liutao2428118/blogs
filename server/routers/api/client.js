@@ -13,7 +13,9 @@ class ClientController {
         if (!user) return ctx.fail('登录失败')
 
         ctx.session.user = {
-            username: body.username
+            _id: user._id,
+            role: user.role,
+            username:user.username
         }
 
 

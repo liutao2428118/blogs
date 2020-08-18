@@ -41,6 +41,12 @@ export default {
             commit('setArticleOne', data)
         })
     },
+
+    fetchLeaveList({ commit }) {
+        return apiModel.getLeaveList().then(data => {
+            commit('setLeaveData', data)
+        })
+    },
     /**
      * 登录
      * @param {*} param0 
@@ -61,5 +67,10 @@ export default {
         return apiModel.submitReply(data).then(data => {
             // commit('doLogin', data)
         })
+    },
+
+    addLeave({ commit }, data) {
+        return apiModel.addLeave(data)
     }
+        
 }

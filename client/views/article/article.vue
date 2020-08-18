@@ -47,22 +47,12 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-import MarkdownIt from "markdown-it";
-import moment from "moment";
-import Reply from "../../components/reply/reply.vue";
+import { mapState, mapActions } from "vuex"
+import MarkdownIt from "markdown-it"
+import moment from "moment"
+import Reply from "../../components/reply/reply.vue"
 
-const md = MarkdownIt({
-    highlight: function (str, lang) {
-        if (lang && hljs.getLanguage(lang)) {
-            try {
-                return hljs.highlight(lang, str, true).value;
-            } catch (__) {}
-        }
-
-        return ""; // 使用额外的默认转义
-    }
-});
+const md = MarkdownIt()
 
 export default {
     name: "artile",
@@ -110,11 +100,11 @@ export default {
     background-size: 100% 100%;
 
     .article-time, .article-views {
-        color: #eee;
+        color: #444;
     }
 
     .abstract {
-        color: #ffffff;
+        color: #444;
         border-left: 3px solid #F56C6C;
         padding: 10px;
         background-color: rgba(126, 129, 135, 0.3);
@@ -124,7 +114,7 @@ export default {
         padding: 20px;
         line-height: 30px;
         font-size: 16px;
-        color: #000;
+        color: #444;
     }
 }
 

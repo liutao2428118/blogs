@@ -35,5 +35,8 @@ export default {
     },
     submitReply(data) {
         return handleRequest(request.post('/reply/add-reply', data))
+    },
+    addLeave(data) {
+        return handleRequest(request.post('/leave/add-leave', data))
     }
 }

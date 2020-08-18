@@ -17,6 +17,7 @@ export async function getTopArticle() {
                 path: 'classify',
                 select: '_id name'
             })
+            .limit(10)
             .exec()
 
         return essayTop
@@ -200,3 +201,20 @@ export async function getArticleList(title, classifyId, skip, page_size) {
         throw error
     }
 }
+
+/**
+ * 根据时间戳获取最新的浏览列表
+ */
+
+ export async function getBrowseLsit(timeStamp) {
+    const preDate = new Date(new Date().getTime() - 24*60*60*1000) 
+     try {
+        const articles = await Article
+            .find({browseAt: {$gt: preDate}}, {content:0 })
+            .exec()
+
+            return articles
+     } catch (error) {
+         
+     }
+ }

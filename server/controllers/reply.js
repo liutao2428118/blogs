@@ -32,21 +32,34 @@ export async function replyList(ctx, next) {
  * @param {*} next 
  */
 export async function addReply(ctx, next) {
-    let data = ctx.request.body
 
-    const reply = await api.reply.addReply(data)
+    const {content, articleId, from, to, replyId } = ctx.request.body
 
-    const message = await api.message
-        .setMessage({
-            type: 'reply',
-            topicId: data.articleId
-        })
-
-    if (!reply) {
-        ctx.fail('添加失败')
+    const data = {
+        articleId,
+        from,
+        to,
+        replyId
     }
 
-    ctx.success('添加成功', reply)
+    for(let key in data) {
+        if(!ObjectId.isValid(data[key])) return ctx.throw(412, `${key}不合法！`)
+    }
+
+    data.content = content
+
+    try {
+        const reply = await api.reply.addReply(data)
+
+        if (!reply) {
+            return ctx.fail('添加失败')
+        }
+    
+        return ctx.success('添加成功', reply)
+    } catch (error) {
+        ctx.throw(500, `服务器内部错误${error}`)
+        throw error
+    }
 }
 
 /**

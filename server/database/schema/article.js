@@ -22,6 +22,9 @@ const articleSchema = new Schema({
         type: Number,
         default: 0
     },
+    browseAt: {
+        type: Date
+    },
     createdAt: {
         type: Date,
         default: Date.now()

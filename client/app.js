@@ -8,7 +8,11 @@ import 'github-markdown-css/github-markdown.css'
 import './assets/styles/global.styl'
 import App from './App.vue'
 
+import { dateStr } from './assets/js/filter'
+
 Vue.use(ElementUI);
+
+Vue.filter('dateStr', dateStr)
 
 export default () => {
     const router = createRouter()

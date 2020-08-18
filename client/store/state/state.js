@@ -3,5 +3,6 @@ export default {
     articleYearData: {},
     articleTop: [],
     articleOne: {},
+    leaveData: [],
     user: null,
 }

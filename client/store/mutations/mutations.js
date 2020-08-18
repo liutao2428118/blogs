@@ -14,4 +14,7 @@ export default {
   doLogin (state, data) {
     state.user = data
   },
+  setLeaveData (state, data) {
+    state.leaveData = data
+  }
 }

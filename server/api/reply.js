@@ -49,21 +49,11 @@ export async function getReplyList(title, username, skip, page_size) {
  */
 export async function addReply(body) {
     try {
-        const articleDoc = await Article
-            .findOne({ _id: ObjectId(body.articleId) })
-            .exec()
+        const reply = new Reply(body)
 
-        const replyDoc = new Reply(body)
-
-        await replyDoc.save()
-
-        let { reply } = articleDoc
-
-        reply.push(replyDoc._id)
-
-        await articleDoc.save()
-
-        return replyDoc
+        await reply.save()
+    
+        return reply
     } catch (error) {
         console.log(error)
     }

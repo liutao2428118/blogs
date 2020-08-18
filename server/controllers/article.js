@@ -16,6 +16,8 @@ export async function clientArticleDetails(id) {
 
         article.pageview += 1
 
+        article.browseAt =  Date.now()
+
         await article.save()
 
         const replys = await api.reply.replyIdAndList(id)
@@ -151,4 +153,13 @@ export async function articleDetails(ctx, next) {
         return ctx.fail('获取失败')
         throw error
     }
+}
+
+/**
+ * 获取最新浏览列表
+ */
+export async function getBrowseList(ctx, next) {
+    const data = await api.article.getBrowseLsit()
+
+    return ctx.success('获取成功', data)
 }

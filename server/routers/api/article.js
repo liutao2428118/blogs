@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Put, Auth, AuthAll, Required } from '../../decorator/router'
-import { addArticle, updateArticle, isShowArticle, articleList, articleDetails } from '../../controllers/article'
+import { addArticle, updateArticle, isShowArticle, articleList, articleDetails, getBrowseList } from '../../controllers/article'
 
 @Controller('/article')
 @AuthAll
@@ -42,5 +42,10 @@ class ArticleController {
     @Post('/article-one')
     async articleDetails(ctx, next) {
         await articleDetails(ctx, next)
+    }
+
+    @Get('/get-browse-list')
+    async getBrowseList(ctx, next) {
+        await getBrowseList(ctx, next)
     }
 }
