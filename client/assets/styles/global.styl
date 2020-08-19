@@ -1,28 +1,59 @@
-html, body{
-  margin 0
-  padding 0
-  width 100%
-  height 100%
-}
-body{
-//   background-image: url('../images/bg.jpeg')
-  background-size: cover
-  background-position: center;
-//   font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 16px;
-  color: #4d4d4d;
-  font-smoothing: antialiased;
-//   font-weight: 300;
+body {
+  height: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
 }
 
-* {
-  box-sizing: border-box
+label {
+  font-weight: 700;
 }
 
-a {
-     text-decoration: none
-     color: #08c
+html {
+  height: 100%;
+  box-sizing: border-box;
 }
+
+#app {
+  height: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+div:focus {
+  outline: none;
+}
+
+.clearfix {
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+}
+
+ul,li{ padding:0;margin:0;list-style:none}
 
 .fade-enter-active, .fade-leave-active
   transition: opacity .5s

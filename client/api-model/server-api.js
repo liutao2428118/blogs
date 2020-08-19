@@ -16,7 +16,7 @@ export default {
     getArticleDetails(id) {
         return clientArticleDetails(id)
     },
-    getLeaveList() {
-        return getLeaveList()
+    getLeaveList(data) {
+        return getLeaveList(data)
     }
 }

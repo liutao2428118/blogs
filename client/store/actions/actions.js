@@ -42,9 +42,14 @@ export default {
         })
     },
 
-    fetchLeaveList({ commit }) {
-        return apiModel.getLeaveList().then(data => {
-            commit('setLeaveData', data)
+    /**
+     * 获取留言列表
+     * @param {*} param0 
+     * @param {*} data 
+     */
+    fetchLeaveList({ commit }, data) {
+        return apiModel.getLeaveList(data).then(list => {
+            commit('setLeaveData', list)
         })
     },
     /**
@@ -69,6 +74,11 @@ export default {
         })
     },
 
+    /**
+     * 添加留言
+     * @param {*} param0 
+     * @param {*} data 
+     */
     addLeave({ commit }, data) {
         return apiModel.addLeave(data)
     }

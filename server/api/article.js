@@ -12,7 +12,7 @@ export async function getTopArticle() {
     // "like": { $gt: 0 }
     try {
         const essayTop = await Article
-            .find({})
+            .find({}, {content:0})
             .populate({
                 path: 'classify',
                 select: '_id name'

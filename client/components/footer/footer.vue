@@ -5,27 +5,27 @@
                 <el-col :span="8" class="item-col">
                     <div class="title">快速通道</div>
                     <div class>
-                        <a href="#" class="out-link">码云</a>
+                        <a href="https://gitee.com/tommy-tao" class="out-link" target="_Blank">码云</a>
                     </div>
                     <div class>
-                        <a href="#" class="out-link">CSDN</a>
+                        <a href="https://juejin.im/user/1943592290229719/posts" class="out-link" target="_Blank">掘金</a>
                     </div>
                     <div class>
-                        <a href="#" class="out-link">后台管理</a>
+                        <a href="#" class="out-link" target="_Blank">后台管理</a>
                     </div>
                 </el-col>
                 <el-col :span="8" class="item-col weside">
                     <div class="item">
                         <i class="el-icon-caret-right"></i>
-                        寻找诗和远方
+                        寻寻觅觅
                     </div>
                     <div class="item">
                         <i class="el-icon-caret-right"></i>
-                        liutao2428118@163.com
+                        邮箱 liutao2428118@163.com
                     </div>
                     <div class="item">
                         <i class="el-icon-caret-right"></i>
-                        © tao.lt-博客 | 粤ICP备18035899号-1
+                        © 个人网络日志站 | 粤ICP备18035899号-1
                     </div>
                 </el-col>
             </el-row>

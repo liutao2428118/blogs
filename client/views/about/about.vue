@@ -21,6 +21,7 @@
                         >https://www.yuque.com/kuangyedeluobu</a>
                     </div>
                 </div>
+
                 <h5 class="title">
                     <i class="el-icon-star-on"></i>
                     关于博客
@@ -34,9 +35,10 @@
                         <dt>涉及技术</dt>
                         <dd>ES6+、Vue、Vue-Router、Element-ui、Vue-ssr、axios、node、koa2、mongodb、</dd>
                         <dt>其他</dt>
-                        <dd>ssr渲染，后台Markdown编写文章，无限嵌套评论回复，后台管理员回复评论</dd>
+                        <dd>ssr渲染，后台Markdown编写文章，无限嵌套评论回复，后台管理员回复评论，图片资源上传七牛云</dd>
                     </dl>
                 </el-card>
+
                 <h5 class="title">
                     <i class="el-icon-star-on"></i>
                     给我留言
@@ -62,20 +64,38 @@
                             <el-button type="primary" @click="submitForm('formLabelAlign')">提交留言</el-button>
                         </el-form-item>
                     </el-form>
-                    <div class="leave">
-                        <div class="leave-item" v-for="(item, index) in leaveData">
+
+                    <div class="leave" id="leave">
+                        <div class="leave-item" v-for="(item, index) in leaveData.list">
                             <div class="head">
-                                <el-avatar size="small">{{item.authorId && item.authorId.username.split("")[0]}}</el-avatar>
+                                <el-avatar
+                                    size="small"
+                                >{{item.authorId && item.authorId.username.split("")[0]}}</el-avatar>
                             </div>
                             <div class="content">
-                                <div class="name">{{item.authorId && item.authorId.username}} <span>{{index+1}}楼•{{item.createdAt | dateStr}}</span> <i @click="handlerReply(item.authorId)">回复</i></div>
+                                <div class="name" :id="item._id">
+                                    {{item.authorId && item.authorId.username}}
+                                    <span>{{index+1}}楼•{{item.createdAt | dateStr}}</span>
+                                    <i @click="handlerReply(item.authorId)">回复</i>
+                                </div>
                                 <div class="content-box" v-html="item.content"></div>
                             </div>
                         </div>
                     </div>
+
+                    <el-pagination
+                        style="margin-top: 20px"
+                        background
+                        @current-change="currentChange"
+                        :current-page.sync="page"
+                        :page-size="10"
+                        layout="total, prev, pager, next"
+                        :total="leaveData.total"
+                    ></el-pagination>
                 </el-card>
             </el-col>
         </el-row>
+
         <el-dialog
             title="注册/登录"
             :visible.sync="dialogVisible"
@@ -106,6 +126,7 @@ export default {
     name: "about",
     data() {
         return {
+            page: 1,
             author: {},
             dialogVisible: false,
             form: {
@@ -143,26 +164,31 @@ export default {
             // 当被绑定的元素插入到 DOM 中时……
             inserted: function (el) {
                 // 聚焦元素
-                el.children[0].focus()
-            }
-
-        }
+                el.children[0].focus();
+            },
+        },
     },
     computed: {
         ...mapState(["leaveData"]),
     },
-    created() {
-        console.log(this.leaveData)
-    },
+    created() {},
     mounted() {
         this.userKey = Cookies.get("userKey");
         const user = Cookies.get("user");
         if (user) this.user = JSON.parse(user);
+
+        this.page = parseInt(this.$route.params.page);
     },
-    asyncData({ router, store }) {
-        return store.dispatch("fetchLeaveList");
+    asyncData({ app, router, store }) {
+        return store.dispatch("fetchLeaveList", {
+            page: app.$route.params.page,
+            page_size: 10,
+        });
     },
     methods: {
+        currentChange(page) {
+            window.location.href = `/about/${page}#leave`;
+        },
         /**
          * 登录
          */
@@ -185,11 +211,11 @@ export default {
             });
         },
         handlerReply(author) {
-            this.formLabelAlign.content = ` @${author.username}:`
+            this.formLabelAlign.content = ` @${author.username}:`;
 
-            this.author = author
+            this.author = author;
 
-            this.$refs.textarea.$el.children[0].focus()
+            this.$refs.textarea.$el.children[0].focus();
         },
         textareaFocus() {
             if (!this.userKey)
@@ -201,14 +227,18 @@ export default {
 
             this.$refs[formName].validate(async (valid) => {
                 if (valid) {
+                    const content = this.formLabelAlign.content;
 
-                    const content = this.formLabelAlign.content
+                    this.formLabelAlign.content = content.replace(
+                        "@" + this.author.username + ":",
+                        '<a href="javascript:void(0);">@' +
+                            this.author.username +
+                            "</a>&nbsp;"
+                    );
 
-                    this.formLabelAlign.content = content.replace('@' + this.author.username + ':', '<a href="javascript:void(0);"> @'+ this.author.username+'</a>')
+                    await this.addLeave(this.formLabelAlign);
 
-                    await this.addLeave(this.formLabelAlign)
-
-                    window.location.reload()
+                    window.location.reload();
                 } else {
                     return false;
                 }
@@ -241,36 +271,51 @@ export default {
     margin-top: 20px;
 }
 
-.leave
-    font-size 14px
-    border-top 1px solid #f0f0f0
-    .leave-item
-        display flex
-        width 100%
-        padding 12px 0 20px 0
-        border-bottom 1px solid #f0f0f0
-        .head
-            width 30px
-            height 30px
-            margin-right 10px
-        .content
-            flex 1
-            .name
-                color #666
-                text-decoration none
-                font-weight 600
-                span
-                    font-size 11px
-                    color #08c
-                    font-weight 400
-                i 
-                    font-size 12px
-                    color #666
-                    float right
-                    cursor pointer
-                    font-weight 400
-            .content-box
-                color #333
-                margin-top 10px
-                font-size 15px
+.leave {
+    font-size: 14px;
+    border-top: 1px solid #f0f0f0;
+
+    .leave-item {
+        display: flex;
+        width: 100%;
+        padding: 12px 0 20px 0;
+        border-bottom: 1px solid #f0f0f0;
+
+        .head {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .content {
+            flex: 1;
+
+            .name {
+                color: #666;
+                text-decoration: none;
+                font-weight: 600;
+
+                span {
+                    font-size: 11px;
+                    color: #08c;
+                    font-weight: 400;
+                }
+
+                i {
+                    font-size: 12px;
+                    color: #666;
+                    float: right;
+                    cursor: pointer;
+                    font-weight: 400;
+                }
+            }
+
+            .content-box {
+                color: #333;
+                margin-top: 10px;
+                font-size: 15px;
+            }
+        }
+    }
+}
 </style>

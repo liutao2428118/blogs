@@ -10,10 +10,10 @@
                             </h5>
                             <el-row class="art-info d-flex align-items-center justify-content-start">
                                 <div class="art-time">
-                                    <i class="el-icon-time"></i>:{{item.createdAt | dateFrm}}
+                                    <i class="el-icon-time"></i> {{item.createdAt | dateFrm}}
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <img class="tag" src="../../assets/image/tag.png" />：
+                                    <img class="tag" src="../../assets/image/tag.png" />&nbsp;
                                     <el-tag size="mini">{{item.classify && item.classify.name}}</el-tag>
                                 </div>
                             </el-row>
@@ -28,7 +28,7 @@
                                             <el-button plain>阅读全文</el-button>
                                         </a>
                                         <div class="view">
-                                            <i class="el-icon-view"></i>{{item.pageview}}
+                                            <i class="el-icon-view"></i> {{item.pageview}}
                                         </div>
                                     </div>
                                 </div>
@@ -116,7 +116,7 @@ export default {
         height: 16px
     .art-title 
         text-decoration: none
-        border-left: 3px solid #f56c6c
+        // border-left: 3px solid #f56c6c
         padding-left: 5px
         color: blue
         cursor: pointer
@@ -155,6 +155,7 @@ export default {
                 color: #aaa
 h5 
     font-size: 18px
+    margin 10px 0
 .pagination 
     background-color: #f9f9f9
 </style>

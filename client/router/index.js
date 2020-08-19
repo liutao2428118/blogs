@@ -26,7 +26,7 @@ export default () => {
                 component: archive
             },
             {
-                path: '/about',
+                path: '/about/:page',
                 name: 'about',
                 component: about
             }
