@@ -8,9 +8,12 @@
                             <h5>
                                 <a :href="/article/+item._id" class="art-title">{{item.title}}</a>
                             </h5>
-                            <el-row class="art-info d-flex align-items-center justify-content-start">
+                            <el-row
+                                class="art-info d-flex align-items-center justify-content-start"
+                            >
                                 <div class="art-time">
-                                    <i class="el-icon-time"></i> {{item.createdAt | dateFrm}}
+                                    <i class="el-icon-time"></i>
+                                    {{item.createdAt | dateFrm}}
                                 </div>
                                 <div class="d-flex align-items-center">
                                     <img class="tag" src="../../assets/image/tag.png" />&nbsp;
@@ -24,11 +27,12 @@
                                 <div class="side-abstract">
                                     <div class="art-abstract">{{item.outline}}</div>
                                     <div class="art-more">
-                                        <a :href="/article/+item._id" >
+                                        <a :href="/article/+item._id">
                                             <el-button plain>阅读全文</el-button>
                                         </a>
                                         <div class="view">
-                                            <i class="el-icon-view"></i> {{item.pageview}}
+                                            <i class="el-icon-view"></i>
+                                            {{item.pageview}}
                                         </div>
                                     </div>
                                 </div>
@@ -49,113 +53,65 @@
         </el-row>
     </div>
 </template>
-
-<script>
-import { mapState, mapActions } from "vuex";
-import Friend from "../../components/friend/friend.vue";
-import Tag from "../../components/tag/tag.vue";
-import moment from "moment"
-export default {
-    name: "home",
-    props: [""],
-    data() {
-        return {
-            tableData: [],
-            form: {
-                name: "",
-                age: "",
-                site: ""
-            }
-        };
-    },
-    created() {},
-    beforeMount() {},
-    mounted() {},
-    asyncData({ router, store }) {
-        return Promise.all([
-            store.dispatch("fetchClassify"),
-            store.dispatch("fetchTopArticle")
-        ])
-    },
-    computed: {
-       ...mapState([
-           "articleTop"
-       ])
-    },
-    filters: {
-        dateFrm(date) {
-            return moment(date).format("YYYY-MM-DD")
-        }
-    },
-    methods: {
-        // ...mapActions(["fetchCategorys"])
-    },
-
-    components: {
-        Friend,
-        Tag
-    }
-};
-</script>
 <style lang="stylus" scoped>
-#side 
-    .item 
+#side
+    .item
         margin-bottom: 30px
-
-.art-item 
+.art-item
     margin-bottom: 30px
     position: relative
-    .star 
+    .star
         width: 60px
         height: 60px
         position: absolute
         top: 0
         right: 0
-    .tag 
+    .tag
         width: 16px
         height: 16px
-    .art-title 
+    .art-title
         text-decoration: none
-        // border-left: 3px solid #f56c6c
         padding-left: 5px
         color: blue
         cursor: pointer
-        & :hover 
+        & :hover
             padding-left: 10px
             color: #409eff
-    .art-time 
+    .art-time
         margin-right: 20px
-    .art-body 
+    .art-body
         display: flex
         padding: 10px 0
-        .side-img 
+        .side-img
             height: 150px
             width: 270px
             overflow: hidden
             margin-right: 10px
-            .art-banner 
+            .art-banner
                 width: 100%
                 height: 100%
                 transition: all 0.6s
-                & :hover 
+                & :hover
                     transform: scale(1.4)
-        .side-abstract 
+        .side-abstract
             flex: 1
             display: flex
             flex-direction: column
-            .art-abstract 
+            .art-abstract
                 flex: 1
                 color: #aaa
-            .art-more 
+            .art-more
                 height: 40px
                 display: flex
                 justify-content: space-between
                 align-items: flex-end
-            .art-more .view 
+            .art-more .view
                 color: #aaa
-h5 
+h5
     font-size: 18px
-    margin 10px 0
-.pagination 
+    margin: 10px 0
+.pagination
     background-color: #f9f9f9
 </style>
+
+<script src="./home"></script>

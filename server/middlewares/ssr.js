@@ -5,7 +5,6 @@ import path from 'path'
 const router = new Router()
 
 export const ssrRouter = app => {
-    const apiPath = path.resolve(__dirname, '../routers/ssr')
-    new Route(app, router, apiPath).init()
-
+  const apiPath = path.resolve(__dirname, '../routers/ssr')
+  new Route(app, router, apiPath).init()
 }

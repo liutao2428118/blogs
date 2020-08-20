@@ -15,22 +15,6 @@
 		</el-card>
 	</div>
 </template>
-
-<script>
-import { mapState } from "vuex";
-	export default {
-        name: 'tag',
-        computed: {
-            ...mapState(["classifyArr"])
-        },
-		methods: {
-			tag(id) {
-                window.location.href = `/archive/${id}`
-			}
-		}
-	}
-</script>
-
 <style lang="stylus" scoped>
 .box-card 
     .item
@@ -48,3 +32,5 @@ import { mapState } from "vuex";
         height: 20px
         margin-right: 10px
 </style>
+
+<script src="./tag"></script>

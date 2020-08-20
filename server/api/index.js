@@ -4,11 +4,10 @@ import * as reply from './reply'
 import * as user from './user'
 import * as leave from './leave'
 
-
 export default {
-    article,
-    classify,
-    reply,
-    user,
-    leave
+  article,
+  classify,
+  reply,
+  user,
+  leave
 }

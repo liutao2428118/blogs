@@ -8,8 +8,18 @@
     "build:client": "cross-env NODE_ENV=production webpack --config build/webpack.config.pro.client.js",
     "dev:server": "cross-env NODE_ENV=development nodemon start.js",
     "build:server": "cross-env NODE_ENV=production webpack --config build/webpack.config.server.js",
-    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
-    "start": "cross-env NODE_ENV=production node start.js"
+    "dev": "standard --fix && concurrently \"npm run dev:client\" \"npm run dev:server\"",
+    "start": "cross-env NODE_ENV=production node start.js",
+    "lint": "npx standard --fix"
+  },
+  "standard": {
+    "parser": "babel-eslint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "echo 'husky' && npm run lint",
+      "pre-push": "echo 'husky' && npm run lint"
+    }
   },
   "keywords": [],
   "author": "",
@@ -28,11 +38,13 @@
     "css-loader": "^3.5.3",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
+    "husky": "^4.2.5",
     "memory-fs": "^0.5.0",
     "mini-css-extract-plugin": "^0.9.0",
     "nodemon": "^2.0.4",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-loader": "^3.0.0",
+    "standard": "^14.3.4",
     "style-loader": "^1.2.1",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
@@ -48,6 +60,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.8.7",
     "axios": "^0.19.2",
+    "babel-eslint": "^10.1.0",
     "bcrypt": "^5.0.0",
     "ejs": "^3.1.3",
     "element-ui": "^2.13.2",

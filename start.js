@@ -1,2 +1,2 @@
-require("@babel/register")
-require("./server/server")
+require('@babel/register')
+require('./server/server')

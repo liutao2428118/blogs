@@ -5,8 +5,12 @@ const ObjectId = Schema.Types.ObjectId
 const leaveNoteSchema = new Schema({
   content: String, // 留言的类容
   authorId: {
-      type: ObjectId, 
-      ref: 'User'
+    type: ObjectId,
+    ref: 'User'
+  },
+  isRead: {
+    type: Boolean,
+    default: false
   },
   createdAt: {
     type: Date,

@@ -12,23 +12,6 @@
 		</el-menu>
 	</div>
 </template>
-
-<script>
-	export default {
-		data() {
-			return {
-				activeIndex: '1'
-			};
-        },
-        computed: {},
-		methods: {
-            to(path) {
-                window.location.href = path
-            }
-		}
-	}
-</script>
-
 <style lang="stylus" scoped>
 .logo
     width 32px
@@ -37,3 +20,4 @@
 .title
     vertical-align middle
 </style>
+<script src="./header"></script>

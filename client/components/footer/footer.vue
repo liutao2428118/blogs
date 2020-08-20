@@ -8,7 +8,11 @@
                         <a href="https://gitee.com/tommy-tao" class="out-link" target="_Blank">码云</a>
                     </div>
                     <div class>
-                        <a href="https://juejin.im/user/1943592290229719/posts" class="out-link" target="_Blank">掘金</a>
+                        <a
+                            href="https://juejin.im/user/1943592290229719/posts"
+                            class="out-link"
+                            target="_Blank"
+                        >掘金</a>
                     </div>
                     <div class>
                         <a href="#" class="out-link" target="_Blank">后台管理</a>
@@ -35,47 +39,32 @@
 
 <script>
 export default {
-    name: "mfooter"
-};
+    name: 'mfooter',
+}
 </script>
 
 <style lang="stylus" scoped>
-.f-footer 
+.f-footer
     padding: 20px
     text-align: center
     color: #fff
     background-color: #555
-
-
-.main 
+.main
     width: 70%
     margin: 0 auto
     color: #ccc
-
-
-.out-link 
+.out-link
     text-decoration: none
     color: #ccc
-
-
-.out-link:hover 
+.out-link:hover
     color: #ffffff
-
-
-.item-col 
+.item-col
     text-align: left
-
-
-.item-col.weside 
+.item-col.weside
     font-size: 14px
-
-
-.item-col .title 
+.item-col .title
     color: #ddd
     margin-bottom: 10px
-
-
-.item span 
+.item span
     margin-right: 5px
-
 </style>
