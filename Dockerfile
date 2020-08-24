@@ -1,4 +1,4 @@
-FROM node:12.16.2
+FROM node:10.16.3
 LABEL maintainer="tao.lt liutao2428118@163.com"
 COPY . /app
 WORKDIR /app
