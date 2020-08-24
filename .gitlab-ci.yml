@@ -1,0 +1,16 @@
+stages:
+    - pro
+ 
+  cache:
+   paths:
+    - $(pwd)/node_modules/ 
+
+  pro:
+   stage: pro
+   script:
+    - echo "Hello, Shell"
+   only:
+     - '/pro-.*$/'
+   tags:
+     - pro-runner 
+ 
