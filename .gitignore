@@ -1,0 +1,7 @@
+node_modules
+public
+server-build
+.vscode
+dist
+.DS_Store
+.package-lock
