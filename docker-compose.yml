@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  voting-app:
+    build: .
+    ports:
+      - "3000:3000"
+    links:
+      - mongo
+    networks:
+      - back-tier
+  mongo:
+    image: mongo:latest
+    volumes:
+      - "db-data:/data/db"
+    networks:
+      - back-tier
+
+volumes:
+  db-data: "/data/mongo"
+
+networks:
+  back-tier:
