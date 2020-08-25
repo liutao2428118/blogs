@@ -4,7 +4,7 @@ import R from 'ramda'
 
 const isDev = process.env.NODE_ENV === 'development'
 const r = path => resolve(__dirname, path)
-const host = process.env.HOST || '127.0.0.1'
+const host = process.env.HOST || '0.0.0.0'
 const port = process.env.PORT || 3000
 
 const MIDDLEWARES = ['database', 'common', 'router', 'ssr']
