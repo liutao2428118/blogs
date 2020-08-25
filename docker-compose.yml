@@ -17,7 +17,7 @@ services:
       - back-tier
 
 volumes:
-  db-data: "/data/mongo"
+  db-data:
 
 networks:
   back-tier:
