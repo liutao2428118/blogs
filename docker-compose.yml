@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  voting-app:
+  app:
     build: .
     ports:
       - "3000:3000"
@@ -11,13 +11,11 @@ services:
       - back-tier
   mongo:
     image: mongo:latest
+    restart: always
     volumes:
-      - "db-data:/data/db"
+      - /data/mongo/db:/data/db
+      - /data/mongo/log:/var/log/mongodb  
     networks:
       - back-tier
-
-volumes:
-  db-data:
-
 networks:
   back-tier:
