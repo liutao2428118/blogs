@@ -22,7 +22,7 @@ import {
   Link,
   Loading,
   MessageBox,
-  Message,
+  Message
 } from 'element-ui'
 
 export const elementUse = Vue => {
@@ -41,12 +41,12 @@ export const elementUse = Vue => {
   Vue.use(Tree)
   Vue.use(Row)
   Vue.use(Col)
-  Vue.use(Main);
+  Vue.use(Main)
   Vue.use(Link)
-  Vue.use(Timeline);
-  Vue.use(TimelineItem);
-  Vue.use(Card);
-  Vue.use(Avatar);
+  Vue.use(Timeline)
+  Vue.use(TimelineItem)
+  Vue.use(Card)
+  Vue.use(Avatar)
   Vue.use(Loading.directive)
 
   Vue.prototype.$loading = Loading.service
