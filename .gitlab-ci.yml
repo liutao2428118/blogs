@@ -27,7 +27,7 @@
      - fi
     # 登录镜像仓库
      - echo $REGISTRY
-     - docker login $REGISTRY -u $REGISTRY_USER -p $REGISTRY_PASSWORD
+     - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD
     # 构建新的镜像
      - docker build -t $REGISTRY_IMAGE_TAG .
     # 上传镜像
