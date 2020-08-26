@@ -3,8 +3,8 @@ const merge = require('webpack-merge')
 const base = require('./webpack.config.base')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') // 抽取样式到单独文件的插件
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin') // 压缩css的插件
-// const UglifyJsPlugin = require('uglifyjs-webpack-plugin') // js压缩插件
-// const CopyWebpackPlugin = require('copy-webpack-plugin') // 在webpack中拷贝文件和文件夹的插件
+const TerserPlugin = require('terser-webpack-plugin') // js压缩插件
+const CopyWebpackPlugin = require('copy-webpack-plugin') // 在webpack中拷贝文件和文件夹的插件
 
 const pluginsConfig = require('./client.pluins.config')
 
@@ -128,19 +128,20 @@ module.exports = merge(base, {
     new MiniCssExtractPlugin({
       filename: '[name][hash].css', // 设置最终输出的文件名
       chunkFilename: '[id][hash].css'
+    }),
+    new CopyWebpackPlugin({
+      patterns: [{
+        from: path.resolve(__dirname, '../server/static'), // 拷贝不需要打包的文件夹路径
+        to: path.resolve(__dirname, '../public')
+      }]
     })
-    // new CopyWebpackPlugin([{
-    //     from: path.resolve(__dirname, '../server/static'), // 拷贝不需要打包的文件夹路径
-    //     to: path.resolve(__dirname, '../public')
-    // }])
   ]),
   optimization: {
     minimizer: [
-      // new UglifyJsPlugin({
-      //     cache: true, // 消除注释
-      //     parallel: true,
-      //     sourceMap: true // set to true if you want JS source maps
-      // }),
+      new TerserPlugin({
+        cache: true, // 消除注释
+        parallel: true
+      }),
       new OptimizeCSSAssetsPlugin({})
     ]
   }
