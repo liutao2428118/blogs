@@ -53,7 +53,6 @@ export default {
 <style lang="stylus" scoped>
 .app 
     font-family: "microsoft yahei"
-
     #content 
         background-color: #f9f9f9
         padding: 30px 0

@@ -1,17 +1,47 @@
-  stages:
-    - pro
+# 使用docker镜像
+# 设置变量
+ variables:
+    # 镜像版本
+    REGISTRY_IMAGE_TAG: liutao2428118/blogs-app:$CI_COMMIT_TAG
+    # 镜像启动后的容器名
+    CONTAINER_NAME: blogs-app
     
-  cache:
-   paths:
-    - $(pwd)/node_modules/ 
+ stages:
+    - build
+    - test
+    - deploy
 
-  pro:
-   stage: pro
-   script:
-    - echo "Hello, Shell"
-   only:
-    - '/pro-.*$/'
-   tags:
-    - pro-runner 
- 
- 
+# ----------------构建-----------------
+ build:
+    stage: build
+    script:
+    # 停止并删除正在使用当前镜像的容器
+     - if [ "$(docker ps -a | grep $CONTAINER_NAME)" ]; then
+     - docker stop $CONTAINER_NAME && docker rm $CONTAINER_NAME
+     - fi
+    # 删除当前已存在的镜像
+     - if [ "$(docker images | grep $REGISTRY_IMAGE_TAG)" ]; then
+     - docker rmi $REGISTRY_IMAGE_TAG
+     - fi
+    # 登录镜像仓库
+     - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD
+    # 构建新的镜像
+     - docker build -t $REGISTRY_IMAGE_TAG .
+    # 上传镜像
+     - docker push $REGISTRY_IMAGE_TAG
+    only:
+     - tags
+    tags:
+     - pro-runner 
+
+# ----------------测试-----------------
+ test:
+    stage: test
+    script:
+    # 本地启动容器进行测试
+     - docker run  --name $CONTAINER_NAME  --network blogs -d $REGISTRY_IMAGE_TAG
+    when: on_success
+    only:
+     - tags
+    tags:
+     - pro-runner 
