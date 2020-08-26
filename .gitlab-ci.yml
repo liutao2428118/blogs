@@ -41,7 +41,7 @@
     stage: test
     script:
     # 本地启动容器进行测试
-     - docker run  --name $CONTAINER_NAME  --network blogs -d $REGISTRY_IMAGE_TAG
+     - docker run  --name $CONTAINER_NAME  --link mongo --network blogs -d $REGISTRY_IMAGE_TAG
     when: on_success
     only:
      - tags
