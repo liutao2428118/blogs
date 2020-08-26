@@ -26,7 +26,8 @@
      - docker rmi $REGISTRY_IMAGE_TAG
      - fi
     # 登录镜像仓库
-     - winpty docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD REGISTRY
+     - docker login $REGISTRY -u $REGISTRY_USER -p $REGISTRY_PASSWORD
+     - echo $REGISTRY
     # 构建新的镜像
      - docker build -t $REGISTRY_IMAGE_TAG .
     # 上传镜像
