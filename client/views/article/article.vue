@@ -93,7 +93,7 @@
     img
         width: 100%
 #statement
-    border-left: 3px solid #F56C6C
+    // border-left: 3px solid #F56C6C
     padding: 20px
     background-color: #EBEEF5
 .comments

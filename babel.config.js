@@ -16,7 +16,14 @@ module.exports = function (api) {
   ]
   const plugins = [
     ['@babel/plugin-transform-runtime'],
-    ['@babel/plugin-proposal-decorators', { legacy: true }] // node支持ES7装饰器语法插件
+    ['@babel/plugin-proposal-decorators', { legacy: true }], // node支持ES7装饰器语法插件
+    [
+      'component',
+      {
+        libraryName: 'element-ui',
+        styleLibraryName: 'theme-chalk'
+      }
+    ]
   ]
   return {
     presets,
