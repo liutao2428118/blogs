@@ -1,6 +1,8 @@
 # 使用docker镜像
 # 设置变量
  variables:
+    #镜像仓库地址
+    REGISTRY: hub.docker.com
     # 镜像版本
     REGISTRY_IMAGE_TAG: liutao2428118/blogs-app:$CI_COMMIT_TAG
     # 镜像启动后的容器名
@@ -24,7 +26,7 @@
      - docker rmi $REGISTRY_IMAGE_TAG
      - fi
     # 登录镜像仓库
-     - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD
+     - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD REGISTRY
     # 构建新的镜像
      - docker build -t $REGISTRY_IMAGE_TAG .
     # 上传镜像
