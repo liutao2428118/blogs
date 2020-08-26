@@ -1,13 +1,13 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'tag',
+  name: 'mytag',
   computed: {
     ...mapState(['classifyArr'])
   },
   methods: {
-    tag (id) {
-      window.location.href = `/archive/${id}`
+    handleTag (id) {
+      window.location.href = '/archive/' + id + ''
     }
   }
 }

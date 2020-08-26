@@ -10,7 +10,7 @@
     "build:server": "cross-env NODE_ENV=production webpack --config build/webpack.config.server.js",
     "dev": "standard --fix && concurrently \"npm run dev:client\" \"npm run dev:server\"",
     "start": "cross-env NODE_ENV=production node start.js",
-    "lint": "npx standard --fix"
+    "lint": "npx standard"
   },
   "standard": {
     "parser": "babel-eslint"
@@ -49,7 +49,7 @@
     "style-loader": "^1.2.1",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
-    "uglifyjs-webpack-plugin": "^2.2.0",
+    "terser-webpack-plugin": "^4.1.0",
     "url-loader": "^4.1.0",
     "vue-loader": "^15.9.2",
     "vue-template-compiler": "^2.6.11",
