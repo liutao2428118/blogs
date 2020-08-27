@@ -58,10 +58,13 @@ export default {
     this.page = parseInt(this.$route.params.page)
   },
   asyncData ({ app, router, store }) {
-    return store.dispatch('fetchLeaveList', {
-      page: app.$route.params.page,
-      page_size: 10
-    })
+    return Promise.all([
+      store.dispatch('fetchLeaveList', {
+        page: app.$route.params.page,
+        page_size: 10
+      }),
+      store.dispatch('fetchClassify')
+    ])
   },
   methods: {
     currentChange (page) {

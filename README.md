@@ -21,15 +21,15 @@
 
 
 ## 简介
-[blogs](https://github.com/liutao2428118/blogs)服务器端渲染(SSR)博客网站，它基于[vue](https://github.com/vuejs/vue)、[vue-ssr](https://ssr.vuejs.org/zh/)、[element-ui](https://github.com/ElemeFE/element)、[node](https://github.com/nodejs/node)实现。使用了最新的前端技术栈，基本功能（文章分类管理年限划分，文章发布编辑，图片等资源上传七牛云，无限评论回复等等)。简洁风格。项目分三个端，客户端、服务端、[admin端](https://github.com/liutao2428118/blogs-admin)。
+[blogs](https://github.com/liutao2428118/blogs)服务器端渲染(SSR)博客网站，它基于[vue](https://github.com/vuejs/vue)、[vue-ssr](https://ssr.vuejs.org/zh/)、[element-ui](https://github.com/ElemeFE/element)、[node](https://github.com/nodejs/node)实现。使用了最新的前端技术栈，基本功能（文章分类管理年限划分，文章发布编辑Markdown，图片等资源上传七牛云，无限嵌套评论回复等等)。简洁风格。项目分三个端，客户端、服务端、[admin端](https://github.com/liutao2428118/blogs-admin)。
 
 项目本身也是一次尝试，从需求分析->本地工程化->前后端开发->数据库设计->自动化发布部署（持续集成）->服务器环境搭建（微服务）,从头到尾自己一个人独立完成，也算是完整体系开发项目的一次试水
 
-- [在线预览](https://www.baidu.com/)
+- [在线预览](http://blogs.xiaoying.love/)
 
-- [在线预览admin](https://www.baidu.com/)
+- [在线预览admin端](http://blogs.xiaoying.love/admin)
 
-- [Wiki](https://www.baidu.com/)
+- [Wiki](https://github.com/liutao2428118/blogs/wiki)
 
 
 ## 前序准备
@@ -61,8 +61,8 @@
 - 项目没用到现成服务端渲染框架nuxt，完全从零开始。
 - 目前手上有两台腾讯云的服务器，分别测试环境、正式环境。
 - 什么是持续集成，持续集成服务（Continuous Integration，简称 CI）。只要有新的代码，就会自动抓取。然后，提供一个运行环境，执行测试，完成构建，还能部署到服务器。
-- 代码仓库放在github上为啥没用TravisCI，gitlab-CICD实际工作中用的多一点。
-- 下面说下CICD大致步骤，开发人员push代码到gitlab，打tag触发对应的Jobs，代码自动抓取到测试服务器->自动构建docker容器部署->完成单元测试->测试通过后，正式服务器拉取容器镜像，构建容器部署（以上步骤全部是打完tag后连续触发）。这里就简单的讲下CICD的大致步骤，具体就不展开说了。
+- 代码仓库放在github上为啥没用TravisCI，github仓库只做展示，githu仓库与gitlab仓库是联动的，持续集成与持续部署主要还是放在gitlab上，gitlab-CICD实际工作中用的会多一点。
+- 下面说下CICD大致步骤，开发人员push代码到gitlab仓库-打tag触发对应的Jobs-代码自动pull测试服务器->构建镜像-上传镜像-构建docker容器-完成测试环境部署-完成单元测试-测试通过-正式服务器拉取镜像-构建容器-完成部署（以上步骤全部是打完tag后连续触发）。这里就简单的讲下CICD的大致步骤，具体就不展开说了。
 
 ## 目录结构
 
@@ -106,7 +106,9 @@
 │  ├─static  静态文件
 |  └─server.js  服务端启动文件
 ├─server-build  服务端打包后文件夹
-└─template   html模板文件
+├─ template   html模板文件
+├─ gitlab-ci.yml 自动化部署脚本
+└─ Dockerfile  Docker镜像构建脚本
 
 ```
 

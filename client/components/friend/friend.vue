@@ -9,13 +9,13 @@
                 </el-button>
             </div>
             <div class="text item">
-                <a href="https://github.com/liutao2428118" target="_Blank">我的github</a>
+                <a href="https://github.com/liutao2428118" target="_Blank">Github</a>
             </div>
             <div class="text item">
-                <a href="#" target="_Blank">我的gitlab</a>
+                <a href="https://gitlab.com/new-group25" target="_Blank">Gitlab</a>
             </div>
             <div class="text item">
-                <a href="https://www.yuque.com/kuangyedeluobu" target="_Blank">我的语雀</a>
+                <a href="https://www.yuque.com/kuangyedeluobu" target="_Blank">语雀</a>
             </div>
         </el-card>
     </div>

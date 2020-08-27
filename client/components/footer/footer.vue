@@ -15,7 +15,7 @@
                         >掘金</a>
                     </div>
                     <div class>
-                        <a href="#" class="out-link" target="_Blank">后台管理</a>
+                        <a href="/admin" class="out-link" target="_Blank">后台管理</a>
                     </div>
                 </el-col>
                 <el-col :span="8" class="item-col weside">

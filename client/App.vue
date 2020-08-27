@@ -1,8 +1,8 @@
 <template>
     <div class="app">
-        <m-header></m-header>
+        <m-header :class="{'navBarFixed': navBarFixed}"></m-header>
         <el-row type="flex" justify="center" id="content">
-            <el-col :xs="20" :md="20" :style="{'minHeight':minHeight+'px'}">
+            <el-col :xs="20" :md="20" :style="{minHeight:'800px'}">
                 <router-view></router-view>
             </el-col>
         </el-row>
@@ -17,7 +17,6 @@ export default {
     name: "app",
     data() {
         return {
-            minHeight: 0,
             navBarFixed: false
         };
     },
@@ -40,12 +39,7 @@ export default {
         }
     },
     mounted() {
-        let that = this;
-        that.minHeight = document.documentElement.clientHeight;
-        window.addEventListener("scroll", that.watchScroll);
-        window.onresize = function() {
-            that.minHeight = document.documentElement.clientHeight;
-        };
+        window.addEventListener('scroll', this.watchScroll, true);
     }
 };
 </script>
@@ -53,6 +47,11 @@ export default {
 <style lang="stylus" scoped>
 .app 
     font-family: "microsoft yahei"
+    .navBarFixed
+        position fixed
+        top 0
+        left 0
+        z-index 50
     #content 
         background-color: #f9f9f9
         padding: 30px 0
