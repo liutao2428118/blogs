@@ -50,13 +50,6 @@
 
 持续集成与持续部署基于[gitlab-CICD](https://docs.gitlab.com/ee/README.html)，服务器环境搭建依赖[docker](https://www.docker.com/), 提前了解和学习这些知识会对使用本项目有很大的帮助。
 
-同时配套了系列教程文章，如何从零构建一个完整的ssr博客网站，建议大家可以看看
-
-- [手摸手，带你用 vue-ssr 撸博客网站 系列一(本地工程化篇)](https://www.baidu.com)
-- [手摸手，带你用 vue-ssr 撸博客网站 系列二 (实战篇)](https://www.baidu.com)
-- [手摸手，带你用合理的姿势使用 webpack4（上）](https://juejin.im/post/5b56909a518825195f499806)
-- [手摸手，带你用合理的姿势使用 webpack4（下）](https://juejin.im/post/5b5d6d6f6fb9a04fea58aabc)
-
 一些说明：
 - 项目没用到现成服务端渲染框架nuxt，完全从零开始。
 - 目前手上有两台腾讯云的服务器，分别测试环境、正式环境。
