@@ -22,11 +22,10 @@ class Server {
         console.log(`request with path ${ctx.path}`)
         await next()
       } catch (err) {
-        ctx.status = 500
         if (isDev) {
           ctx.body = err.message
         } else {
-          ctx.bosy = 'please try again later'
+          ctx.body = 'please try again later'
         }
       }
     })
