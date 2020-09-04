@@ -39,8 +39,8 @@
 
 <script>
 export default {
-    name: 'mfooter',
-}
+    name: "mfooter",
+};
 </script>
 
 <style lang="stylus" scoped>

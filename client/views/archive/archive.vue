@@ -2,7 +2,7 @@
     <div class="archive">
         <el-row id="artList" type="flex" justify="space-around">
             <el-col :span="16">
-                <div class="count">归档：{{articleYearData.count}}篇</div>
+                <div class="count">归档：{{ articleYearData.count }}篇</div>
                 <el-timeline>
                     <el-timeline-item
                         v-for="(activity, index) in articleYearData.list"
@@ -12,7 +12,7 @@
                         @mouseenter="hoverLine(activity)"
                     >
                         <div class="line-item" v-for="c in activity.item">
-                            <span @click="to(c.id)">{{c.title}}</span>
+                            <span @click="to(c.id)">{{ c.title }}</span>
                         </div>
                     </el-timeline-item>
                 </el-timeline>
@@ -27,13 +27,13 @@
 </template>
 
 <style lang="stylus" scoped>
-.count 
+.count
     margin-bottom: 20px
     font-size: 20px
     color: #e6a23c
-.line-item 
+.line-item
     padding: 5px 0
-    :hover 
+    :hover
         cursor: pointer
         color: #409eff
 </style>
