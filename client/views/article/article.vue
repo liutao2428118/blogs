@@ -1,49 +1,52 @@
 <template>
-    <div>
-        <el-row class="main" type="flex" justify="center">
-            <el-col :span="16" class="col">
-                <div
-                    class="artcle-info"
-                    :style="{backgroundImage: `url('${articleOne.imageUrl}')`}"
-                >
-                    <h2 class="text-center">
-                        <strong>{{articleOne.title}}</strong>
-                    </h2>
-                    <!-- 描述：文章信息 -->
-                    <div class="text-center timeAndView">
-                        <span class="article-time">
-                            <i class="el-icon-time"></i>
-                            发表于：
-                            <span>{{articleOne.createdAt | dateFrm}}</span>
-                        </span>
-                        &nbsp;|&nbsp;
-                        <span class="article-views">
-                            <i class="el-icon-view"></i>
-                            阅读量：
-                            <span>{{articleOne.pageview}}</span>
-                        </span>
-                    </div>
-                    <p class="abstract">{{articleOne.outline}}</p>
-                </div>
-                <hr />
+  <div>
+    <el-row class="main" type="flex" justify="center">
+      <el-col :span="16" class="col">
+        <div
+          class="artcle-info"
+          :style="{ backgroundImage: `url('${articleOne.imageUrl}')` }"
+        >
+          <h2 class="text-center">
+            <strong>{{ articleOne.title }}</strong>
+          </h2>
+          <!-- 描述：文章信息 -->
+          <div class="text-center timeAndView">
+            <span class="article-time">
+              <i class="el-icon-time"></i>
+              发表于：
+              <span>{{ articleOne.createdAt | dateFrm }}</span>
+            </span>
+            &nbsp;|&nbsp;
+            <span class="article-views">
+              <i class="el-icon-view"></i>
+              阅读量：
+              <span>{{ articleOne.pageview }}</span>
+            </span>
+          </div>
+          <p class="abstract">{{ articleOne.outline }}</p>
+        </div>
+        <hr />
 
-                <!-- 内容 -->
-                <div class="markdown-body" v-html="content"></div>
+        <!-- 内容 -->
+        <div class="markdown-body" v-html="content"></div>
 
-                <div id="statement">
-                    <div class="item"></div>
-                    <div class="item">
-                        <a href="https://www.xiaoying.love">https://www.xiaoying.love</a>
-                    </div>
-                    <div class="item">本博客所有文章除特别声明外,转载请注明出处!</div>
-                </div>
-                <div class="comments">
-                    <div class="title">评论区</div>
-                    <reply :articleId="$route.params.id" :reply="articleOne.reply"></reply>
-                </div>
-            </el-col>
-        </el-row>
-    </div>
+        <div id="statement">
+          <div class="item"></div>
+          <div class="item">
+            <a href="https://www.xiaoying.love">https://www.xiaoying.love</a>
+          </div>
+          <div class="item">本博客所有文章除特别声明外,转载请注明出处!</div>
+        </div>
+        <div class="comments">
+          <div class="title">评论区</div>
+          <reply
+            :articleId="$route.params.id"
+            :reply="articleOne.reply"
+          ></reply>
+        </div>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 <style lang="stylus" scoped>
 .col
